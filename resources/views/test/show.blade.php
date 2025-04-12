@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content-main')
-    <div id="test-user" class="container mt-5 p-4 border border-primary rounded shadow-sm" style="margin: 30px; width: 90%">
-        <h3 id="test-text" class="text-center mb-4">Hello</h3>
+
+    <div id="test-user" class="container mt-5 p-4 border border-primary rounded shadow-sm" style="padding-top: 0px; width: 90%">
+       <p style="text-align: left" id="kl"></p>
+        <h3 id="test-text" class="text-center mb-4"></h3>
 
         <div class="test-content mb-4 chek" id="input-test">
 
@@ -47,18 +49,23 @@
             });
           return matchingResults;
         }
+        function question_answer(){
+            let text_content=document.getElementById('answer');
+
+            return text_content.value;
+        }
 
         function test_view(dd) {
-            test = dd; // Assign the incoming test object to the global test variable
+            test = dd.test; // Assign the incoming test object to the global test variable
             const testText = document.getElementById('test-text');
-
+            document.getElementById('kl').textContent='10/'+dd.kl;
             testText.textContent = test.text;
 
             inputContainer.innerHTML = '';
 
             if (test.type_test === "question_answer") {
                 inputContainer.innerHTML = `
-                <textarea class="js-count-characters form-control" id="reviewLabelModalEg" placeholder="Textarea field" rows="4" maxlength="60" data-hs-count-characters-options='{"output": "#maxLengthCountCharacters"}'></textarea>
+                <textarea class="form-control" id="answer" placeholder="Textarea field" rows="4"></textarea>
             `;
             } else if (test.type_test === "one_correct" || test.type_test === "list_correct") {
                 const typeInput = test.type_test === "one_correct" ? "radio" : "checkbox";
@@ -149,6 +156,9 @@
             else if(test.type_test==="matching"){
                 send_test(matching());
             }
+            else if(test.type_test==="question_answer"){
+                send_test(question_answer());
+            }
         }
 
         let data_g = [];
@@ -165,7 +175,7 @@
             data: JSON.stringify({}),
             success: function (data1) {
                 console.log(data1);
-                data_g = data1;
+                data_g = data1.test;
                 test_view(data1); // Display the test using test_view function
             },
             error: function (xhr, status, error) {

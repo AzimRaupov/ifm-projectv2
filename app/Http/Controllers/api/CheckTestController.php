@@ -44,6 +44,16 @@ class CheckTestController extends Controller
             $test->skill->score=$test->score;
             $ok=true;
         }
+        else if($test->type_test=="question_answer"){
+            $req=strtolower(preg_replace('/\s+/', '', $correct));
+            $answer=strtolower(preg_replace('/\s+/', '', $test->correct));
+            if($req===$answer){
+                $test->skill->score=$test->score;
+                $ok=true;
+
+            }
+
+        }
             $test->view=1;
         $test->update();
             $test->skill->update();

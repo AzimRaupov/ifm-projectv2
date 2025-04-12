@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('type_test',["one_correct","list_correct","question_answer","matching","true_false"]);
             $table->text('variants')->nullable();
             $table->boolean('view')->default(0);
+            $table->enum('verdict',['0','1','2'])->default('0');
             $table->text('correct')->nullable();
             $table->integer('score')->default(0);
             $table->text('list1')->nullable();

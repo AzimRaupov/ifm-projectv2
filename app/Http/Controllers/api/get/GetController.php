@@ -33,9 +33,17 @@ class GetController extends Controller
     }
     function test($id)
     {
-        $test=Test::query()->where('step_id',$id)->where('view',0)->first();
+        $test=Test::query()->where('step_id',$id)->get();
+        if(!$test->isEmpty()){
 
-        return response()->json($test,200);
+        foreach ($test as $index=>$item){
+            if($item->view===0){
+                return response()->json(['test'=>$item,'kl'=>$index+1,'status'=>'ok'],200);
+
+            }
+        }
+        return response()->json(['status'=>'over'],200);
+        }
 
     }
     function steps($id)

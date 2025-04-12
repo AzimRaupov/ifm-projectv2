@@ -4,32 +4,36 @@
 
     <style>
         #containerr {
-            height: 600px;
             position: relative;
+            min-height: 100vh;
             border: 1px solid #ccc;
             overflow: auto; /* Добавляем прокрутку */
         }
 
         .box {
             margin-top: 30px;
-            width: 150px;
-            height: 50px;
-            font-size: 14px;
+            width: 180px; /* Фиксированная ширина */
+            min-height: 50px; /* Минимальная высота */
+            font-size: 12px;
             position: absolute;
             background-color: #4a90e2;
             color: white;
             text-align: center;
-            line-height: 50px;
             border-radius: 8px;
             overflow: hidden; /* Скрываем текст, выходящий за границы */
-            text-overflow: ellipsis; /* Добавляем троеточие, если текст слишком длинный */
-            white-space: nowrap;
             opacity: 0;
             transform: translateY(-20px); /* Начальная позиция для анимации */
             transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Плавная анимация */
             cursor: pointer; /* Указатель мыши как на ссылке */
+            word-wrap: break-word; /* Перенос длинных слов */
+            white-space: normal; /* Разрешаем перенос текста */
+            line-height: 1.2; /* Межстрочный интервал */
+            padding: 8px; /* Внутренние отступы */
+            box-sizing: border-box; /* Учитываем padding в размерах */
         }
-
+       .passed{
+       background-color: #22c366;
+       }
         /* CSS для анимации линии */
         path {
             stroke-dasharray: 1000;
@@ -44,6 +48,7 @@
                 stroke-dashoffset: 0;
             }
         }
+
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/jsplumb@2.15.0/dist/js/jsplumb.min.js"></script>
@@ -57,9 +62,18 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body" style="margin-top: 0px">
-            <a href="" style="border-right: solid 1px black; padding: 3px">Пройти тест</a>
-            <a href="{{route('vocabulary.show')}}?id=" class="link_vocabulary">Лексика</a> <br> <br>
-            <span class="spinner-border spinner-border-sm" style="display: inline-block" ></span>
+            <div class="row" style="display: flex; align-items: center;">
+                <a href="t" class="col-6 link_test" style="text-decoration: none; color: #3498db; display: flex; align-items: center; justify-content: center;">
+                    Пройти тест
+
+                </a>
+                <a href="z" class="link_vocabulary col-6" style="text-decoration: none; color: #3498db; display: flex; align-items: center; justify-content: center;">
+                    Лексика
+
+                </a>
+            </div>
+            <br>
+                <span class="spinner-border spinner-border-sm" style="display: inline-block" ></span>
 
             <div id="description">
 
@@ -68,8 +82,15 @@
 
             </div>
         </div>
+
     </div>
+
+
+@endsection
+
+@section('script')
     <script>
+        const lv=document.querySelector('.link_vocabulary');
         async function fetchData() {
             try {
                 const response = await fetch("{{ route('get.steps', $course->id) }}", {
@@ -97,7 +118,7 @@
         async function get_description(step_id) {
             try {
                 const offcanvasBody = document.getElementById('description');
-               offcanvasBody.innerHTML=``;
+                offcanvasBody.innerHTML=``;
                 const spin = document.querySelector('.spinner-border-sm');
                 spin.style='display: inline-block';
                 const bllink=document.getElementById('links');
@@ -148,7 +169,7 @@
                 if (steps[i].type === 'parent') {
                     // Вычисляем вертикальное положение родительского блока
                     const parentTop = parentIndex * parentSpacing;
-                    html += `<div id="box${i}" class="box" style="top: ${parentTop}px; left: 45%; transform: translateX(-50%);">
+                    html += `<div id="box${i}" class="box ${steps[i].status == 1 ? 'passed' : ''}" style="top: ${parentTop}px; left: 45%; transform: translateX(-50%);">
                         ${steps[i].title}
                      </div>`;
 
@@ -161,7 +182,7 @@
                             const leftPosition = side === 'left' ? '20%' : '70%';
                             const childTop = parentTop + row * childRowHeight;
 
-                            html += `<div id="box${steps[i].heirs[j]}" class="box" style="top: ${childTop}px; left: ${leftPosition}; transform: translateX(-50%);">
+                            html += `<div id="box${steps[i].heirs[j]}" class="box ${steps[steps[i].heirs[j]].status == 1 ? 'passed' : ''}" style="top: ${childTop}px; left: ${leftPosition}; transform: translateX(-50%);">
                                 ${steps[steps[i].heirs[j]].title}
                              </div>`;
 
@@ -212,12 +233,12 @@
                     return steps[box.id.replace('box', '')].type === 'heir';
                 });
 
-                // Появление родительских блоков
+
                 parentBoxes.forEach((box, index) => {
                     setTimeout(() => {
                         box.style.opacity = 1;
                         box.style.transform = 'translateY(0)';
-                    }, index * 300); // Задержка для каждого родительского блока
+                    }, index * 150);
                 });
 
                 // Появление дочерних блоков после родительских
@@ -226,7 +247,7 @@
                         setTimeout(() => {
                             box.style.opacity = 1;
                             box.style.transform = 'translateY(0)';
-                        }, index * 300); // Задержка для каждого дочернего блока
+                        }, index * 200); // Задержка для каждого дочернего блока
                     });
                 }, parentBoxes.length * 200); // Задержка перед появлением дочерних блоков
             }
@@ -240,19 +261,21 @@
                     const index = box.id.replace('box', '');
                     const step = steps[index];
                     const title=document.getElementById('offcanvasRightLabel');
-                    const lv=document.querySelector('.link_vocabulary');
-                    lv.a.href+=step.id;
+
+                    lv.removeAttribute("href");
+                    ltest.removeAttribute("href");
                     title.textContent=step.title;
 
                     get_description(step.id);
-
+                    create_vocabulary(step.id);
+                    create_test(step.id);
                     const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasRight'));
                     offcanvas.show();
                 }
             });
 
         }
-
+       let ltest=document.querySelector('.link_test');
         function createConnections(connections) {
             jsPlumb.ready(function() {
                 jsPlumb.setContainer("containerr"); // Устанавливаем контейнер
@@ -279,16 +302,70 @@
 
             });
         }
+      async function create_test(step_id){
+          try {
+
+              const response =await fetch("{{ route('api.create.test') }}", {
+                  method: "POST",
+                  headers: {
+                      "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                      id:step_id
+                  }),
+              });
+
+              if (!response.ok) {
+                  throw new Error(`Ошибка HTTP: ${response.status}`);
+              }
+
+              const data =await response.json();
+
+              console.log(data);
+              ltest.href='{{route('test.show')}}?id='+step_id;
 
 
-        fetchData();
+          } catch (error) {
+              console.error("Ошибка при загрузке шагов курса:", error);
+          }
+      }
+      async function create_vocabulary(step_id){
+          try {
+
+              const response =await fetch("{{ route('api.create.vocabulary') }}", {
+                  method: "POST",
+                  headers: {
+                      "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                      id:step_id
+                  }),
+              });
+
+              if (!response.ok) {
+                  throw new Error(`Ошибка HTTP: ${response.status}`);
+              }
+
+              const data =await response.json();
+
+              console.log(data);
+              lv.href='{{route('vocabulary.show')}}?id='+step_id;
+
+
+          } catch (error) {
+              console.error("Ошибка при загрузке шагов курса:", error);
+          }
+      }
+
         document.addEventListener('DOMContentLoaded', () => {
             const offcanvas = document.getElementById('offcanvasRight');
             const container = document.getElementById('containerr');
-
+            fetchData();
             // Функция обновления соединений
             function updateJsPlumb() {
-                setTimeout(() => jsPlumb.repaintEverything(), 50);
+                setTimeout(() => jsPlumb.repaintEverything(), 20);
             }
 
             // Отслеживание открытия/закрытия шторки
@@ -304,5 +381,4 @@
         });
 
     </script>
-
 @endsection

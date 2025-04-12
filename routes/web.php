@@ -14,12 +14,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::post('/api/rd/vocabulary',[\App\Http\Controllers\VocabularyController::class,'rd'])->name('vocabulary.rd');
+    Route::post('/test/check',[\App\Http\Controllers\TestController::class,'check'])->name('test.check');
     Route::get('/vocabulary',[\App\Http\Controllers\VocabularyController::class,'show'])->name('vocabulary.show');
     Route::get('/gpt',[\App\Http\Controllers\api\create\CreateController::class,'c_test']);
-    Route::get('/test',[\App\Http\Controllers\TestController::class,'show'])->name('test.show');
+    Route::get('/test',[\App\Http\Controllers\TestController::class,'show2'])->name('test.show');
     Route::post('/api/get/steps/{id}',[\App\Http\Controllers\api\get\GetController::class,'steps'])->name('get.steps');
     Route::post('/api/create/description',[\App\Http\Controllers\api\create\CreateController::class,'create_description'])->name('api.create.description');
-    Route::get('api/create/vocabulary',[\App\Http\Controllers\api\create\CreateController::class,'vocabulary'])->name('api.create.vocabulary');
+    Route::post('api/create/vocabulary',[\App\Http\Controllers\api\create\CreateController::class,'vocabulary'])->name('api.create.vocabulary');
     Route::get('/show',[\App\Http\Controllers\CourseController::class,'show'])->name('show');
     Route::post('/api/info',[\App\Http\Controllers\api\get\GetController::class,'user_info'])->name('user_info');
     Route::post('/api/create/test',[\App\Http\Controllers\api\create\CreateController::class,'test'])->name('api.create.test');

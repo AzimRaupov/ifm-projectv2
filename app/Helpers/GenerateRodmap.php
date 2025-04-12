@@ -104,6 +104,7 @@ class GenerateRodmap
 3. **2 вопроса с открытым ответом**
    - Вопрос
    - Текстовый правильный ответ
+   - Короткий ответ от до 10 символов.
 
 4. **2 теста с верно/неверно**
    - Вопрос
@@ -118,6 +119,7 @@ class GenerateRodmap
 - Укажи, к какому навыку относится каждый тест (из списка: [$skills]).
 - Присвой каждому тесту баллы в зависимости от сложности.
 - У меня {$step->course->ex} баллов из 1000.
+- В итоге 10 тестов!!!
 
 ### Формат ответа (JSON):
 ```json
@@ -286,7 +288,7 @@ class GenerateRodmap
         }
     }
 
-    static public function generateDescription($step)
+    static public function generateDescriptionn($step)
     {
         $open_ai_key = env('OPENAI_API_KEY');
         $open_ai = new OpenAi($open_ai_key);
@@ -333,5 +335,75 @@ class GenerateRodmap
         $clean = str_replace(['```json', '```'], '', $text);
         $data=json_decode(trim($clean),true);
         return $data;
+    }
+    static public function generateDescription($step)
+    {
+        $apiKey = env('GEMINI_API_KEY');
+
+        $promt=' Создай описание на тему "' . $step->course->topic . '" шаг "' . $step->title . '" в формате HTML.
+                Также предоставь минимум 5 внешних ссылок для изучения.
+
+                ### Формат ответа (JSON):
+                ```json
+                {
+                    "info": {
+                        "description": "HTML-описание шага",
+                        "links": [
+                            "https://example.com",
+                            "https://example.com",
+                            "https://example.com",
+                            "https://example.com",
+                            "https://example.com"
+                        ]
+                    }
+                }
+                ```
+                Убедись, что ответ полностью соответствует этой структуре JSON.
+
+          ';
+
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
+
+        try {
+            // Отправляем запрос к API
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json'
+            ])->post($url, [
+                'contents' => [
+                    [
+                        'parts' => [
+                            ['text' => $promt]
+                        ]
+                    ]
+                ]
+            ]);
+
+            // Проверяем успешность запроса
+            if ($response->successful()) {
+                $result = $response->json();
+
+                // Проверяем, что результат содержит кандидатов
+                if (isset($result['candidates'][0]['content']['parts'][0]['text'])) {
+                    $text = $result['candidates'][0]['content']['parts'][0]['text'];
+
+                    // Очищаем текст от лишних элементов
+                    $clean = str_replace(['```json', '```'], '', $text);
+                    $roadmap = trim($clean);
+
+                    // Возвращаем распарсенный JSON
+                    return json_decode($roadmap, true);
+                }
+
+                // Если текст не найден в ответе, возвращаем ошибку
+                return response()->json(['error' => 'Не удалось найти нужные данные в ответе API'], 400);
+            }
+
+            // Если API вернуло ошибку, выводим ошибку
+            return response()->json(['error' => 'Ошибка API', 'status' => $response->status(), 'message' => $response->body()], $response->status());
+
+        } catch (\Exception $e) {
+            // Логирование и обработка исключений
+            return response()->json(['error' => 'Ошибка при подключении к API: ' . $e->getMessage()], 500);
+        }
     }
 }

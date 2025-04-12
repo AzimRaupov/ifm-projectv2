@@ -14,6 +14,64 @@ use phpDocumentor\Reflection\TypeResolver;
 use App\Helpers\GenerateRodmap;
 class TestController extends Controller
 {
+    function check(Request $request)
+    {
+        $tests=Test::query()->where('step_id',$request->id)->with('skill')->get();
+        $i=0;
+
+        $answer=$request->answer;
+        $ok='1';
+        foreach ($tests as $test){
+            $ok='1';
+            if (!isset($answer[$i]['answer'])) {
+                $i++;
+                $test->verdict = $ok;
+                $test->save();
+
+                continue;
+            }
+            if($test->type_test=="one_correct" || $test->type_test=="true_false") {
+                if ($test->correct == $answer[$i]['answer']) {
+
+                    $test->skill->score += $test->score;
+                    $ok = '2';
+                }
+            }
+            else if($test->type_test=="list_correct"){
+                $test_correct=$test->correct;
+
+                foreach ($test_correct as $list){
+                    foreach ($answer[$i]['answer'] as $list1){
+                        if($list==$list1){
+                            $test->skill->score+=$test->score/count($test_correct);
+                            $ok='2';
+
+                            break;
+                        }
+                    }
+                }
+            }
+            else if($test->type_test=="matching" && $answer[$i]['answer']==$test->list2){
+                $test->skill->score+=$test->score;
+                $ok='2';
+            }
+            else if($test->type_test=="question_answer"){
+                $req = strtolower(preg_replace('/\s+/', '', $answer[$i]['answer']));
+                $correctAnswer = strtolower(preg_replace('/\s+/', '', $test->correct));
+                if (!empty($req) && $req === $correctAnswer) {
+                    $test->skill->score += $test->score;
+                    $ok = '2';
+                }
+
+            }
+            $test->verdict=$ok;
+            $test->save();
+            $test->skill->save();;
+            $i++;
+        }
+        $step=Step::where('id',$request->id)->update(['status'=>'1']);
+        return $tests;
+    }
     function test(Request $request)
     {
         $user=Auth::user();
@@ -90,9 +148,7 @@ dd($tests);
                     }
 
                 }
-                else{
 
-                }
                 $test->view=true;
                 $test->update();
                 $course->update();
@@ -105,6 +161,20 @@ dd($tests);
             $step=Step::query()->where('id',$request->input('id'))->first();
             return view('test.show',compact('step'));
 
+        }
+        function show2(Request $request)
+        {   $step=Step::query()->where('id',$request->id)->first();
+            $test=Test::query()->where('step_id',$request->id)->where('view',0)->get();
+
+            if($step->status==1){
+                return view('test.verdict',compact(['test','request']));
+            }
+            foreach ($test as $item){
+                if($item->type_test=="matching"){
+                    $item->list2 = collect($item->list2)->shuffle()->all();
+                }
+            }
+            return view('test.show2',compact(['test','request']));
         }
         function send()
         {

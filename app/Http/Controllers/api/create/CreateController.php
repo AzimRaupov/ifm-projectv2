@@ -66,12 +66,11 @@ class CreateController extends Controller
 
         $tests = GenerateRodmap::generateTests($step,json_encode($skills));
 
-        return response()->json(['status'=>'ok','id'=>$step->id]);
 
     }
-    else{
-        return response()->json(['status'=>'ok','id'=>$step->id]);
-    }
+
+        return response()->json(['status'=>'ok']);
+
 
     }
     function vocabulary(Request $request)
@@ -82,6 +81,8 @@ class CreateController extends Controller
         $response=GenerateRodmap::generateVocabulary($step);
         $vocabulary=[];
         $links=[];
+
+        $res=[];
         foreach ($response as $item){
              $vocabulary=VocabularyStep::query()->create([
                  'step_id'=>$step->id,
@@ -92,25 +93,19 @@ class CreateController extends Controller
                  foreach ($item['links'] as $link) {
                      $links[]=[
                          'vocabulary_step_id'=>$vocabulary->id,
-                         'link'=>$link
+                         'link'=>$link,
+                         'step_id'=>null
                      ];
                  }
              }
         }
-        Link::query()->insert($links);
+        Link::insert($links);
+            $step->load('vocabularies.links');
 
         }
 
 
-            foreach ($step->vocabularies as $item){
-                $res[]=VocabularyStep::query()
-                    ->where('id', $item->id)
-                    ->with(['links' => function ($query) {
-                        $query->select('link');
-                    }])
-                    ->first();
-            }
-            return  response()->json($res);
+            return  response()->json(['status'=>'ok']);
 
 
     }
