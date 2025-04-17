@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('ex')->default(0);
             $table->enum('freetime',['5','10','20']);
             $table->date('date_start');
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

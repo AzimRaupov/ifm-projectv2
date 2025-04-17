@@ -1,5 +1,10 @@
 @extends('layouts.app')
-
+@section('icon')
+    {{$course->logo}}
+@endsection
+@section('title')
+    {{$course->topic}}
+@endsection
 @section('content-main')
 
     <style>
@@ -264,11 +269,13 @@
 
                     lv.removeAttribute("href");
                     ltest.removeAttribute("href");
-                    title.textContent=step.title;
 
+                    title.textContent=step.title;
                     get_description(step.id);
                     create_vocabulary(step.id);
                     create_test(step.id);
+
+
                     const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasRight'));
                     offcanvas.show();
                 }
@@ -302,62 +309,39 @@
 
             });
         }
-      async function create_test(step_id){
-          try {
+        function create_test(step_id) {
+            fetch("{{ route('api.create.test') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: step_id
+                }),
+            }).catch(error => {
+                console.error("Ошибка при отправке теста:", error);
+            });
 
-              const response =await fetch("{{ route('api.create.test') }}", {
-                  method: "POST",
-                  headers: {
-                      "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                      "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                      id:step_id
-                  }),
-              });
+            ltest.href = '{{ route('test.show') }}?id=' + step_id;
+        }
 
-              if (!response.ok) {
-                  throw new Error(`Ошибка HTTP: ${response.status}`);
-              }
+        function create_vocabulary(step_id) {
+            fetch("{{ route('api.create.vocabulary') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: step_id
+                }),
+            }).catch(error => {
+                console.error("Ошибка при отправке запроса:", error);
+            });
 
-              const data =await response.json();
-
-              console.log(data);
-              ltest.href='{{route('test.show')}}?id='+step_id;
-
-
-          } catch (error) {
-              console.error("Ошибка при загрузке шагов курса:", error);
-          }
-      }
-      async function create_vocabulary(step_id){
-          try {
-
-              const response =await fetch("{{ route('api.create.vocabulary') }}", {
-                  method: "POST",
-                  headers: {
-                      "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                      "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                      id:step_id
-                  }),
-              });
-
-              if (!response.ok) {
-                  throw new Error(`Ошибка HTTP: ${response.status}`);
-              }
-
-              const data =await response.json();
-
-              console.log(data);
-              lv.href='{{route('vocabulary.show')}}?id='+step_id;
-
-
-          } catch (error) {
-              console.error("Ошибка при загрузке шагов курса:", error);
-          }
-      }
+            lv.href = '{{ route('vocabulary.show') }}?id=' + step_id;
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             const offcanvas = document.getElementById('offcanvasRight');

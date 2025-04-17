@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
 
     <!-- Title -->
-    <title>Dashboard | Front - Admin &amp; Dashboard Template</title>
+    <title>@yield('title')</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{asset('favicon.ico')}}">
+    <link rel="shortcut icon" href="@yield('icon')">
     @yield('head')
 
     <!-- CSS Implementing Plugins -->

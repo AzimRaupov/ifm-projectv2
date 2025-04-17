@@ -9,6 +9,7 @@ use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use App\Helpers\GenerateRodmap;
@@ -176,8 +177,23 @@ dd($tests);
             }
             return view('test.show2',compact(['test','request']));
         }
-        function send()
+        function send(Request $request)
         {
+            $course = Course::find($request->id);
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json'
+            ])->get('https://www.googleapis.com/customsearch/v1', [
+                'key' => env('ggapi'),
+                'cx' => env('cx'),
+                'q' => "{$course->topic} logo",
+                'searchType' => 'image',
+                'num' => 1,
+            ]);
 
+            if ($response->successful() && isset($response['items'][0]['link'])) {
+                $course->logo = $response['items'][0]['link'];
+                $course->save();
+                return $response['items'][0]['link'];
+            }
         }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\create;
 use App\Helpers\GenerateRodmap;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCourseRequest;
+use App\Jobs\DownloadLogoJob;
 use App\Models\Course;
 use App\Models\Link;
 use App\Models\Skill;
@@ -22,16 +23,17 @@ class CreateController extends Controller
     function course(CreateCourseRequest $request)
     {
         $user=Auth::user();
-
         $date_start=Carbon::today();
         $map=GenerateRodmap::generateRodmap($request,$user);
 
         $course=Course::query()->create([
             'user_id'=>$user->id,
-            'topic'=>$map['title'],
+            'topic'=>$map['topic_course'],
             'freetime'=>$request->input('freetime'),
             'date_start'=>$date_start
         ]);
+        dispatch(new DownloadLogoJob((object)['id' => $course->id]));
+
         $data=$map["map"];
         $skills=[];
         foreach ($map['skills'] as $list){
@@ -138,5 +140,7 @@ class CreateController extends Controller
         $data=GenerateRodmap::generateRodmap($request,$user);
         dd($data);
     }
+
+
 
 }
