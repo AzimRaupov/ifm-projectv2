@@ -1407,12 +1407,11 @@
                     </li>
                 </ul>
             </div>
-            <!-- End Footer -->
         </div>
     </div>
 </aside>
 
-<main id="content-main" role="main" class="main">
+<main id="content-main" role="main" class="main" style="">
 
 @yield('content-main')
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('step_id')->constrained('steps');
             $table->foreignId('skill_id')->constrained('skills');
+            $table->foreignId('course_id')->constrained('courses');
             $table->string('text');
             $table->enum('type_test',["one_correct","list_correct","question_answer","matching","true_false"]);
             $table->text('variants')->nullable();

@@ -38,10 +38,24 @@ class CourseController extends Controller
       dd($map);
 
     }
+function progress(Request $request)
+{
+    $complete=0;
+    $course = Course::where('id', $request->id)
+        ->with([
+            'skills',
+            'steps'
+        ])
+        ->first();
 
-    /**
-     * Display the specified resource.
-     */
+    foreach ($course->steps as $list){
+        if($list->status==1){
+            $complete+=$list->experience;
+        }
+    }
+    return view('course.progress',compact(['course','complete']));
+
+}
     public function show(Request $request)
     {
         $user=Auth::user();

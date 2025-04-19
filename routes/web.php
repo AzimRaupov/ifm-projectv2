@@ -15,6 +15,7 @@ Route::get('/dashboard', function () {
 Route::get('/fg',[\App\Http\Controllers\TestController::class,'send']);
 Route::middleware('auth')->group(function () {
     Route::prefix('api')->group(function (){
+        Route::post('/get/skills',[\App\Http\Controllers\api\get\GetController::class,'skills'])->name('api.get.skills');
         Route::post('/rd/vocabulary',[\App\Http\Controllers\VocabularyController::class,'rd'])->name('vocabulary.rd');
         Route::post('/get/steps/{id}',[\App\Http\Controllers\api\get\GetController::class,'steps'])->name('get.steps');
         Route::post('/create/description',[\App\Http\Controllers\api\create\CreateController::class,'create_description'])->name('api.create.description');

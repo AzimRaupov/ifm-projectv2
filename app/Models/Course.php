@@ -16,4 +16,8 @@ class Course extends Model
     {
         return $this->hasMany(Test::class);
     }
+    public function skills()
+    {
+        return $this->hasMany(Skill::class);
+    }
 }

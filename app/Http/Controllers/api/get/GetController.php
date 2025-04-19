@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\Auth;
 
 class GetController extends Controller
 {
+    function skills(Request $request)
+    {
+        [$positive, $nonPositive] = Skill::where('course_id', $request->id)
+            ->get(['skill', 'score'])
+            ->partition(fn($item) => $item->score > 0);
+
+        $sorted = $positive->concat($nonPositive);
+
+        return response()->json([
+            'skills' => $sorted->pluck('skill')->values(),
+            'data' => $sorted->pluck('score')->values()
+        ]);
+    }
     function user_info()
     {
         $user=Auth::user();
