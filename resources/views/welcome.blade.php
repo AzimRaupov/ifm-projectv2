@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>Welcome to Front - Admin &amp; Dashboard Template!</title>
+    <title>ИИ генератсия курса</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="{{asset('assets/img/logo_mini.png')}}">
 
     <!-- Font -->
     <link href="../../css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -143,7 +143,7 @@
             <!-- Logo -->
 
             <a class="navbar-brand" href="index.html" aria-label="Front">
-                <img class="navbar-brand-logo" src="assets/svg/logos/logo.svg" alt="Logo" data-hs-theme-appearance="default">
+                <img class="navbar-brand-logo" src="{{asset('assets/img/logo.png')}}" alt="Logo" data-hs-theme-appearance="default" style="max-width: 200px; width: 95%; height: auto;">
                 <img class="navbar-brand-logo" src="assets/svg/logos-light/logo.svg" alt="Logo" data-hs-theme-appearance="dark">
             </a>
 
@@ -152,30 +152,8 @@
             <!-- Secondary Content -->
             <div class="navbar-nav-wrap-secondary-content">
                 <!-- Style Switcher -->
-                <div class="dropdown">
-                    <button type="button" class="btn btn-ghost-secondary btn-icon rounded-circle" id="selectThemeDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-dropdown-animation="">
 
-                    </button>
-
-                    <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="selectThemeDropdown">
-                        <a class="dropdown-item" href="#" data-icon="bi-moon-stars" data-value="auto">
-                            <i class="bi-moon-stars me-2"></i>
-                            <span class="text-truncate" title="Auto (system default)">Auto (system default)</span>
-                        </a>
-                        <a class="dropdown-item" href="#" data-icon="bi-brightness-high" data-value="default">
-                            <i class="bi-brightness-high me-2"></i>
-                            <span class="text-truncate" title="Default (light mode)">Default (light mode)</span>
-                        </a>
-                        <a class="dropdown-item active" href="#" data-icon="bi-moon" data-value="dark">
-                            <i class="bi-moon me-2"></i>
-                            <span class="text-truncate" title="Dark">Dark</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- End Style Switcher -->
-
-                <a class="btn btn-primary navbar-btn" href="index.html">Начать бесплатно</a>
+                <a class="btn btn-primary navbar-btn" href="{{route('register')}}">Начать</a>
             </div>
             <!-- End Secondary Content -->
 
@@ -194,13 +172,13 @@
             <div class="collapse navbar-collapse" id="navbarContainerNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link py-2 py-lg-3" href="documentation/index.html">О проекте <span class="badge bg-dark rounded-pill ms-1">v2.1.1</span></a>
+                        <a class="nav-link py-2 py-lg-3" href="">О проекте <span class="badge bg-dark rounded-pill ms-1">v1.0.0</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link py-2 py-lg-3" href="https://htmlstream.com/contact-us" target="_blank">Контакты <i class="bi-box-arrow-up-right small ms-1"></i></a>
+                        <a class="nav-link py-2 py-lg-3" href="{{route('login')}}" target="_blank">Вход <i class="bi-box-arrow-up-right small ms-1"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link py-2 py-lg-3" href="https://themes.getbootstrap.com/product/front-admin-dashboard-template/" target="_blank">Купить сейчас</a>
+                        <a class="nav-link py-2 py-lg-3" href="{{route('register')}}" target="_blank">Регистратсия</a>
                     </li>
                 </ul>
             </div>
@@ -219,14 +197,14 @@
             <div class="w-lg-75 text-center mx-lg-auto text-center mx-auto">
                 <!-- Heading -->
                 <div class="mb-7 animated fadeInUp">
-                    <h1 class="display-2 mb-3">Admin &amp; Dashboard theme <span class="text-primary text-highlight-warning">for everyone!</span></h1>
-                    <p class="fs-2">Developer friendly and highly customizable Admin &amp; Dashboard theme.</p>
+                    <h1 class="display-2 mb-3">ИИ &amp; Индувидуалние <span class="text-primary text-highlight-warning">Онлайн курсы!</span></h1>
+                    <p class="fs-2">SelfLearn — платформа для создания и управления онлайн-курсами с использованием искусственного интеллекта, позволяющая персонализировать обучение и адаптировать материалы под потребности студентов.</p>
                 </div>
                 <!-- End Heading -->
             </div>
 
             <!-- Browser Device -->
-            <div class="animated fadeInUp">
+            <div class="animated fadeInUp" >
                 <figure class="js-img-comp device-browser device-browser-lg">
                     <div class="device-browser-header">
                         <div class="device-browser-header-btn-list">
@@ -267,12 +245,12 @@
     <div class="container-lg content-space-t-lg-2 content-space-b-2 content-space-b-lg-3">
         <!-- Heading -->
         <div class="w-lg-75 text-center mx-lg-auto mb-7 mb-md-10">
-            <h2 class="display-4">Creative <span class="text-primary">demos</span></h2>
-            <p class="lead">Hop in and see Front's power in action in these different layout options.</p>
+            <h2 class="display-4">Сфера <span class="text-primary">обучения</span></h2>
+            <p class="lead">Какими сферами можно обучаться на платформе?</p>
         </div>
         <!-- End Heading -->
 
-        <div class="row">
+        <div class="row" style="display: none;">
             <div class="col-md-6 mb-4">
                 <!-- Card -->
                 <a class="card card-lg card-transition h-100 bg-light border-0 shadow-none overflow-hidden" href="index.html">
@@ -531,26 +509,6 @@
     <!-- End Features -->
 
     <!-- Sliding Image -->
-    <div class="content-space-b-2">
-        <!-- Heading -->
-        <div class="container-lg">
-            <div class="w-lg-75 text-center mx-lg-auto mb-7 mb-md-10">
-                <h2 class="display-4">Design solutions for any use cases</h2>
-                <p class="lead">Whether you're creating a web application, dashboard, admin panels, or SASS based interface — Front Dashboard helps you create the best possible web application projects.</p>
-            </div>
-        </div>
-        <!-- End Heading -->
-
-        <div class="sliding-img mb-5">
-            <div class="sliding-img-frame-to-start" style="background-image: url(assets/img/others/img1.png);" data-hs-theme-appearance="default"></div>
-            <div class="sliding-img-frame-to-start" style="background-image: url(assets/img/others/img1-dark.png);" data-hs-theme-appearance="dark"></div>
-        </div>
-
-        <div class="sliding-img">
-            <div class="sliding-img-frame-to-end" style="background-image: url(assets/img/others/img2.png);" data-hs-theme-appearance="default"></div>
-            <div class="sliding-img-frame-to-end" style="background-image: url(assets/img/others/img2-dark.png);" data-hs-theme-appearance="dark"></div>
-        </div>
-    </div>
     <!-- End Sliding Image -->
 
     <!-- Stats -->
@@ -559,7 +517,7 @@
             <div class="col-sm-6 col-lg-3 mb-5 mb-lg-0">
                 <div class="text-center">
                     <span class="display-3 fw-normal text-dark">60+</span>
-                    <p class="fs-3 mb-0">Components</p>
+                    <p class="fs-3 mb-0">Сфера</p>
                 </div>
             </div>
             <!-- End Col -->
@@ -575,7 +533,7 @@
             <div class="col-sm-6 col-lg-3 mb-5 mb-sm-0">
                 <div class="text-center">
                     <span class="display-3 fw-normal text-dark">450+</span>
-                    <p class="fs-3 mb-0">Combinations</p>
+                    <p class="fs-3 mb-0">Пользователи</p>
                 </div>
             </div>
             <!-- End Col -->
@@ -583,7 +541,7 @@
             <div class="col-sm-6 col-lg-3">
                 <div class="text-center">
                     <span class="display-3 fw-normal text-dark">47k+</span>
-                    <p class="fs-3 mb-0">Happy customers</p>
+                    <p class="fs-3 mb-0">Курсы</p>
                 </div>
             </div>
             <!-- End Col -->
@@ -608,17 +566,21 @@
                     <img class="img-fluid mx-auto" src="assets/svg/illustrations-light/oc-review.svg" alt="Image Description" data-hs-theme-appearance="dark" style="max-width: 10rem;">
                 </div>
 
-                <p class="fs-2 text-dark mb-4"><em>This theme is really great, as back end developer <span class="text-highlight-warning">I was able to build an impressive front end using this theme in plain JavaScript vanilla. The source code is clear and the documentation as well, for me it's the best purchase I made with this team and I am watching evolution.</span> Thank you so much for such quality and price. Keep going!</em></p>
+                <p class="fs-2 text-dark mb-4">
+                    <em>
+                        SelfLearn — платформа для умного и доступного обучения.
+                        Учись, развивайся, достигай целей вместе с нами.
+                    </em></p>
 
-                <h3 class="mb-0">David</h3>
-                <p class="fs-4 mb-0">Happy customer</p>
+
+                <p class="fs-4 mb-0">Раупов Азим</p>
             </div>
         </div>
     </div>
     <!-- End Testimonials -->
 
     <!-- Pricing -->
-    <div class="overflow-hidden">
+    <div class="overflow-hidden" style="display: none;">
         <div class="container-lg content-space-t-2 content-space-t-lg-3">
             <!-- Heading -->
             <div class="w-lg-75 text-center mx-lg-auto mb-7 mb-md-10">
@@ -714,7 +676,7 @@
     <!-- End Pricing -->
 
     <!-- FAQ -->
-    <div class="container-lg content-space-t-2 content-space-t-lg-3">
+    <div class="container-lg content-space-t-2 content-space-t-lg-3" style="display: none;">
         <!-- Heading -->
         <div class="w-lg-75 text-center mx-lg-auto mb-7 mb-md-10">
             <h2 class="display-4">Frequently Asked <span class="text-primary">Questions</span></h2>
@@ -764,37 +726,6 @@
 <!-- ========== END MAIN CONTENT ========== -->
 
 <!-- ========== FOOTER ========== -->
-<footer class="container-lg text-center py-10">
-    <!-- Socials -->
-    <ul class="list-inline mb-3">
-        <li class="list-inline-item">
-            <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="https://www.facebook.com/htmlstream">
-                <i class="bi-facebook"></i>
-            </a>
-        </li>
-
-        <li class="list-inline-item">
-            <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="https://twitter.com/htmlstream">
-                <i class="bi-twitter"></i>
-            </a>
-        </li>
-
-        <li class="list-inline-item">
-            <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="https://github.com/htmlstreamofficial">
-                <i class="bi-github"></i>
-            </a>
-        </li>
-
-        <li class="list-inline-item">
-            <a class="btn btn-soft-secondary btn-sm btn-icon rounded-circle" href="https://www.instagram.com/htmlstream/">
-                <i class="bi-instagram"></i>
-            </a>
-        </li>
-    </ul>
-    <!-- End Socials -->
-
-    <p class="mb-0">&copy; Front. 2021 Htmlstream. All rights reserved.</p>
-</footer>
 <!-- ========== END FOOTER ========== -->
 
 <!-- ========== SECONDARY CONTENTS ========== -->

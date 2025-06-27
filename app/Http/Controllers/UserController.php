@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Course;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
+class UserController extends Controller
+{
+    public function dashboard(Request $request)
+    {
+        $user = Auth::user();
+        $courses = Course::where('user_id', $user->id)->with(['steps','progress'])->get();
+
+        foreach ($courses as $course) {
+            $complete = 0;
+            $sr=0;
+            $ps=0;
+            $i=0;
+            foreach ($course->steps as $step) {
+                if ($step->status==1) {
+                    $complete += $step->experience;
+                }
+            }
+            if($course->progress){
+                foreach ($course->progress as $list) {
+                    if ($i<count($course->progress)-1) {
+                        $sr+=$list->colum;
+                    } else {
+                        $ps+=$list->colum;
+                    }
+                    $i++;
+                }
+                $course->sr=count($course->progress)-1>0?($sr/(count($course->progress)-1)):0;
+                $course->ps=$ps;
+                if ($course->sr!= 0){
+                    $course->pr=round((($ps-$course->sr)/$course->sr)*100,1);
+                }
+                else{
+                    $course->pr=0;
+                }
+            }
+            $course->complete=$complete;
+        }
+        return view('dashboard', ['courses' => $courses]);
+
+    }
+
+    public function profile()
+    {
+        $user=Auth::user();
+
+        return view('user.profile');
+
+
+    }
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
+            'lang' => 'required|in:tj,ru,en',
+            'type_user' => 'required|in:schoolboy,student,worker',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = Auth::user();
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->leng = $request->input('lang');
+        $user->user_type = $request->input('type_user');
+        $user->save();
+
+   return redirect()->back();
+    }
+
+}

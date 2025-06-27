@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\api\GetController;
 use App\Models\Course;
+use App\Models\Progress;
 use App\Models\Step;
 use App\Models\Test;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -17,11 +19,12 @@ class TestController extends Controller
 {
     function check(Request $request)
     {
-        $tests=Test::query()->where('step_id',$request->id)->with('skill')->get();
+        $tests=Test::query()->where('step_id',$request->id)->with(['skill'])->get();
         $i=0;
 
         $answer=$request->answer;
         $ok='1';
+        $colum=0;
         foreach ($tests as $test){
             $ok='1';
             if (!isset($answer[$i]['answer'])) {
@@ -65,12 +68,28 @@ class TestController extends Controller
                 }
 
             }
+            if ($ok==='2'){
+                $colum+=$test->score;
+            }
             $test->verdict=$ok;
             $test->save();
-            $test->skill->save();;
+            $test->skill->save();
             $i++;
         }
+
         $step=Step::where('id',$request->id)->update(['status'=>'1']);
+        $progress=Progress::query()->where('course_id',$test->course_id)->whereDate('date',Carbon::now())->first();
+        if($progress){
+            $progress->colum+=$colum;
+            $progress->save();
+        }
+        else{
+            Progress::query()->create([
+                'course_id'=>$test->course_id,
+                'date'=>Carbon::now(),
+                'colum'=>$colum+=$test->score
+            ]);
+        }
         return $tests;
     }
     function test(Request $request)
@@ -106,7 +125,7 @@ class TestController extends Controller
 dd($tests);
         }
         function index($id)
-        {
+          {
             return view('test.index');
             $user=Auth::user();
             $tests=Test::query()->where('course_id',$id)->firstOrFail();

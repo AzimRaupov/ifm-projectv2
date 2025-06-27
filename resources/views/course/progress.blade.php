@@ -111,23 +111,6 @@
                         <!-- End Card -->
 
                         <!-- Card -->
-                        <div class="card card-lg mb-3 mb-lg-5">
-                            <!-- Body -->
-                            <div class="card-body text-center">
-                                <div class="mb-4">
-                                    <img class="avatar avatar-xl avatar-4x3" src="{{asset('assets/svg/illustrations/oc-unlock.svg')}}" alt="Image Description" data-hs-theme-appearance="default">
-                                    <img class="avatar avatar-xl avatar-4x3" src="{{asset('assets/svg/illustrations-light/oc-unlock.svg')}}" alt="Image Description" data-hs-theme-appearance="dark">
-                                </div>
-
-                                <div class="mb-3">
-                                    <h3>2-step verification</h3>
-                                    <p>Protect your account now and enable 2-step verification in the settings.</p>
-                                </div>
-
-                                <a class="btn btn-primary" href="account-settings.html#twoStepVerificationSection">Enable now</a>
-                            </div>
-                            <!-- End Body -->
-                        </div>
                         <!-- End Card -->
                     </div>
                     <!-- End Col -->
@@ -219,6 +202,7 @@
                     <!-- End List Separator -->
                 </div>
             </div>
+
             <!-- End Col -->
         </div>
         <!-- End Row -->

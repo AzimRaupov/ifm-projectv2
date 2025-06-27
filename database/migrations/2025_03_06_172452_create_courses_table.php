@@ -18,8 +18,10 @@ return new class extends Migration
             $table->string('topic');
             $table->integer('step')->default(1);
             $table->integer('ex')->default(0);
-            $table->enum('freetime',['5','10','20']);
+            $table->integer('freetime');
             $table->date('date_start');
+            $table->enum('status',[0,1,2]);
+            $table->enum('level',['ignorant','knowing','experienced'])->default('ignorant');
             $table->string('logo')->nullable();
             $table->timestamps();
         });

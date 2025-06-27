@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content-main')
-    <!-- Nav -->
+
     <br>
     <div class="text-center">
         <ul class="nav nav-segment nav-pills mb-7" role="tablist">
@@ -20,15 +20,13 @@
         </ul>
     </div>
 
-    <!-- End Nav -->
 
-    <!-- Tab Content -->
     <div class="tab-content">
         @foreach($test as $index => $item)
             <div class="tests_list card tab-pane fade show {{ $index === 0 ? 'active' : '' }}"
                  id="tab{{ $item->id }}"
                  role="tabpanel"
-                 style="width: 1000px;margin-left: 20px"
+                 style="width: 1000px;margin-left: 20px;background-color: #d6e1f1"
                  aria-labelledby="test_nav{{ $item->id }}">
                 <div class="card-body" data-name="{{$item->id}}" data-value="{{$item->type_test}}">
                 <h2 style="text-align: center">{{$item->text }}</h2> <br>
@@ -74,7 +72,11 @@
                     </p>
                 @endif
 
-
+                    @if($index < count($test) - 1)
+                        <div class="text-center mt-4">
+                            <button type="button" class="btn btn-primary next-tab-btn" data-next-tab="#tab{{ $test[$index + 1]->id }}">Вперед</button>
+                        </div>
+                    @endif
                 @if($index===9)
                     <div class="row">
                         <div class="col-md-6">
@@ -92,16 +94,15 @@
                             </div>
                         </div>
                     </div> <br>
-                    <button class="btn btn-primary" style="text-align: center" onclick="pr_test()">Сдать тесты</button>
+                        <div class="text-center mt-4">
+                            <button class="btn btn-primary" style="text-align: center" onclick="pr_test()">Сдать тесты</button>
+                        </div>
                 @endif
             </div>
             </div>
         @endforeach
     </div>
 
-    <!-- End Tab Content -->
-
-    <!-- End Step Form -->
 
 @endsection
 
@@ -214,4 +215,21 @@
 
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded',function (){
+const nb=document.querySelectorAll('.next-tab-btn');
+nb.forEach(button=>{
+    button.addEventListener('click',function (){
+        const nxt=this.getAttribute('data-next-tab');
+        const nxtt=document.querySelector(`[data-bs-target="${nxt}"]`);
+
+        if(nxtt){
+            nxtt.click();
+        }
+
+    });
+});
+        });
+    </script>
+
 @endsection

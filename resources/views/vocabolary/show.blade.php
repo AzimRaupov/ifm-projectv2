@@ -49,6 +49,7 @@
                         @if($item->status==0)
                         <button class="btn btn-warning" id="bt{{$item->id}}" onclick="rd({{$item->id}})" style="width: 100%;margin-top: 10px">Прочитал</button>
                         @endif
+
                     </div>
 
                 @endforeach

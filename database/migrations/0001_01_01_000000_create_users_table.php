@@ -17,8 +17,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->enum('user_type',['worker','student','schoolboy'])->default('schoolboy');
             $table->integer('old');
+            $table->enum('leng',['ru','tj','en'])->default('ru');
+            $table->string('chat_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role',['admin','student','teacher']);
             $table->rememberToken();
             $table->timestamps();
         });

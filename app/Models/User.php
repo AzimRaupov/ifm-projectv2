@@ -23,6 +23,7 @@ class User extends Authenticatable
         'user_type',
         'old',
         'password',
+        'chat_id'
     ];
 
     /**

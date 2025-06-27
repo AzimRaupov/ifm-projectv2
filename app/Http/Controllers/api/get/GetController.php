@@ -7,6 +7,7 @@ use App\Helpers\GetTest;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Skill;
+use App\Models\Step;
 use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,16 +16,14 @@ class GetController extends Controller
 {
     function skills(Request $request)
     {
-        [$positive, $nonPositive] = Skill::where('course_id', $request->id)
-            ->get(['skill', 'score'])
-            ->partition(fn($item) => $item->score > 0);
-
-        $sorted = $positive->concat($nonPositive);
+        $skills = Skill::where('course_id', $request->id)
+            ->get(['skill', 'score']);
 
         return response()->json([
-            'skills' => $sorted->pluck('skill')->values(),
-            'data' => $sorted->pluck('score')->values()
+            'skills' => $skills->pluck('skill')->values(),
+            'data' => $skills->pluck('score')->values()
         ]);
+
     }
     function user_info()
     {
@@ -64,5 +63,13 @@ class GetController extends Controller
         $course=Course::query()->where('id',$id)->
         with('steps')->firstOrFail();
         return response()->json($course->steps,200);
+    }
+    public function status_step(Request $request)
+    {
+        $step=Step::query()->find($request->input('id'));
+
+        $step->status=$request->input('status');
+         $step->save();
+        return $step;
     }
 }

@@ -26,8 +26,8 @@ class CreateCourseRequest extends FormRequest
     {
         return [
             'topic'=>['required'],
-            'freetime'=>['required',Rule::in(['5','10','20'])],
-
+            'freetime'=>['required','integer','min:5'],
+            'level'=>['required',Rule::in(['ignorant','knowing','experienced'])],
         ];
     }
 }

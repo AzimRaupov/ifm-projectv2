@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->integer('experience')->default(0);
-            $table->enum('status',['0','1'])->default('0');
+            $table->enum('status',['0','1','2'])->default('0');
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    protected $fillable=['user_id','topic','freetime','date_start','step','logo'];
+    protected $fillable=['user_id','topic','freetime','date_start','step','logo','level'];
 
     public function steps()
     {
@@ -19,5 +19,9 @@ class Course extends Model
     public function skills()
     {
         return $this->hasMany(Skill::class);
+    }
+    public function progress()
+    {
+        return $this->hasMany(Progress::class);
     }
 }

@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
 
     <!-- Title -->
+
     <title>@yield('title')</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="@yield('icon')">
+    <link rel="shortcut icon" href="{{asset('assets/img/logo_mini.png')}}">
     @yield('head')
 
     <!-- CSS Implementing Plugins -->
@@ -145,9 +146,12 @@
     <div class="navbar-nav-wrap">
         <!-- Logo -->
         <a class="navbar-brand" href="index.html" aria-label="Front">
-            <img class="navbar-brand-logo" src="{{asset('assets/svg/logos/logo.svg')}}" alt="Logo" data-hs-theme-appearance="default">
+            <img class="navbar-brand-logo"
+                 src="{{ asset('assets/img/logo.png') }}"
+                 alt="Logo"
+                 style="max-width: 100px; width: 1000px; height: auto;">
             <img class="navbar-brand-logo" src="{{asset('assets/svg/logos-light/logo.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
-            <img class="navbar-brand-logo-mini" src="{{asset('assets/svg/logos/logo-short.svg')}}" alt="Logo" data-hs-theme-appearance="default">
+            <img class="navbar-brand-logo-mini" src="{{asset('assets/img/logo_mini.png')}}" alt="Logo" data-hs-theme-appearance="default">
             <img class="navbar-brand-logo-mini" src="{{asset('assets/svg/logos-light/logo-short.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
         </a>
         <!-- End Logo -->
@@ -163,150 +167,6 @@
             <!-- End Navbar Vertical Toggle -->
 
             <!-- Search Form -->
-            <div class="dropdown ms-2">
-                <!-- Input Group -->
-                <div class="d-none d-lg-block">
-                    <div class="input-group input-group-merge input-group-borderless input-group-hover-light navbar-input-group">
-                        <div class="input-group-prepend input-group-text">
-                            <i class="bi-search"></i>
-                        </div>
-
-                        <input type="search" class="js-form-search form-control" placeholder="Search in front" aria-label="Search in front" data-hs-form-search-options='{
-                       "clearIcon": "#clearSearchResultsIcon",
-                       "dropMenuElement": "#searchDropdownMenu",
-                       "dropMenuOffset": 20,
-                       "toggleIconOnFocus": true,
-                       "activeClass": "focus"
-                     }'>
-                        <a class="input-group-append input-group-text" href="javascript:;">
-                            <i id="clearSearchResultsIcon" class="bi-x-lg" style="display: none;"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <button class="js-form-search js-form-search-mobile-toggle btn btn-ghost-secondary btn-icon rounded-circle d-lg-none" type="button" data-hs-form-search-options='{
-                       "clearIcon": "#clearSearchResultsIcon",
-                       "dropMenuElement": "#searchDropdownMenu",
-                       "dropMenuOffset": 20,
-                       "toggleIconOnFocus": true,
-                       "activeClass": "focus"
-                     }'>
-                    <i class="bi-search"></i>
-                </button>
-                <!-- End Input Group -->
-
-                <!-- Card Search Content -->
-                <div id="searchDropdownMenu" class="hs-form-search-menu-content dropdown-menu dropdown-menu-form-search navbar-dropdown-menu-borderless">
-                    <div class="card">
-                        <!-- Body -->
-                        <div class="card-body-height">
-                            <div class="d-lg-none">
-                                <div class="input-group input-group-merge navbar-input-group mb-5">
-                                    <div class="input-group-prepend input-group-text">
-                                        <i class="bi-search"></i>
-                                    </div>
-
-                                    <input type="search" class="form-control" placeholder="Search in front" aria-label="Search in front">
-                                    <a class="input-group-append input-group-text" href="javascript:;">
-                                        <i class="bi-x-lg"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <span class="dropdown-header">Recent searches</span>
-
-                            <div class="dropdown-item bg-transparent text-wrap">
-                                <a class="btn btn-soft-dark btn-xs rounded-pill" href="index.html">
-                                    Gulp <i class="bi-search ms-1"></i>
-                                </a>
-                                <a class="btn btn-soft-dark btn-xs rounded-pill" href="index.html">
-                                    Notification panel <i class="bi-search ms-1"></i>
-                                </a>
-                            </div>
-
-                            <div class="dropdown-divider"></div>
-
-                            <span class="dropdown-header">Tutorials</span>
-
-                            <a class="dropdown-item" href="index.html">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                      <span class="icon icon-soft-dark icon-xs icon-circle">
-                        <i class="bi-sliders"></i>
-                      </span>
-                                    </div>
-
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <span>How to set up Gulp?</span>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="dropdown-item" href="index.html">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                      <span class="icon icon-soft-dark icon-xs icon-circle">
-                        <i class="bi-paint-bucket"></i>
-                      </span>
-                                    </div>
-
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <span>How to change theme color?</span>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <div class="dropdown-divider"></div>
-
-                            <span class="dropdown-header">Members</span>
-
-                            <a class="dropdown-item" href="index.html">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <img class="avatar avatar-xs avatar-circle" src="{{asset('assets/img/160x160/img10.jpg')}}" alt="Image Description">
-                                    </div>
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <span>Amanda Harvey <i class="tio-verified text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed"></i></span>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="dropdown-item" href="index.html">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <img class="avatar avatar-xs avatar-circle" src="{{asset('assets/img/160x160/img3.jpg')}}" alt="Image Description">
-                                    </div>
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <span>David Harrison</span>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <a class="dropdown-item" href="index.html">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <div class="avatar avatar-xs avatar-soft-info avatar-circle">
-                                            <span class="avatar-initials">A</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <span>Anne Richard</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- End Body -->
-
-                        <!-- Footer -->
-                        <a class="card-footer text-center" href="index.html">
-                            See all results <i class="bi-chevron-right small"></i>
-                        </a>
-                        <!-- End Footer -->
-                    </div>
-                </div>
-                <!-- End Card Search Content -->
-
-            </div>
 
             <!-- End Search Form -->
         </div>
@@ -715,124 +575,12 @@
                                 <a class="card-footer text-center" href="#">
                                     View all notifications <i class="bi-chevron-right"></i>
                                 </a>
-                                <!-- End Card Footer -->
                             </div>
                         </div>
                     </div>
-                    <!-- End Notification -->
                 </li>
 
-                <li class="nav-item d-none d-sm-inline-block">
-                    <!-- Apps -->
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-icon btn-ghost-secondary rounded-circle" id="navbarAppsDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-dropdown-animation="">
-                            <i class="bi-app-indicator"></i>
-                        </button>
 
-                        <div class="dropdown-menu dropdown-menu-end dropdown-card navbar-dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="navbarAppsDropdown" style="width: 25rem;">
-                            <div class="card">
-                                <!-- Header -->
-                                <div class="card-header">
-                                    <h4 class="card-title">Web apps &amp; services</h4>
-                                </div>
-                                <!-- End Header -->
-
-                                <!-- Body -->
-                                <div class="card-body card-body-height">
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs avatar-4x3" src="{{asset('assets/svg/brands/atlassian-icon.svg')}}" alt="Image Description">
-                                            </div>
-                                            <div class="flex-grow-1 text-truncate ms-3">
-                                                <h5 class="mb-0">Atlassian</h5>
-                                                <p class="card-text text-body">Security and control across Cloud</p>
-                                            </div>
-                                        </div>
-                                    </a>
-
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs avatar-4x3" src="{{asset('assets/svg/brands/slack-icon.svg')}}" alt="Image Description">
-                                            </div>
-                                            <div class="flex-grow-1 text-truncate ms-3">
-                                                <h5 class="mb-0">Slack <span class="badge bg-primary rounded-pill text-uppercase ms-1">Try</span></h5>
-                                                <p class="card-text text-body">Email collaboration software</p>
-                                            </div>
-                                        </div>
-                                    </a>
-
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs avatar-4x3" src="{{asset('assets/svg/brands/google-webdev-icon.svg')}}" alt="Image Description">
-                                            </div>
-                                            <div class="flex-grow-1 text-truncate ms-3">
-                                                <h5 class="mb-0">Google webdev</h5>
-                                                <p class="card-text text-body">Work involved in developing a website</p>
-                                            </div>
-                                        </div>
-                                    </a>
-
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs avatar-4x3" src="{{asset('assets/svg/brands/frontapp-icon.svg')}}" alt="Image Description">
-                                            </div>
-                                            <div class="flex-grow-1 text-truncate ms-3">
-                                                <h5 class="mb-0">Frontapp</h5>
-                                                <p class="card-text text-body">The inbox for teams</p>
-                                            </div>
-                                        </div>
-                                    </a>
-
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs avatar-4x3" src="{{asset('assets/svg/illustrations/review-rating-shield.svg')}}" alt="Image Description">
-                                            </div>
-                                            <div class="flex-grow-1 text-truncate ms-3">
-                                                <h5 class="mb-0">HS Support</h5>
-                                                <p class="card-text text-body">Customer service and support</p>
-                                            </div>
-                                        </div>
-                                    </a>
-
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="avatar avatar-sm avatar-soft-dark">
-                                                    <span class="avatar-initials"><i class="bi-grid"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1 text-truncate ms-3">
-                                                <h5 class="mb-0">More Front products</h5>
-                                                <p class="card-text text-body">Check out more HS products</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <!-- End Body -->
-
-                                <!-- Footer -->
-                                <a class="card-footer text-center" href="#">
-                                    View all apps <i class="bi-chevron-right"></i>
-                                </a>
-                                <!-- End Footer -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Apps -->
-                </li>
-
-                <li class="nav-item d-none d-sm-inline-block">
-                    <!-- Activity -->
-                    <button class="btn btn-ghost-secondary btn-icon rounded-circle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasActivityStream" aria-controls="offcanvasActivityStream">
-                        <i class="bi-x-diamond"></i>
-                    </button>
-                    <!-- Activity -->
-                </li>
 
                 <li class="nav-item">
                     <!-- Account -->
@@ -859,47 +607,14 @@
 
                             <div class="dropdown-divider"></div>
 
-                            <!-- Dropdown -->
-                            <div class="dropdown">
-                                <a class="navbar-dropdown-submenu-item dropdown-item dropdown-toggle" href="javascript:;" id="navSubmenuPagesAccountDropdown1" data-bs-toggle="dropdown" aria-expanded="false">Set status</a>
 
-                                <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-sub-menu" aria-labelledby="navSubmenuPagesAccountDropdown1">
-                                    <a class="dropdown-item" href="#">
-                                        <span class="legend-indicator bg-success me-1"></span> Available
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <span class="legend-indicator bg-danger me-1"></span> Busy
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <span class="legend-indicator bg-warning me-1"></span> Away
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"> Reset status
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- End Dropdown -->
 
-                            <a class="dropdown-item" href="#">Profile &amp; account</a>
-                            <a class="dropdown-item" href="#">Settings</a>
+                            <a class="dropdown-item" href="{{route('profile.edit')}}">Профиль &amp; аккаунт</a>
+                            <a class="dropdown-item" href="#">Настройки</a>
 
                             <div class="dropdown-divider"></div>
 
-                            <a class="dropdown-item" href="#">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <div class="avatar avatar-sm avatar-dark avatar-circle">
-                                            <span class="avatar-initials">HS</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1 ms-2">
-                                        <h5 class="mb-0">Htmlstream <span class="badge bg-primary rounded-pill text-uppercase ms-1">PRO</span></h5>
-                                        <span class="card-text">hs.example.com</span>
-                                    </div>
-                                </div>
-                            </a>
 
-                            <div class="dropdown-divider"></div>
 
                             <!-- Dropdown -->
                             <div class="dropdown">
@@ -925,7 +640,7 @@
 
                             <div class="dropdown-divider"></div>
 
-                            <a class="dropdown-item" href="#" onclick="document.getElementById('logout-form').submit();" >Sign out</a>
+                            <a class="dropdown-item" href="#" onclick="document.getElementById('logout-form').submit();" >Выход</a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
@@ -952,9 +667,12 @@
             <!-- Logo -->
 
             <a class="navbar-brand" href="index.html" aria-label="Front">
-                <img class="navbar-brand-logo" src="{{asset('assets/svg/logos/logo.svg')}}" alt="Logo" data-hs-theme-appearance="default">
+                <img class="navbar-brand-logo"
+                     src="{{ asset('assets/img/logo.png') }}"
+                     alt="Logo"
+                     style="max-width: 200px; width: 95%; height: auto;">
                 <img class="navbar-brand-logo" src="{{asset('assets/svg/logos-light/logo.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
-                <img class="navbar-brand-logo-mini" src="{{asset('assets/svg/logos/logo-short.svg')}}" alt="Logo" data-hs-theme-appearance="default">
+                <img class="navbar-brand-logo-mini" src="{{asset('assets/img/logo_mini.png')}}" alt="Logo" data-hs-theme-appearance="default" width="80rem" >
                 <img class="navbar-brand-logo-mini" src="{{ asset("assets/svg/logos-light/logo-short.svg") }}" alt="Logo" data-hs-theme-appearance="dark">
             </a>
 
@@ -972,9 +690,27 @@
             <div class="navbar-vertical-content">
                 <div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav">
                     <!-- Collapse -->
+                    <span class="dropdown-header mt-4">Навигатсия</span>
+                    <small class="bi-three-dots nav-subtitle-replacer"></small>
+
+                    <div class="nav-item">
+                        <a class="nav-link " data-placement="left" href="{{route('home')}}">
+                            <i class="bi-house-door nav-icon"></i>
+                            <span class="nav-link-title">Гланая</span>
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link" style="background-color: #00c9a7;color: white;" data-placement="left" onclick="newCourse()">
+                                                  <i class="bi bi-plus-circle-fill nav-icon"></i>
+                            <span class="nav-link-title">Новый курс</span>
+                        </a>
+                    </div>
+
+
                     <div class="nav-item">
                         <a class="nav-link dropdown-toggle" href="#navbarVerticalMenuDashboards" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuDashboards" aria-expanded="false" aria-controls="navbarVerticalMenuDashboards">
-                            <i class="bi-house-door nav-icon"></i>
+                            <i class="bi-stickies nav-icon"></i>
+
                             <span class="nav-link-title">Мои курсы</span>
                         </a>
 
@@ -983,320 +719,56 @@
                     </div>
 
                     </div>
+
                     <div class="nav-item">
-                        <a class="nav-link " data-placement="left" onclick="newCourse()">
-{{--                            <i class="bi-key nav-icon"></i>--}}
-                            <span class="nav-link-title">Новый курс</span>
+                        <a class="nav-link " data-placement="left" href="{{route('dashboard')}}">
+                            <i class="bi bi-bar-chart nav-icon"></i>
+                            <span class="nav-link-title">Погресс понель</span>
                         </a>
                     </div>
-                    <span class="dropdown-header mt-4">Pages</span>
+
+                    <span class="dropdown-header mt-4">Аккаунт</span>
                     <small class="bi-three-dots nav-subtitle-replacer"></small>
+
 
                     <!-- Collapse -->
                     <div class="navbar-nav nav-compact">
 
                     </div>
                     <div id="navbarVerticalMenuPagesMenu">
-                        <!-- Collapse -->
-                        <div class="nav-item">
-                            <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuPagesUsersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUsersMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesUsersMenu">
-                                <i class="bi-people nav-icon"></i>
-                                <span class="nav-link-title">Users</span>
-                            </a>
 
-                            <div id="navbarVerticalMenuPagesUsersMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenu">
-                                <a class="nav-link " href="users.html">Overview</a>
-                                <a class="nav-link " href="users-leaderboard.html">Leaderboard</a>
-                                <a class="nav-link " href="users-add-user.html">Add User <span class="badge bg-info rounded-pill ms-1">Hot</span></a>
-                            </div>
-                        </div>
-                        <!-- End Collapse -->
 
                         <!-- Collapse -->
                         <div class="nav-item">
-                            <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuPagesUserProfileMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUserProfileMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesUserProfileMenu">
+                            <a class="nav-link" href="#navbarVerticalMenuPagesUserProfileMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUserProfileMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesUserProfileMenu">
                                 <i class="bi-person nav-icon"></i>
-                                <span class="nav-link-title">User Profile <span class="badge bg-primary rounded-pill ms-1">5</span></span>
+                                <span class="nav-link-title">Профиль <span class="badge bg-primary rounded-pill ms-1">5</span></span>
                             </a>
 
-                            <div id="navbarVerticalMenuPagesUserProfileMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenu">
-                                <a class="nav-link " href="user-profile.html">Profile</a>
-                                <a class="nav-link " href="user-profile-teams.html">Teams</a>
-                                <a class="nav-link " href="user-profile-projects.html">Projects</a>
-                                <a class="nav-link " href="user-profile-connections.html">Connections</a>
-                                <a class="nav-link " href="user-profile-my-profile.html">My Profile</a>
-                            </div>
-                        </div>
-                        <!-- End Collapse -->
 
-                        <!-- Collapse -->
-                        <div class="nav-item">
-                            <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuPagesAccountMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesAccountMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesAccountMenu">
-                                <i class="bi-person-badge nav-icon"></i>
-                                <span class="nav-link-title">Account</span>
-                            </a>
-
-                            <div id="navbarVerticalMenuPagesAccountMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenu">
-                                <a class="nav-link " href="account-settings.html">Settings</a>
-                                <a class="nav-link " href="account-billing.html">Billing</a>
-                                <a class="nav-link " href="account-invoice.html">Invoice</a>
-                            </div>
-                        </div>
-                        <!-- End Collapse -->
-
-                        <!-- Collapse -->
-                        <div class="nav-item">
-                            <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuPagesEcommerceMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesEcommerceMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesEcommerceMenu">
-                                <i class="bi-basket nav-icon"></i>
-                                <span class="nav-link-title">E-commerce</span>
-                            </a>
-
-                            <div id="navbarVerticalMenuPagesEcommerceMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenu">
-                                <a class="nav-link " href="ecommerce.html">Overview</a>
-
-                                <div id="navbarVerticalMenuPagesMenuEcommerce">
-                                    <!-- Collapse -->
-                                    <div class="nav-item">
-                                        <a class="nav-link dropdown-toggle" href="#navbarVerticalMenuPagesEcommerceProductsMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesEcommerceProductsMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesEcommerceProductsMenu">
-                                            Products
-                                        </a>
-
-                                        <div id="navbarVerticalMenuPagesEcommerceProductsMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenuEcommerce">
-                                            <a class="nav-link " href="ecommerce-products.html">Products</a>
-                                            <a class="nav-link " href="ecommerce-product-details.html">Product Details</a>
-                                            <a class="nav-link " href="ecommerce-add-product.html">Add Product</a>
-                                        </div>
-                                    </div>
-                                    <!-- End Collapse -->
-
-                                    <!-- Collapse -->
-                                    <div class="nav-item">
-                                        <a class="nav-link dropdown-toggle" href="#navbarVerticalMenuPagesEcommerceOrdersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesEcommerceOrdersMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesEcommerceOrdersMenu">
-                                            Orders
-                                        </a>
-
-                                        <div id="navbarVerticalMenuPagesEcommerceOrdersMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenuEcommerce">
-                                            <a class="nav-link " href="ecommerce-orders.html">Orders</a>
-                                            <a class="nav-link " href="ecommerce-order-details.html">Order Details</a>
-                                        </div>
-                                    </div>
-                                    <!-- End Collapse -->
-
-                                    <!-- Collapse -->
-                                    <div class="nav-item">
-                                        <a class="nav-link dropdown-toggle" href="#navbarVerticalMenuPagesEcommerceCustomersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesEcommerceCustomersMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesEcommerceCustomersMenu">
-                                            Customers
-                                        </a>
-
-                                        <div id="navbarVerticalMenuPagesEcommerceCustomersMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenuEcommerce">
-                                            <a class="nav-link " href="ecommerce-customers.html">Customers</a>
-                                            <a class="nav-link " href="ecommerce-customer-details.html">Customer Details</a>
-                                            <a class="nav-link " href="ecommerce-add-customers.html">Add Customers</a>
-                                        </div>
-                                    </div>
-                                    <!-- End Collapse -->
-                                </div>
-
-                                <a class="nav-link " href="ecommerce-referrals.html">Referrals</a>
-                                <a class="nav-link " href="ecommerce-manage-reviews.html">Manage Reviews</a>
-                                <a class="nav-link " href="ecommerce-checkout.html">Checkout</a>
-                            </div>
-                        </div>
-                        <!-- End Collapse -->
-
-                        <!-- Collapse -->
-                        <div class="nav-item">
-                            <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuPagesProjectsMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesProjectsMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesProjectsMenu">
-                                <i class="bi-stickies nav-icon"></i>
-                                <span class="nav-link-title">Projects</span>
-                            </a>
-
-                            <div id="navbarVerticalMenuPagesProjectsMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenu">
-                                <a class="nav-link " href="projects.html">Overview</a>
-                                <a class="nav-link " href="projects-timeline.html">Timeline</a>
-                            </div>
-                        </div>
-                        <!-- End Collapse -->
-
-                        <!-- Collapse -->
-                        <div class="nav-item">
-                            <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuPagesProjectMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesProjectMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesProjectMenu">
-                                <i class="bi-briefcase nav-icon"></i>
-                                <span class="nav-link-title">Project</span>
-                            </a>
-
-                            <div id="navbarVerticalMenuPagesProjectMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenu">
-                                <a class="nav-link " href="project.html">Overview</a>
-                                <a class="nav-link " href="project-files.html">Files</a>
-                                <a class="nav-link " href="project-activity.html">Activity</a>
-                                <a class="nav-link " href="project-teams.html">Teams</a>
-                                <a class="nav-link " href="project-settings.html">Settings</a>
-                            </div>
-                        </div>
-                        <!-- End Collapse -->
-
-                        <!-- Collapse -->
-                        <div class="nav-item">
-                            <a class="nav-link dropdown-toggle  collapsed" href="#" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuAuthentication" aria-expanded="false" aria-controls="navbarVerticalMenuAuthentication">
-                                <i class="bi-shield-lock nav-icon"></i>
-                                <span class="nav-link-title">Authentication</span>
-                            </a>
-
-                            <div id="navbarVerticalMenuAuthentication" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenu">
-                                <div id="navbarVerticalMenuAuthenticationMenu">
-                                    <!-- Collapse -->
-                                    <div class="nav-item">
-                                        <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuAuthenticationLoginMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuAuthenticationLoginMenu" aria-expanded="false" aria-controls="navbarVerticalMenuAuthenticationLoginMenu">
-                                            Log In
-                                        </a>
-
-                                        <div id="navbarVerticalMenuAuthenticationLoginMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuAuthenticationMenu">
-                                            <a class="nav-link " href="authentication-login-basic.html">Basic</a>
-                                            <a class="nav-link " href="authentication-login-cover.html">Cover</a>
-                                        </div>
-                                    </div>
-                                    <!-- End Collapse -->
-
-                                    <!-- Collapse -->
-                                    <div class="nav-item">
-                                        <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuAuthenticationSignupMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuAuthenticationSignupMenu" aria-expanded="false" aria-controls="navbarVerticalMenuAuthenticationSignupMenu">
-                                            Sign Up
-                                        </a>
-
-                                        <div id="navbarVerticalMenuAuthenticationSignupMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuAuthenticationMenu">
-                                            <a class="nav-link " href="authentication-signup-basic.html">Basic</a>
-                                            <a class="nav-link " href="authentication-signup-cover.html">Cover</a>
-                                        </div>
-                                    </div>
-                                    <!-- End Collapse -->
-
-                                    <!-- Collapse -->
-                                    <div class="nav-item">
-                                        <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuAuthenticationResetPasswordMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuAuthenticationResetPasswordMenu" aria-expanded="false" aria-controls="navbarVerticalMenuAuthenticationResetPasswordMenu">
-                                            Reset Password
-                                        </a>
-
-                                        <div id="navbarVerticalMenuAuthenticationResetPasswordMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuAuthenticationMenu">
-                                            <a class="nav-link " href="authentication-reset-password-basic.html">Basic</a>
-                                            <a class="nav-link " href="authentication-reset-password-cover.html">Cover</a>
-                                        </div>
-                                    </div>
-                                    <!-- End Collapse -->
-
-                                    <!-- Collapse -->
-                                    <div class="nav-item">
-                                        <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuAuthenticationEmailVerificationMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuAuthenticationEmailVerificationMenu" aria-expanded="false" aria-controls="navbarVerticalMenuAuthenticationEmailVerificationMenu">
-                                            Email Verification
-                                        </a>
-
-                                        <div id="navbarVerticalMenuAuthenticationEmailVerificationMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuAuthenticationMenu">
-                                            <a class="nav-link " href="authentication-email-verification-basic.html">Basic</a>
-                                            <a class="nav-link " href="authentication-email-verification-cover.html">Cover</a>
-                                        </div>
-                                    </div>
-                                    <!-- End Collapse -->
-
-                                    <!-- Collapse -->
-                                    <div class="nav-item">
-                                        <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuAuthentication2StepVerificationMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuAuthentication2StepVerificationMenu" aria-expanded="false" aria-controls="navbarVerticalMenuAuthentication2StepVerificationMenu">
-                                            2-step Verification
-                                        </a>
-
-                                        <div id="navbarVerticalMenuAuthentication2StepVerificationMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuAuthenticationMenu">
-                                            <a class="nav-link " href="authentication-2-step-verification-basic.html">Basic</a>
-                                            <a class="nav-link " href="authentication-2-step-verification-cover.html">Cover</a>
-                                        </div>
-                                    </div>
-                                    <!-- End Collapse -->
-
-                                    <a class="nav-link" href="javascript:;" data-bs-toggle="modal" data-bs-target="#welcomeMessageModal">Welcome Message</a>
-                                    <a class="nav-link " href="error-404.html">Error 404</a>
-                                    <a class="nav-link " href="error-500.html">Error 500</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Collapse -->
-
-                        <div class="nav-item">
-                            <a class="nav-link " href="api-keys.html" data-placement="left">
-                                <i class="bi-key nav-icon"></i>
-                                <span class="nav-link-title">API Keys</span>
-                            </a>
                         </div>
 
                         <div class="nav-item">
-                            <a class="nav-link " href="welcome-page.html" data-placement="left">
-                                <i class="bi-eye nav-icon"></i>
-                                <span class="nav-link-title">Welcome Page</span>
+                            <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit();" data-bs-toggle="modal" data-bs-target="#welcomeMessageModal">
+
+                                <i class="bi-person nav-icon"></i>
+                                <span class="nav-link-title">Выход <span class="badge bg-primary rounded-pill ms-1">5</span></span>
+
                             </a>
+
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+
                         </div>
 
-                        <div class="nav-item">
-                            <a class="nav-link " href="landing.html" data-placement="left">
-                                <i class="bi-box-seam nav-icon"></i>
-                                <span class="nav-link-title">Landing Page <span class="badge bg-info rounded-pill ms-1">New</span></span>
-                            </a>
-                        </div>
+
                     </div>
                     <!-- End Collapse -->
 
-                    <span class="dropdown-header mt-4">Apps</span>
-                    <small class="bi-three-dots nav-subtitle-replacer"></small>
 
-                    <div class="nav-item">
-                        <a class="nav-link " href="apps-kanban.html" data-placement="left">
-                            <i class="bi-kanban nav-icon"></i>
-                            <span class="nav-link-title">Kanban</span>
-                        </a>
-                    </div>
-
-                    <div class="nav-item">
-                        <a class="nav-link " href="apps-calendar.html" data-placement="left">
-                            <i class="bi-calendar-week nav-icon"></i>
-                            <span class="nav-link-title">Calendar</span>
-                        </a>
-                    </div>
-
-                    <div class="nav-item">
-                        <a class="nav-link " href="apps-invoice-generator.html" data-placement="left">
-                            <i class="bi-receipt nav-icon"></i>
-                            <span class="nav-link-title">Invoice Generator</span>
-                        </a>
-                    </div>
-
-                    <div class="nav-item">
-                        <a class="nav-link " href="apps-file-manager.html" data-placement="left">
-                            <i class="bi-folder2-open nav-icon"></i>
-                            <span class="nav-link-title">File Manager</span>
-                        </a>
-                    </div>
-
-                    <span class="dropdown-header mt-4">Layouts</span>
-                    <small class="bi-three-dots nav-subtitle-replacer"></small>
-
-                    <div class="nav-item">
-                        <a class="nav-link " href="layouts/index.html" data-placement="left">
-                            <i class="bi-grid-1x2 nav-icon"></i>
-                            <span class="nav-link-title">Layouts</span>
-                        </a>
-                    </div>
-
-                    <span class="dropdown-header mt-4">Documentation</span>
-                    <small class="bi-three-dots nav-subtitle-replacer"></small>
-
-                    <div class="nav-item">
-                        <a class="nav-link " href="documentation/index.html" data-placement="left">
-                            <i class="bi-book nav-icon"></i>
-                            <span class="nav-link-title">Documentation <span class="badge bg-primary rounded-pill ms-1">v2.1.1</span></span>
-                        </a>
-                    </div>
-
-                    <div class="nav-item">
-                        <a class="nav-link " href="documentation/typography.html" data-placement="left">
-                            <i class="bi-layers nav-icon"></i>
-                            <span class="nav-link-title">Components</span>
-                        </a>
-                    </div>
+               
                 </div>
 
             </div>
@@ -1416,7 +888,7 @@
 @yield('content-main')
 
 </main>
-
+@yield('content1')
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasBuilder" aria-labelledby="offcanvasBuilderLabel">
     <div class="offcanvas-header align-items-start">
@@ -1612,7 +1084,10 @@
                     <!-- Logo -->
 
                     <a class="navbar-brand" href="index.html" aria-label="Front">
-                        <img class="navbar-brand-logo" src="{{asset('assets/svg/logos/logo.svg')}}" alt="Logo" data-hs-theme-appearance="default">
+                        <img class="navbar-brand-logo"
+                             src="{{ asset('assets/img/logo.png') }}"
+                             alt="Logo"
+                             style="max-width: 100px; width: 100px; height: auto;">
                         <img class="navbar-brand-logo" src="{{asset('assets/svg/logos-light/logo.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
                     </a>
 
@@ -2259,7 +1734,7 @@
 
                                         <div class="dropdown-divider"></div>
 
-                                        <a class="dropdown-item" href="#">Sign out</a>
+                                        <a class="dropdown-item" href="{{route('logout')}}">Выход</a>
                                     </div>
                                 </div>
                                 <!-- End Account -->
@@ -4054,205 +3529,7 @@
 </div>
 <!-- End Keyboard Shortcuts -->
 
-<!-- Activity -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasActivityStream" aria-labelledby="offcanvasActivityStreamLabel">
-    <div class="offcanvas-header">
-        <h4 id="offcanvasActivityStreamLabel" class="mb-0">Activity stream</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <!-- Step -->
-        <ul class="step step-icon-sm step-avatar-sm">
-            <!-- Step Item -->
-            <li class="step-item">
-                <div class="step-content-wrapper">
-                    <div class="step-avatar">
-                        <img class="step-avatar" src="{{asset('assets/img/160x160/img9.jpg')}}" alt="Image Description">
-                    </div>
 
-                    <div class="step-content">
-                        <h5 class="mb-1">Iana Robinson</h5>
-
-                        <p class="fs-5 mb-1">Added 2 files to task <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fd-7</a></p>
-
-                        <ul class="list-group list-group-sm">
-                            <!-- List Item -->
-                            <li class="list-group-item list-group-item-light">
-                                <div class="row gx-1">
-                                    <div class="col-6">
-                                        <!-- Media -->
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="{{asset('assets/svg/brands/excel-icon.svg')}}" alt="Image Description">
-                                            </div>
-                                            <div class="flex-grow-1 text-truncate ms-2">
-                                                <span class="d-block fs-6 text-dark text-truncate" title="weekly-reports.xls">weekly-reports.xls</span>
-                                                <span class="d-block small text-muted">12kb</span>
-                                            </div>
-                                        </div>
-                                        <!-- End Media -->
-                                    </div>
-                                    <!-- End Col -->
-
-                                    <div class="col-6">
-                                        <!-- Media -->
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="{{asset('assets/svg/brands/word-icon.svg')}}" alt="Image Description">
-                                            </div>
-                                            <div class="flex-grow-1 text-truncate ms-2">
-                                                <span class="d-block fs-6 text-dark text-truncate" title="weekly-reports.xls">weekly-reports.xls</span>
-                                                <span class="d-block small text-muted">4kb</span>
-                                            </div>
-                                        </div>
-                                        <!-- End Media -->
-                                    </div>
-                                    <!-- End Col -->
-                                </div>
-                                <!-- End Row -->
-                            </li>
-                            <!-- End List Item -->
-                        </ul>
-
-                        <span class="small text-muted text-uppercase">Now</span>
-                    </div>
-                </div>
-            </li>
-            <!-- End Step Item -->
-
-            <!-- Step Item -->
-            <li class="step-item">
-                <div class="step-content-wrapper">
-                    <span class="step-icon step-icon-soft-dark">B</span>
-
-                    <div class="step-content">
-                        <h5 class="mb-1">Bob Dean</h5>
-
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-6</a> as <span class="badge bg-soft-success text-success rounded-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
-
-                        <span class="small text-muted text-uppercase">Today</span>
-                    </div>
-                </div>
-            </li>
-            <!-- End Step Item -->
-
-            <!-- Step Item -->
-            <li class="step-item">
-                <div class="step-content-wrapper">
-                    <div class="step-avatar">
-                        <img class="step-avatar-img" src="{{asset('assets/img/160x160/img3.jpg')}}" alt="Image Description">
-                    </div>
-
-                    <div class="step-content">
-                        <h5 class="h5 mb-1">Crane</h5>
-
-                        <p class="fs-5 mb-1">Added 5 card to <a href="#">Payments</a></p>
-
-                        <ul class="list-group list-group-sm">
-                            <li class="list-group-item list-group-item-light">
-                                <div class="row gx-1">
-                                    <div class="col">
-                                        <img class="img-fluid rounded" src="{{asset('assets/svg/components/card-1.svg')}}" alt="Image Description">
-                                    </div>
-                                    <div class="col">
-                                        <img class="img-fluid rounded" src="{{asset('assets/svg/components/card-2.svg')}}" alt="Image Description">
-                                    </div>
-                                    <div class="col">
-                                        <img class="img-fluid rounded" src="{{asset('assets/svg/components/card-3.svg')}}" alt="Image Description">
-                                    </div>
-                                    <div class="col-auto align-self-center">
-                                        <div class="text-center">
-                                            <a href="#">+2</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-
-                        <span class="small text-muted text-uppercase">May 12</span>
-                    </div>
-                </div>
-            </li>
-            <!-- End Step Item -->
-
-            <!-- Step Item -->
-            <li class="step-item">
-                <div class="step-content-wrapper">
-                    <span class="step-icon step-icon-soft-info">D</span>
-
-                    <div class="step-content">
-                        <h5 class="mb-1">David Lidell</h5>
-
-                        <p class="fs-5 mb-1">Added a new member to Front Dashboard</p>
-
-                        <span class="small text-muted text-uppercase">May 15</span>
-                    </div>
-                </div>
-            </li>
-            <!-- End Step Item -->
-
-            <!-- Step Item -->
-            <li class="step-item">
-                <div class="step-content-wrapper">
-                    <div class="step-avatar">
-                        <img class="step-avatar-img" src="{{asset('assets/img/160x160/img7.jpg')}}" alt="Image Description">
-                    </div>
-
-                    <div class="step-content">
-                        <h5 class="mb-1">Rachel King</h5>
-
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span class="badge bg-soft-success text-success rounded-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
-
-                        <span class="small text-muted text-uppercase">Apr 29</span>
-                    </div>
-                </div>
-            </li>
-            <!-- End Step Item -->
-
-            <!-- Step Item -->
-            <li class="step-item">
-                <div class="step-content-wrapper">
-                    <div class="step-avatar">
-                        <img class="step-avatar-img" src="{{asset('assets/img/160x160/img5.jpg')}}" alt="Image Description">
-                    </div>
-
-                    <div class="step-content">
-                        <h5 class="mb-1">Finch Hoot</h5>
-
-                        <p class="fs-5 mb-1">Earned a "Top endorsed" <i class="bi-patch-check-fill text-primary"></i> badge</p>
-
-                        <span class="small text-muted text-uppercase">Apr 06</span>
-                    </div>
-                </div>
-            </li>
-            <!-- End Step Item -->
-
-            <!-- Step Item -->
-            <li class="step-item">
-                <div class="step-content-wrapper">
-            <span class="step-icon step-icon-soft-primary">
-              <i class="bi-person-fill"></i>
-            </span>
-
-                    <div class="step-content">
-                        <h5 class="mb-1">Project status updated</h5>
-
-                        <p class="fs-5 mb-1">Marked <a class="text-uppercase" href="#"><i class="bi-journal-bookmark-fill"></i> Fr-3</a> as <span class="badge bg-soft-primary text-primary rounded-pill"><span class="legend-indicator bg-primary"></span>"In progress"</span></p>
-
-                        <span class="small text-muted text-uppercase">Feb 10</span>
-                    </div>
-                </div>
-            </li>
-            <!-- End Step Item -->
-        </ul>
-        <!-- End Step -->
-
-        <div class="d-grid">
-            <a class="btn btn-white" href="javascript:;">View all <i class="bi-chevron-right"></i></a>
-        </div>
-    </div>
-</div>
-<!-- End Activity -->
 
 <!-- Welcome Message Modal -->
 <div class="modal fade" id="welcomeMessageModal" tabindex="-1" aria-hidden="true">
@@ -4274,9 +3551,9 @@
                         <img class="img-fluid" src="{{asset('assets/svg/illustrations-light/oc-collaboration.svg')}}" alt="Image Description" data-hs-theme-appearance="dark">
                     </div>
 
-                    <h4 class="h1">Welcome to Front</h4>
+                    <h4 class="h1">Вы дествительно хотите выйти</h4>
 
-                    <p>We're happy to see you in our community.</p>
+
                 </div>
             </div>
             <!-- End Body -->
@@ -4852,8 +4129,9 @@
                         <img class="img-fluid mb-5" src="{{asset('assets/svg/illustrations/oc-collaboration.svg')}}" alt="Image Description" data-hs-theme-appearance="default">
                         <img class="img-fluid mb-5" src="{{asset('assets/svg/illustrations-light/oc-collaboration.svg')}}" alt="Image Description" data-hs-theme-appearance="dark">
 
-                        <h1>Hello, nice to see you!</h1>
-                        <p>You are now minutes away from creativity than ever before. Enjoy!</p>
+                    <h1>Здравствуй, ты ещё не создал курс!</h1>
+<p>Нажми на кнопку, чтобы создать курс.</p>
+
 
 <button class="btn btn-primary" onclick="newCourse()">Создайте первый курс</button>
                     </div>
@@ -4894,15 +4172,20 @@
             <div class="col-sm-6 mx-auto">
                 <div class="mb-4">
                     <label class="form-label" for="freetime" style="font-size: 16px; font-weight: 600;">Сколько часов в неделю вы можете обучаться?</label>
-                    <select name="freetime" id="freetime" class="form-select"
+                     <input type="text" id="freetime" class="form-control form-control-lg" name="freetime">
+                </div>
+            </div>
+ <div class="col-sm-6 mx-auto">
+                <div class="mb-4">
+                    <label class="form-label" for="level" style="font-size: 16px; font-weight: 600;">Ваш уроваень занние</label>
+                    <select name="level" id="level" class="form-select"
                         style="border-radius: 10px; padding: 15px; font-size: 16px; background-color: #f0f3f5; border: 1px solid #bdc3c7; transition: all 0.3s ease;">
-                        <option value="5">Пять часов в неделю</option>
-                        <option value="10">Десять часов в неделю</option>
-                        <option value="20">Двадцать часов в неделю</option>
+                        <option value="ignorant">Не чего не знаю</option>
+                        <option value="knowing">Уже знаю</option>
+                        <option value="experienced">Хорошо знаю</option>
                     </select>
                 </div>
             </div>
-
             <div class="text-center">
                 <button class="btn btn-primary" onclick="create_course(event)" id="sub"
                     style="background-color: #3498db; border-radius: 50px; padding: 12px 30px; font-size: 16px; font-weight: bold; border: none; transition: all 0.3s ease;">
@@ -4942,6 +4225,7 @@
         // Получаем данные из формы
         let topic = document.getElementById('topic-input').value;
         let freetime = document.getElementById('freetime').value;
+        let level=document.getElementById('level').value;
 
         let button = document.getElementById("sub");
 
@@ -4958,7 +4242,8 @@
             contentType: "application/json",
             data: JSON.stringify({
                 'topic': topic,
-                'freetime': freetime
+                'freetime': freetime,
+                'level':level
             }),
             success: function(data) {
                 console.log(data);

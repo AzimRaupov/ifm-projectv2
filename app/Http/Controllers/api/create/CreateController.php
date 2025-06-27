@@ -6,6 +6,8 @@ use App\Helpers\GenerateRodmap;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCourseRequest;
 use App\Jobs\DownloadLogoJob;
+use App\Jobs\GenerateTestJob;
+use App\Jobs\GenerateVocabularyJob;
 use App\Models\Course;
 use App\Models\Link;
 use App\Models\Skill;
@@ -30,6 +32,7 @@ class CreateController extends Controller
             'user_id'=>$user->id,
             'topic'=>$map['topic_course'],
             'freetime'=>$request->input('freetime'),
+            'level'=>$request->input('level'),
             'date_start'=>$date_start
         ]);
         dispatch(new DownloadLogoJob((object)['id' => $course->id]));
@@ -66,8 +69,8 @@ class CreateController extends Controller
     if(!isset($step->test[0]->id)) {
         $skills = Skill::query()->select(['id','skill'])->where('course_id', $step->course_id)->get();
 
-        $tests = GenerateRodmap::generateTests($step,json_encode($skills));
 
+        GenerateTestJob::dispatch($step->id, json_encode($skills));
 
     }
 
@@ -80,30 +83,31 @@ class CreateController extends Controller
         $step=Step::query()->where('id',$request->input('id'))->with(['course','vocabularies'])->first();
         if($step->vocabularies->isEmpty()){
 
-        $response=GenerateRodmap::generateVocabulary($step);
-        $vocabulary=[];
-        $links=[];
-
-        $res=[];
-        foreach ($response as $item){
-             $vocabulary=VocabularyStep::query()->create([
-                 'step_id'=>$step->id,
-                 'title'=>$item['title'],
-                 'text'=>$item['info']
-             ]);
-             if(isset($item['links'])){
-                 foreach ($item['links'] as $link) {
-                     $links[]=[
-                         'vocabulary_step_id'=>$vocabulary->id,
-                         'link'=>$link,
-                         'step_id'=>null
-                     ];
-                 }
-             }
-        }
-        Link::insert($links);
-            $step->load('vocabularies.links');
-
+//        $response=GenerateRodmap::generateVocabulary($step);
+//        $vocabulary=[];
+//        $links=[];
+//
+//        $res=[];
+//        foreach ($response as $item){
+//             $vocabulary=VocabularyStep::query()->create([
+//                 'step_id'=>$step->id,
+//                 'title'=>$item['title'],
+//                 'text'=>$item['info']
+//             ]);
+//             if(isset($item['links'])){
+//                 foreach ($item['links'] as $link) {
+//                     $links[]=[
+//                         'vocabulary_step_id'=>$vocabulary->id,
+//                         'link'=>$link,
+//                         'step_id'=>null
+//                     ];
+//                 }
+//             }
+//        }
+//        Link::insert($links);
+//            $step->load('vocabularies.links');
+            GenerateVocabularyJob::dispatch($request->input('id'));
+            return  response()->json(['status'=>'ok']);
         }
 
 

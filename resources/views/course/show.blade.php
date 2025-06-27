@@ -6,13 +6,27 @@
     {{$course->topic}}
 @endsection
 @section('content-main')
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h1 class="page-header-title">{{$course->topic}}</h1>
+                </div>
+
+                <div class="col-auto">
+                    <a class="btn btn-primary" href="{{route('course.progress',['id'=>$course->id])}}" >
+                        Посмотреть прогресс
+                    </a>
+                </div>
+                <!-- End Col -->
+            </div>
+            <!-- End Row -->
+        </div>
+    </div>
 
     <style>
         #containerr {
             position: relative;
-            min-height: 100vh;
-            border: 1px solid #ccc;
-            overflow: auto; /* Добавляем прокрутку */
         }
 
         .box {
@@ -36,9 +50,12 @@
             padding: 8px; /* Внутренние отступы */
             box-sizing: border-box; /* Учитываем padding в размерах */
         }
-       .passed{
+       .status1{
        background-color: #22c366;
        }
+        .status2{
+            background-color: #d1c10e;
+        }
         /* CSS для анимации линии */
         path {
             stroke-dasharray: 1000;
@@ -64,7 +81,12 @@
         <div class="offcanvas-header">
             <h5 id="offcanvasRightLabel"></h5><br>
 
+
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+        </div>
+        <div style="padding: 0 1rem;" id="input-content">
+
         </div>
         <div class="offcanvas-body" style="margin-top: 0px">
             <div class="row" style="display: flex; align-items: center;">
@@ -73,7 +95,7 @@
 
                 </a>
                 <a href="z" class="link_vocabulary col-6" style="text-decoration: none; color: #3498db; display: flex; align-items: center; justify-content: center;">
-                    Лексика
+                    Лекся
 
                 </a>
             </div>
@@ -174,7 +196,7 @@
                 if (steps[i].type === 'parent') {
                     // Вычисляем вертикальное положение родительского блока
                     const parentTop = parentIndex * parentSpacing;
-                    html += `<div id="box${i}" class="box ${steps[i].status == 1 ? 'passed' : ''}" style="top: ${parentTop}px; left: 45%; transform: translateX(-50%);">
+                    html += `<div id="box${i}" class="box status${steps[i].status}" style="top: ${parentTop}px; left: 45%; transform: translateX(-50%);">
                         ${steps[i].title}
                      </div>`;
 
@@ -187,7 +209,7 @@
                             const leftPosition = side === 'left' ? '20%' : '70%';
                             const childTop = parentTop + row * childRowHeight;
 
-                            html += `<div id="box${steps[i].heirs[j]}" class="box ${steps[steps[i].heirs[j]].status == 1 ? 'passed' : ''}" style="top: ${childTop}px; left: ${leftPosition}; transform: translateX(-50%);">
+                            html += `<div id="box${steps[i].heirs[j]}" class="box status${steps[steps[i].heirs[j]].status}" style="top: ${childTop}px; left: ${leftPosition}; transform: translateX(-50%);">
                                 ${steps[steps[i].heirs[j]].title}
                              </div>`;
 
@@ -262,11 +284,14 @@
 
             container.addEventListener('click', (e) => {
                 const box = e.target.closest('.box');
+                let input_content=document.getElementById('input-content');
+                input_content.innerHTML=``;
+
                 if (box) {
                     const index = box.id.replace('box', '');
                     const step = steps[index];
                     const title=document.getElementById('offcanvasRightLabel');
-
+                   console.log(step);
                     lv.removeAttribute("href");
                     ltest.removeAttribute("href");
 
@@ -278,10 +303,57 @@
 
                     const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasRight'));
                     offcanvas.show();
+                    if(step.status=='0'){
+                        input_content.innerHTML+=`
+                        <input type="checkbox" name="read" id="read"> Прочитал <br>
+                        `;
+                    }
+                    if(step.status=='0' || step.status=='2'){
+                        input_content.innerHTML+=`
+                        <input type="checkbox" name="passed" id="passed"> Пройден
+                        `;
+                    }
+                    let ch_passed=document.getElementById('passed');
+                    let ch_read=document.getElementById('read');
+
+                    ch_read.addEventListener('change',function (){
+                       status_step(step.id,'2');
+                     });
+                    ch_passed.addEventListener('change',function (){
+                        status_step(step.id,'1');
+                    });
                 }
             });
 
         }
+
+        function status_step(id,status){
+            fetch("{{route('api.status.step')}}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    'id':id,
+                    'status':status
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка при запросе: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    console.log(result);
+                })
+                .catch(error => {
+                    console.error('Ошибка запроса:', error);
+                });
+
+        }
+
        let ltest=document.querySelector('.link_test');
         function createConnections(connections) {
             jsPlumb.ready(function() {
@@ -352,7 +424,6 @@
                 setTimeout(() => jsPlumb.repaintEverything(), 20);
             }
 
-            // Отслеживание открытия/закрытия шторки
             offcanvas.addEventListener('shown.bs.offcanvas', updateJsPlumb);
             offcanvas.addEventListener('hidden.bs.offcanvas', updateJsPlumb);
 
