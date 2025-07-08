@@ -156,7 +156,7 @@
                             </div>
 
                             <div class="d-grid mb-4">
-                                <a class="btn btn-white btn-lg" href="#">
+                                <a class="btn btn-white btn-lg" href="{{route('google.auth')}}">
                     <span class="d-flex justify-content-center align-items-center">
                       <img class="avatar avatar-xss me-2" src="{{asset('assets/svg/brands/google-icon.svg')}}" alt="Image Description">
                       Войти через Google

@@ -5,15 +5,15 @@
     <br>
     <div class="text-center">
         <ul class="nav nav-segment nav-pills mb-7" role="tablist">
-            @foreach($test as $index => $item)
+            @foreach($tests as $index => $test)
                 <li class="nav-item">
                     <a class="nav-link {{ $index === 0 ? 'active' : '' }}"
-                       id="test_nav{{ $item->id }}"
-                       href="#tab{{ $item->id }}"
+                       id="test_nav{{ $test->id }}"
+                       href="#tab{{ $test->id }}"
                        data-bs-toggle="pill"
-                       data-bs-target="#tab{{ $item->id }}"
+                       data-bs-target="#tab{{ $test->id }}"
                        role="tab"
-                       aria-controls="tab{{ $item->id }}"
+                       aria-controls="tab{{ $test->id }}"
                        aria-selected="{{ $index === 0 ? 'true' : 'false' }}">Тест {{$index+1}}</a>
                 </li>
             @endforeach
@@ -22,74 +22,81 @@
 
 
     <div class="tab-content">
-        @foreach($test as $index => $item)
+        @foreach($tests as $index => $test)
             <div class="tests_list card tab-pane fade show {{ $index === 0 ? 'active' : '' }}"
-                 id="tab{{ $item->id }}"
+                 id="tab{{ $test->id }}"
                  role="tabpanel"
                  style="width: 1000px;margin-left: 20px;background-color: #d6e1f1"
-                 aria-labelledby="test_nav{{ $item->id }}">
-                <div class="card-body" data-name="{{$item->id}}" data-value="{{$item->type_test}}">
-                <h2 style="text-align: center">{{$item->text }}</h2> <br>
-                @if ($item->type_test == "question_answer")
-                    <textarea class="form-control" id="answer" name="answer_{{$item->id}}" placeholder="Textarea field" rows="4"></textarea>
-                @elseif ($item->type_test == "one_correct" || $item->type_test == "list_correct")
+                 aria-labelledby="test_nav{{ $test->id }}">
+                <div class="card-body" data-name="{{$test->id}}" data-value="{{$test->type_test}}">
+                <h2 style="text-align: center">{{$test->text }}</h2> <br>
+                @if ($test->type_test == "question_answer")
+                    <textarea class="form-control" id="answer" name="answer_{{$test->id}}" placeholder="Textarea field" rows="4"></textarea>
+                @elseif ($test->type_test == "one_correct" || $test->type_test == "list_correct")
 
-                    @foreach($item->variants as $in=>$variant)
+                        @if (!empty($test->variantss) && is_iterable($test->variantss))
+                            @foreach($test->variantss as $in => $variant)
+                                <p>
+                                    <input type="{{ $test->type_test == "one_correct" ? "radio" : "checkbox" }}"
+                                           id="variant-{{$in}}"
+                                           name="correct_{{$test->id}}[]"
+                                           value="{{$in}}"
+                                           class="form-check-input ms-2">
+                                    <label for="variant-{{$in}}">{{$variant->variant}}</label>
+                                </p>
+                            @endforeach
+                        @else
+                            <p class="text-danger">{{dd($test)}}</p>
+                        @endif
 
-                        <p>
-                            <input type="{{ ($item->type_test=="one_correct" ? "radio" : "checkbox") }}" id="variant-{{$in}}" name="correct_{{$item->id}}" value="{{$in}}" class="form-check-input ms-2">
-                            <label for="variant-{{$in}}">{{$variant}}</label>
-                        </p>
 
-                    @endforeach
-
-                @elseif($item->type_test=="matching" && $index!==9)
+                    @elseif($test->type_test=="matching" && $index!==9)
                     <div class="row">
                         <div class="col-md-6">
                             <div id="t1_list1" class="list-group js-sortable">
-                                @foreach($item->list1 as $in=>$list)
-                                    <div class="list-group-item" id="{{$in}}">{{$list}}</div>
+                                @foreach($test->lists1 as $in=>$list)
+                                    <div class="list-group-item" id="{{$in}}">{{$list->str}}</div>
                                 @endforeach
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div id="t1_list2" class="list-group js-sortable">
-                                @foreach($item->list2 as $in=>$list)
-                                    <div class="list-group-item bg-light list2" id="{{$in}}">{{$list}}</div>
+                                @foreach($test->lists2 as $in=>$list)
+                                    <div class="list-group-item bg-light list2" id="{{$in}}">{{$list->str}}</div>
                                 @endforeach
                             </div>
                         </div>
                     </div>
 
-                @elseif($item->type_test=="true_false")
+                @elseif($test->type_test=="true_false")
                     <p>
-                        <input type="radio" id="true" name="true_false_{{$item->id}}" value="1" class="form-check-input ms-2">
+                        <input type="radio" id="true" name="true_false_{{$test->id}}" value="1" class="form-check-input ms-2">
                         <label for="true">Да</label>
                     </p>
                     <p>
-                        <input type="radio" id="false" name="true_false_{{$item->id}}" value="0" class="form-check-input ms-2">
+                        <input type="radio" id="false" name="true_false_{{$test->id}}" value="0" class="form-check-input ms-2">
                         <label for="false">Нет</label>
                     </p>
                 @endif
 
-                    @if($index < count($test) - 1)
+                    @if($index < count($tests) - 1)
                         <div class="text-center mt-4">
-                            <button type="button" class="btn btn-primary next-tab-btn" data-next-tab="#tab{{ $test[$index + 1]->id }}">Вперед</button>
+                            <button type="button" class="btn btn-primary next-tab-btn" data-next-tab="#tab{{ $tests[$index + 1]->id }}">Вперед</button>
                         </div>
                     @endif
                 @if($index===9)
                     <div class="row">
                         <div class="col-md-6">
                             <div id="t2_list1" class="list-group js-sortable">
-                                @foreach($item->list1 as $in=>$list)
-                                    <div class="list-group-item" id="{{$in}}">{{$list}}</div>
+                                @foreach($test->lists1 as $in=>$list)
+                                    <div class="list-group-item" id="{{$in}}">{{$list->str}}</div>
                                 @endforeach
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div id="t2_list2" class="list-group js-sortable">
-                                @foreach($item->list2 as $in=>$list)
-                                    <div class="list-group-item bg-light list2" id="{{$in}}">{{$list}}</div>
+                                @foreach($test->lists2 as $in=>$list)
+                                    <div class="list-group-item bg-light list2" id="{{$in}}">{{$list->str}}</div>
                                 @endforeach
                             </div>
                         </div>
@@ -124,7 +131,7 @@
                 }),
                 success: function (res) {
                     console.log(res);
-                     location.reload();
+                     // location.reload();
                 },
                 error: function (xhr, status, error) {
                     console.error("Ошибка:", error);

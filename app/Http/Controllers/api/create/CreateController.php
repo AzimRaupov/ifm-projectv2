@@ -139,10 +139,15 @@ class CreateController extends Controller
     }
 
    public function c_test(Request $request)
-    {         $user=Auth::user();
-        $step=Step::query()->where('id',$request->input('id'))->with(['course','description'])->first();
-        $data=GenerateRodmap::generateRodmap($request,$user);
-        dd($data);
+    {
+        $step=Step::query()->where('id',$request->input('id'))->with(['test','course'])->first();
+
+        if(!isset($step->test[0]->id)) {
+            $skills = Skill::query()->select(['id', 'skill'])->where('course_id', $step->course_id)->get();
+              $d=GenerateRodmap::generateTests($step,$skills);
+dd($d);
+        }
+
     }
 
 

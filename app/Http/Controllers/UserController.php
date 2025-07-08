@@ -3,12 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class UserController extends Controller
 {
+    public function google_auth()
+    {
+        return Socialite::driver('google')->redirect();
+
+    }
+    public function google_callback()
+    {
+        $userGoogle=Socialite::driver('google')->user();
+           $user=User::query()->where('google_id',$userGoogle->id)->first();
+
+           if(!$user){
+               $userr=User::query()->where('email',$userGoogle->email)->first();
+$userr->google_id=$userGoogle->id;
+$userr->save();
+               return redirect()->route($userr->role.'.dashboard');
+
+           }
+           else{
+               Auth::login($user);
+           }
+           return redirect()->route($user->role.'.dashboard');
+    }
     public function dashboard(Request $request)
     {
         $user = Auth::user();

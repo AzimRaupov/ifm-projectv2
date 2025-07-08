@@ -39,13 +39,11 @@ class DownloadLogoJob implements ShouldQueue
             return;
         }
 
-        // Создаём поисковый URL
         $query = urlencode($course->topic . ' иконка');
         $url = "https://www.google.com/search?tbm=isch&q={$query}";
 
-        // Отправляем HTTP-запрос
         $response = Http::withHeaders([
-            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)', // маскируемся под браузер
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
             'Accept-Language' => 'en-US,en;q=0.9',
         ])->get($url);
 
@@ -54,23 +52,21 @@ class DownloadLogoJob implements ShouldQueue
             return;
         }
 
-        // Парсим HTML
         $html = $response->body();
-        libxml_use_internal_errors(true); // подавить предупреждения DOM
+        libxml_use_internal_errors(true);
         $dom = new \DOMDocument();
         $dom->loadHTML($html);
         libxml_clear_errors();
 
-        // Извлекаем изображения
         $images = [];
         $tags = $dom->getElementsByTagName('img');
         foreach ($tags as $index => $tag) {
             $src = $tag->getAttribute('src');
-            if ($index === 0) continue; // пропускаем логотип Google
+            if ($index === 0) continue;
             if (filter_var($src, FILTER_VALIDATE_URL)) {
                 $images[] = $src;
             }
-            if (count($images) >= 1) break; // берём только первую нормальную ссылку
+            if (count($images) >= 1) break;
         }
 
         if (count($images) > 0) {

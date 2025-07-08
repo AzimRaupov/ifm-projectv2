@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('matching_list1s', function (Blueprint $table) {
+        Schema::create('teacher_courses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('test_id')->constrained('tests');
-            $table->string('str');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('course_id')->constrained('courses');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('matching_list1s');
+        Schema::dropIfExists('teacher_courses');
     }
 };

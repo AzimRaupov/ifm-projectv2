@@ -10,6 +10,8 @@ Route::get('/test/create',[\App\Http\Controllers\api\create\CreateController::cl
 
 Route::get('/dashboard',[\App\Http\Controllers\UserController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/fg',[\App\Http\Controllers\TestController::class,'send']);
+Route::get('/google/auth',[\App\Http\Controllers\UserController::class,'google_auth'])->name('google.auth');
+Route::get('/google-calback',[\App\Http\Controllers\UserController::class,'google_callback'])->name('google.callback');
 Route::middleware('auth')->group(function () {
     Route::prefix('api')->group(function (){
         Route::post('/status/step',[\App\Http\Controllers\api\get\GetController::class,'status_step'])->name('api.status.step');

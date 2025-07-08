@@ -3,8 +3,12 @@
 namespace App\Jobs;
 
 
+use App\Models\MatchingList1;
+use App\Models\MatchingList2;
 use App\Models\Step;
 use App\Models\Test;
+use App\Models\Variant;
+use App\Models\VariantTrue;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -138,27 +142,90 @@ class GenerateTestJob implements ShouldQueue
                 }
                 \Log::info('Received tests:', $tests);
 
-                $create_data = [];
-
+                $create_data=[];
+                $insert_variant=[];
+                $insert_correct=[];
+                $insert_list1=[];
+                $insert_list2=[];
                 foreach ($tests as $item) {
                     $type = key($item);
                     $test = $item[$type];
 
-                    $create_data[] = [
+
+
+                    $create_data= [
                         'course_id' => $step->course_id,
                         'step_id' => $step->id,
                         'skill_id' => $test['id_skill'],
                         'text' => $test['text'],
                         'type_test' => $type,
-                        'variants' => isset($test['variants']) ? json_encode($test['variants']) : null,
-                        'correct' => isset($test['correct']) ? json_encode($test['correct']) : null,
-                        'score' => $test['score'],
-                        'list1' => isset($test['list1']) ? json_encode($test['list1']) : null,
-                        'list2' => isset($test['list2']) ? json_encode($test['list2']) : null,
+                        'score' => $test['score']
                     ];
+                    $result_create=Test::query()->create($create_data);
+                    $create_data=[];
+
+
+                    if($type=="one_correct"){
+                        $insert_correct[]=[
+                            "test_id"=>$result_create->id,
+                            "true"=>$test['correct']
+                        ];
+                        foreach ($test['variants'] as $vr){
+                            $insert_variant[]=[
+                                'test_id'=>$result_create->id,
+                                'variant'=>$vr
+                            ];
+                        }
+                    }
+
+                    if($type=="list_correct"){
+                        foreach ($test['correct'] as $tr){
+                            $insert_correct[]=[
+                                'test_id'=>$result_create->id,
+                                'true'=>$tr
+                            ];
+                        }
+
+                        foreach ($test['variants'] as $vr){
+                            $insert_variant[]=[
+                                'test_id'=>$result_create->id,
+                                'variant'=>$vr
+                            ];
+                        }
+                    }
+                    if($type=="question_answer"){
+                        $insert_correct[]=[
+                            'test_id'=>$result_create->id,
+                            'true'=>$test['correct']
+                        ];
+                    }
+                    if($type=="true_false"){
+                        $insert_correct[]=[
+                            'test_id'=>$result_create->id,
+                            'true'=>$test['correct']
+                        ];
+                    }
+                    if($type=="matching"){
+
+                        foreach ($test['list1'] as $list1){
+                            $insert_list1[]=[
+                                'test_id'=>$result_create->id,
+                                'str'=>$list1
+                            ];
+                        }
+                        foreach ($test['list2'] as $list2){
+                            $insert_list2[]=[
+                                'test_id'=>$result_create->id,
+                                'str'=>$list2
+                            ];
+                        }
+                    }
                 }
 
-                Test::insert($create_data);
+                MatchingList1::query()->insert($insert_list1);
+                MatchingList2::query()->insert($insert_list2);
+                Variant::query()->insert($insert_variant);
+                VariantTrue::query()->insert($insert_correct);
                 Log::info("Тесты успешно созданы для step_id={$this->stepId}");
                 return;
             }
