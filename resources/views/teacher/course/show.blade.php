@@ -120,7 +120,7 @@
         const lv=document.querySelector('.link_vocabulary');
         async function fetchData() {
             try {
-                const response = await fetch("{{ route('get.steps', $course->id) }}", {
+                const response = await fetch("{{ route('api.get.steps', $course->id) }}", {
                     method: "POST",
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}",
@@ -303,7 +303,16 @@
 
                     const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasRight'));
                     offcanvas.show();
-
+                    if(step.status=='0'){
+                        input_content.innerHTML+=`
+                        <input type="checkbox" name="read" id="read"> Прочитал <br>
+                        `;
+                    }
+                    if(step.status=='0' || step.status=='2'){
+                        input_content.innerHTML+=`
+                        <input type="checkbox" name="passed" id="passed"> Пройден
+                        `;
+                    }
                     let ch_passed=document.getElementById('passed');
                     let ch_read=document.getElementById('read');
 
@@ -418,8 +427,10 @@
             offcanvas.addEventListener('shown.bs.offcanvas', updateJsPlumb);
             offcanvas.addEventListener('hidden.bs.offcanvas', updateJsPlumb);
 
+            // Отслеживание изменения размеров окна (например, при изменении ширины бокового меню)
             window.addEventListener('resize', updateJsPlumb);
 
+            // Отслеживание изменений размеров контейнера (если nav изменяет его размер)
             const resizeObserver = new ResizeObserver(updateJsPlumb);
             resizeObserver.observe(container);
         });

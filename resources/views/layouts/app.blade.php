@@ -768,7 +768,7 @@
                     <!-- End Collapse -->
 
 
-               
+
                 </div>
 
             </div>
@@ -4195,7 +4195,7 @@
         `;
     }
 
-    fetch("{{ route('user_info') }}", {
+    fetch("{{ route('api.user_info') }}", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

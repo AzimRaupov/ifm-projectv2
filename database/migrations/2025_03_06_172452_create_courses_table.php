@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-
             $table->string('topic');
+            $table->boolean('type')->default(0);
             $table->integer('step')->default(1);
             $table->integer('ex')->default(0);
             $table->integer('freetime');

@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student_courses', function (Blueprint $table) {
+        Schema::create('test_students', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('test_id')->constrained('tests');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('course_id')->constrained('courses');
+            $table->foreignId('step_id')->constrained('steps');
+            $table->boolean('view')->default(0);
+            $table->enum('verdict',['0','1','2'])->default('0');
+            $table->integer('score')->default(0);
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_courses');
+        Schema::dropIfExists('test_students');
     }
 };

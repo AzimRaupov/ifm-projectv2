@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Skill;
 use App\Models\Step;
+use App\Models\StudentCourse;
 use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,14 +34,21 @@ class GetController extends Controller
         $score=Skill::query()->where('user_id',$user->id)->where('score','>',0)->pluck('score');
 
         $skills=Skill::query()->where('user_id',$user->id)->where('score','>',0)->pluck('skill');
+
+        $studentCourseIds = StudentCourse::where('user_id', $user->id)->pluck('course_id');
+        $studentCourses = Course::whereIn('id', $studentCourseIds)
+            ->where('user_id', '!=', $user->id)
+            ->get();
+        $allCourses = $course->merge($studentCourses);
         $data=[
             'user'=>$user,
-            'courses'=>$course,
+            'courses'=>$allCourses,
             'skills'=>[
                 'title'=>$skills,
                 'score'=>$score
             ]
         ];
+
         return response()->json($data);
     }
     function test($id)

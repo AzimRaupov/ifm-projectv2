@@ -59,7 +59,7 @@ function progress(Request $request)
     public function show(Request $request)
     {
         $user=Auth::user();
-        $course = Course::query()->where('user_id', $user->id)
+        $course = Course::query()
             ->where('id', $request->input('id'))
             ->firstOrFail();
 

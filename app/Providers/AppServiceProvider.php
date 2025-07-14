@@ -24,5 +24,9 @@ class AppServiceProvider extends ServiceProvider
             ->prefix('teacher')
             ->name('teacher.')
             ->group(base_path('routes/teacher.php'));
+        Route::middleware('web')
+            ->prefix('api')
+            ->name('api.')
+            ->group(base_path('routes/api.php'));
     }
 }

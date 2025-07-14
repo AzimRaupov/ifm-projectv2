@@ -13,20 +13,7 @@ Route::get('/fg',[\App\Http\Controllers\TestController::class,'send']);
 Route::get('/google/auth',[\App\Http\Controllers\UserController::class,'google_auth'])->name('google.auth');
 Route::get('/google-calback',[\App\Http\Controllers\UserController::class,'google_callback'])->name('google.callback');
 Route::middleware('auth')->group(function () {
-    Route::prefix('api')->group(function (){
-        Route::post('/status/step',[\App\Http\Controllers\api\get\GetController::class,'status_step'])->name('api.status.step');
-        Route::post('/get/skills',[\App\Http\Controllers\api\get\GetController::class,'skills'])->name('api.get.skills');
-        Route::post('/rd/vocabulary',[\App\Http\Controllers\VocabularyController::class,'rd'])->name('vocabulary.rd');
-        Route::post('/get/steps/{id}',[\App\Http\Controllers\api\get\GetController::class,'steps'])->name('get.steps');
-        Route::post('/create/description',[\App\Http\Controllers\api\create\CreateController::class,'create_description'])->name('api.create.description');
-        Route::post('/check/test',[\App\Http\Controllers\api\CheckTestController::class,'check'])->name('api.check.test');
-        Route::post('/create/course',[\App\Http\Controllers\api\create\CreateController::class,'course'])->name('api.create.course');
-        Route::post('/create/test',[\App\Http\Controllers\api\create\CreateController::class,'test'])->name('api.create.test');
-        Route::post('/get/test/{id}',[\App\Http\Controllers\api\get\GetController::class,'test'])->name('get.test');
-        Route::post('/info',[\App\Http\Controllers\api\get\GetController::class,'user_info'])->name('user_info');
-        Route::post('/create/vocabulary',[\App\Http\Controllers\api\create\CreateController::class,'vocabulary'])->name('api.create.vocabulary');
 
-    });
     Route::prefix('course')->group(function (){
         Route::get('/create',[\App\Http\Controllers\CourseController::class,'create'])->name('course.create');
         Route::get('progress',[\App\Http\Controllers\CourseController::class,'progress'])->name('course.progress');

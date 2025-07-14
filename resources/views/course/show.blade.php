@@ -120,7 +120,7 @@
         const lv=document.querySelector('.link_vocabulary');
         async function fetchData() {
             try {
-                const response = await fetch("{{ route('get.steps', $course->id) }}", {
+                const response = await fetch("{{ route('api.get.steps', $course->id) }}", {
                     method: "POST",
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}",

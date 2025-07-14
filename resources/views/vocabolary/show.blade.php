@@ -67,7 +67,7 @@
     <script>
         function rd(vid){
             $.ajax({
-                url: `{{ route('vocabulary.rd') }}`,
+                url: `{{ route('api.vocabulary.rd') }}`,
                 type: "POST",
                 headers: {
                     "X-CSRF-TOKEN": "{{ csrf_token() }}"

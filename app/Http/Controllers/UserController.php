@@ -25,13 +25,13 @@ class UserController extends Controller
                $userr=User::query()->where('email',$userGoogle->email)->first();
 $userr->google_id=$userGoogle->id;
 $userr->save();
-               return redirect()->route($userr->role.'.dashboard');
+               return redirect()->route('dashboard');
 
            }
            else{
                Auth::login($user);
            }
-           return redirect()->route($user->role.'.dashboard');
+           return redirect()->route('dashboard');
     }
     public function dashboard(Request $request)
     {

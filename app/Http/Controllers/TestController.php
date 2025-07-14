@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TestClass;
 use App\Http\Controllers\api\GetController;
 use App\Models\Course;
 use App\Models\Progress;
 use App\Models\Step;
+use App\Models\StepStudent;
 use App\Models\Test;
+use App\Models\TestStudent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,108 +20,15 @@ use phpDocumentor\Reflection\TypeResolver;
 use App\Helpers\GenerateRodmap;
 class TestController extends Controller
 {
-    function check(Request $request)
+    function check(Request $request,TestClass $testClass)
     {
-        $tests = Test::query()
-            ->where('step_id', $request->id)
-            ->with(['skill', 'variantss', 'lists1', 'lists2', 'corrects'])
-            ->get();
+        $step=Step::query()->with('course')->where('id',$request->id)->first();
 
-        $i = 0;
-        $answer = $request->answer;
-        $ok = '1';
-        $colum = 0;
-
-        foreach ($tests as $test) {
-            $ok = '1';
-
-            if (!isset($answer[$i]['answer'])) {
-                $i++;
-                $test->verdict = $ok;
-                $test->save();
-                continue;
-            }
-
-            if ($test->type_test == "one_correct" || $test->type_test == "true_false") {
-                if (isset($test->corrects[0]) && $test->corrects[0]->true == $answer[$i]['answer']) {
-                    if ($test->skill) {
-                        $test->skill->score += $test->score;
-                    }
-                    $ok = '2';
-                }
-            }
-
-            else if ($test->type_test == "list_correct") {
-                $test_correct = $test->corrects;
-                $answerList = is_array($answer[$i]['answer']) ? $answer[$i]['answer'] : [];
-
-                foreach ($test_correct as $list) {
-                    foreach ($answerList as $list1) {
-                        if ($list->true == $list1) {
-                            if ($test->skill) {
-                                $test->skill->score += $test->score / count($test_correct);
-                            }
-                            $ok = '2';
-                            break;
-                        }
-                    }
-                }
-            }
-
-            else if ($test->type_test == "matching") {
-                $correctList = $test->lists2->pluck('str')->toArray();
-                if ($answer[$i]['answer'] == $correctList) {
-                    if ($test->skill) {
-                        $test->skill->score += $test->score;
-                    }
-                    $ok = '2';
-                }
-            }
-
-            else if ($test->type_test == "question_answer") {
-                $req = strtolower(preg_replace('/\s+/', '', $answer[$i]['answer']));
-                $correctAnswer = strtolower(preg_replace('/\s+/', '', $test->corrects[0]->true));
-                if (!empty($req) && $req === $correctAnswer) {
-                    if ($test->skill) {
-                        $test->skill->score += $test->score;
-                    }
-                    $ok = '2';
-                }
-            }
-
-            if ($ok === '2') {
-                $colum += $test->score;
-            }
-
-            $test->verdict = $ok;
-            $test->save();
-
-            if ($test->skill) {
-                $test->skill->save();
-            }
-
-            $i++;
+        if($step->course->type==0){
+            return $testClass->test0($request);
         }
 
-        Step::where('id', $request->id)->update(['status' => '1']);
-
-        $progress = Progress::query()
-            ->where('course_id', $test->course_id ?? null)
-            ->whereDate('date', Carbon::now())
-            ->first();
-
-        if ($progress) {
-            $progress->colum += $colum;
-            $progress->save();
-        } else {
-            Progress::query()->create([
-                'course_id' => $test->course_id ?? null,
-                'date' => Carbon::now(),
-                'colum' => $colum,
-            ]);
-        }
-
-        return $tests;
+        return $testClass->test1($request);
     }
     function test(Request $request)
     {
@@ -211,11 +121,24 @@ dd($tests);
 
         }
         function show2(Request $request)
-        {   $step=Step::query()->where('id',$request->id)->first();
+        {   $step=Step::query()->with('course')->where('id',$request->id)->first();
+            $user=Auth::user();
             $tests=Test::query()->where('step_id',$request->id)->with('variantss','lists1','lists2','corrects')->where('view',0)->get();
             if($step->status==1){
 
                 return view('test.verdict',compact(['tests','request']));
+            }
+
+            elseif ($step->course->type==1){
+                $step_student=StepStudent::query()->where('step_id',$step->id)->where('user_id',$user->id)->first();
+                $verdict=TestStudent::query()->where('step_id',$step->id)->get();
+                if(!$step_student){
+                    return view('test.show2',compact(['tests','request']));
+                }
+                else if($step_student->status==1){
+                    return view('test.verdict_type1',compact(['tests','request','verdict']));
+
+                }
             }
 
             return view('test.show2',compact(['tests','request']));

@@ -1,9 +1,15 @@
 <?php
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\GetController;
 
-Route::middleware('auth:apii')->group(function () {
-});
-Route::get('/in', [GetController::class, 'get']);
+
+Route::post('/status/step',[\App\Http\Controllers\api\get\GetController::class,'status_step'])->name('status.step');
+Route::post('/get/skills',[\App\Http\Controllers\api\get\GetController::class,'skills'])->name('get.skills');
+Route::post('/rd/vocabulary',[\App\Http\Controllers\VocabularyController::class,'rd'])->name('vocabulary.rd');
+Route::post('/get/steps/{id}',[\App\Http\Controllers\api\get\GetController::class,'steps'])->name('get.steps');
+Route::post('/create/description',[\App\Http\Controllers\api\create\CreateController::class,'create_description'])->name('create.description');
+Route::post('/check/test',[\App\Http\Controllers\api\CheckTestController::class,'check'])->name('check.test');
+Route::post('/create/course',[\App\Http\Controllers\api\create\CreateController::class,'course'])->name('create.course');
+Route::post('/create/test',[\App\Http\Controllers\api\create\CreateController::class,'test'])->name('create.test');
+Route::post('/get/test/{id}',[\App\Http\Controllers\api\get\GetController::class,'test'])->name('test');
+Route::post('/info',[\App\Http\Controllers\api\get\GetController::class,'user_info'])->name('user_info');
+Route::post('/create/vocabulary',[\App\Http\Controllers\api\create\CreateController::class,'vocabulary'])->name('create.vocabulary');
