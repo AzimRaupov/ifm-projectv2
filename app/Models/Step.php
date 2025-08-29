@@ -6,12 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Step extends Model
 {
-    protected $fillable=['course_id','title','experience','test_id','heirs','type','description'];
+    protected $fillable=['parent_id','course_id','title','experience','test_id','heirs','type','description','sort'];
 
     protected $casts=['skills'=>'array','heirs'=>'array'];
 
     public function test(){
         return $this->hasMany(Test::class);
+    }
+    public function step_heirs()
+    {
+        return $this->hasMany(Step::class,'parent_id');
     }
     public function course()
     {

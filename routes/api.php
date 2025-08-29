@@ -2,6 +2,8 @@
 use Illuminate\Support\Facades\Route;
 
 
+Route::get('/test',[\App\Http\Controllers\api\create\CreateController::class,'pdf'])->name('pdf');
+
 Route::post('/status/step',[\App\Http\Controllers\api\get\GetController::class,'status_step'])->name('status.step');
 Route::post('/get/skills',[\App\Http\Controllers\api\get\GetController::class,'skills'])->name('get.skills');
 Route::post('/rd/vocabulary',[\App\Http\Controllers\VocabularyController::class,'rd'])->name('vocabulary.rd');
@@ -13,3 +15,14 @@ Route::post('/create/test',[\App\Http\Controllers\api\create\CreateController::c
 Route::post('/get/test/{id}',[\App\Http\Controllers\api\get\GetController::class,'test'])->name('test');
 Route::post('/info',[\App\Http\Controllers\api\get\GetController::class,'user_info'])->name('user_info');
 Route::post('/create/vocabulary',[\App\Http\Controllers\api\create\CreateController::class,'vocabulary'])->name('create.vocabulary');
+Route::post('/img/upload',[\App\Http\Controllers\api\create\CreateController::class,'img'])->name('img.upload');
+
+Route::post('/user/ping',[\App\Http\Controllers\api\UserController::class,'ping'])->name('user.ping');
+
+
+
+Route::prefix('/teacher')->group(function (){
+
+    Route::post('/step/sort',[\App\Http\Controllers\teacher\StepController::class,'sort'])->name('teacher.step.sort');
+
+});

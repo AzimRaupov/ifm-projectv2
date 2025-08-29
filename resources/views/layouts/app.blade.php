@@ -4,6 +4,8 @@
     <!-- Required Meta Tags Always Come First -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
 
     <!-- Title -->
@@ -134,7 +136,7 @@
     </script>
 </head>
 
-<body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
+<body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset " >
 
 <script src="{{asset('assets/js/hs.theme-appearance.js')}}"></script>
 
@@ -612,7 +614,9 @@
                             <a class="dropdown-item" href="{{route('profile.edit')}}">Профиль &amp; аккаунт</a>
                             <a class="dropdown-item" href="#">Настройки</a>
 
-                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-divider">
+
+                            </div>
 
 
 
@@ -688,93 +692,85 @@
 
             <!-- Content -->
             <div class="navbar-vertical-content">
-                <div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav">
-                    <!-- Collapse -->
-                    <span class="dropdown-header mt-4">Навигатсия</span>
+                <div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav px-3 py-3">
+
+                    <!-- Навигация -->
+                    <span class="dropdown-header mt-4">Навигация</span>
                     <small class="bi-three-dots nav-subtitle-replacer"></small>
 
                     <div class="nav-item">
-                        <a class="nav-link " data-placement="left" href="{{route('home')}}">
+                        <a class="nav-link" style="border-radius: 10px;" href="{{ route('home') }}">
                             <i class="bi-house-door nav-icon"></i>
-                            <span class="nav-link-title">Гланая</span>
+                            <span class="nav-link-title">Главная</span>
                         </a>
                     </div>
+
                     <div class="nav-item">
-                        <a class="nav-link" style="background-color: #00c9a7;color: white;" data-placement="left" onclick="newCourse()">
-                                                  <i class="bi bi-plus-circle-fill nav-icon"></i>
+                        <a class="nav-link" style="background-color: #e0f7f4; color: #00796b; border-radius: 10px;" href="{{ route('course.create') }}">
+                            <i class="bi-plus-circle-fill nav-icon"></i>
                             <span class="nav-link-title">Новый курс</span>
                         </a>
                     </div>
 
-
                     <div class="nav-item">
-                        <a class="nav-link dropdown-toggle" href="#navbarVerticalMenuDashboards" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuDashboards" aria-expanded="false" aria-controls="navbarVerticalMenuDashboards">
-                            <i class="bi-stickies nav-icon"></i>
+                        <a class="nav-link" style="border-radius: 10px;" href="{{ route('student.dashboard') }}">
 
+                            <i class="bi bi-stickies nav-icon"></i>
                             <span class="nav-link-title">Мои курсы</span>
                         </a>
 
-                        <div id="navbarVerticalMenuDashboards" class="nav-collapse collapse" data-bs-parent="#navbarVerticalMenu" >
 
                     </div>
 
-                    </div>
 
                     <div class="nav-item">
-                        <a class="nav-link " data-placement="left" href="{{route('dashboard')}}">
-                            <i class="bi bi-bar-chart nav-icon"></i>
-                            <span class="nav-link-title">Погресс понель</span>
+                        <a class="nav-link" style="border-radius: 10px;" href="{{ route('student.dashboard') }}">
+                            <i class="bi-bar-chart nav-icon"></i>
+                            <span class="nav-link-title">Панель прогресса</span>
                         </a>
                     </div>
 
+                    <!-- Дополнительные кнопки -->
+                    <div class="nav-item">
+                        <a class="nav-link" style="border-radius: 10px;" href="#">
+                            <i class="bi-gear nav-icon"></i>
+                            <span class="nav-link-title">Настройки</span>
+                        </a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a class="nav-link" style="border-radius: 10px;" href="#">
+                            <i class="bi-bell nav-icon"></i>
+                            <span class="nav-link-title">Уведомления</span>
+                        </a>
+                    </div>
+
+                    <!-- Аккаунт -->
                     <span class="dropdown-header mt-4">Аккаунт</span>
                     <small class="bi-three-dots nav-subtitle-replacer"></small>
 
-
-                    <!-- Collapse -->
-                    <div class="navbar-nav nav-compact">
-
-                    </div>
-                    <div id="navbarVerticalMenuPagesMenu">
-
-
-                        <!-- Collapse -->
-                        <div class="nav-item">
-                            <a class="nav-link" href="#navbarVerticalMenuPagesUserProfileMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUserProfileMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesUserProfileMenu">
-                                <i class="bi-person nav-icon"></i>
-                                <span class="nav-link-title">Профиль <span class="badge bg-primary rounded-pill ms-1">5</span></span>
-                            </a>
-
-
+                    <div class="nav-item">
+                        <a class="nav-link dropdown-toggle" style="border-radius: 10px;" href="#navbarVerticalMenuPagesUserProfileMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbarVerticalMenuPagesUserProfileMenu">
+                            <i class="bi-person nav-icon"></i>
+                            <span class="nav-link-title">Профиль</span>
+                        </a>
+                        <div id="navbarVerticalMenuPagesUserProfileMenu" class="collapse">
                         </div>
-
-                        <div class="nav-item">
-                            <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit();" data-bs-toggle="modal" data-bs-target="#welcomeMessageModal">
-
-                                <i class="bi-person nav-icon"></i>
-                                <span class="nav-link-title">Выход <span class="badge bg-primary rounded-pill ms-1">5</span></span>
-
-                            </a>
-
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-
-                        </div>
-
-
                     </div>
-                    <!-- End Collapse -->
 
-
+                    <div class="nav-item">
+                        <a class="nav-link" style="border-radius: 10px;" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="bi-box-arrow-right nav-icon"></i>
+                            <span class="nav-link-title">Выход</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
 
                 </div>
-
             </div>
-            <!-- End Content -->
 
-            <!-- Footer -->
             <div class="navbar-vertical-footer">
                 <ul class="navbar-vertical-footer-list">
                     <li class="navbar-vertical-footer-list-item">
@@ -3952,6 +3948,7 @@
             HSBsDropdown.init()
 
 
+
             // INITIALIZATION OF CHARTJS
             // =======================================================
             HSCore.components.HSChartJS.init('.js-chart')
@@ -4105,11 +4102,10 @@
     })()
 </script>
 <script>
+    let user_g=[];
     user_name=document.getElementById('user-name');
     user_type=document.getElementById('user-email');
     main_content=document.getElementById('content-main');
-    all_courses=document.getElementById('navbarVerticalMenuDashboards');
-    console.log(all_courses);
 
     function main(list){
         user=list.user;
@@ -4119,33 +4115,6 @@
         console.log(main_content);
         user_name.textContent=user.name;
         user_type.textContent=user.email;
-
-        if(courses.length===0){
-
-            main_content.innerHTML = `
-            <div class="content container-fluid">
-                <div class="row justify-content-sm-center text-center py-10">
-                    <div class="col-sm-7 col-md-5">
-                        <img class="img-fluid mb-5" src="{{asset('assets/svg/illustrations/oc-collaboration.svg')}}" alt="Image Description" data-hs-theme-appearance="default">
-                        <img class="img-fluid mb-5" src="{{asset('assets/svg/illustrations-light/oc-collaboration.svg')}}" alt="Image Description" data-hs-theme-appearance="dark">
-
-                    <h1>Здравствуй, ты ещё не создал курс!</h1>
-<p>Нажми на кнопку, чтобы создать курс.</p>
-
-
-<button class="btn btn-primary" onclick="newCourse()">Создайте первый курс</button>
-                    </div>
-                </div>
-            </div>`;
-        }
-        else{
-           for (let i=courses.length-1;i>=0;i--){
-               all_courses.innerHTML+=`
-                   <a class="nav-link" href="{{route('show')}}?id=${courses[i].id}">${courses[i].topic}</a></div>
-
-               `;
-           }
-        }
 
 
     }
@@ -4212,6 +4181,7 @@
             console.log(data);
 
             main(data);
+            view_profile(data);
             // radar(data.skills);
         })
         .catch(error => console.error("Ошибка:", error));
@@ -4219,49 +4189,11 @@
 </script>
 
 <script>
-    function create_course(event){
-        event.preventDefault();  // Предотвращаем отправку формы
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-        // Получаем данные из формы
-        let topic = document.getElementById('topic-input').value;
-        let freetime = document.getElementById('freetime').value;
-        let level=document.getElementById('level').value;
-
-        let button = document.getElementById("sub");
-
-        // Меняем текст и добавляем спиннер
-        button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Генерация...';
-        button.disabled = true;
-
-        $.ajax({
-            url: "{{ route('api.create.course') }}",
-            type: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            contentType: "application/json",
-            data: JSON.stringify({
-                'topic': topic,
-                'freetime': freetime,
-                'level':level
-            }),
-            success: function(data) {
-                console.log(data);
-                button.innerHTML = 'Генерировать';
-                button.disabled = false;
-                if (data.redirect_url) {
-
-                    window.location.href = data.redirect_url; // Используйте URL, который сервер отправляет
-                }
-                createTree(data);
-            },
-            error: function(xhr, status, error) {
-                console.error("Ошибка:", error);
-                console.error("Status:", status);
-                console.error("Response:", xhr.responseText);
-            }
-        });
-    }
+    setInterval(function() {
+        fetch('{{route("api.user.ping")}}', {method: 'POST', headers: {'X-CSRF-TOKEN': csrfToken}});
+    }, 60000);
 </script>
 
 

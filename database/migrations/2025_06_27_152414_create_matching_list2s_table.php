@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('matching_list2s', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('test_id')->constrained('tests');
+            $table->foreignId('test_id')->constrained('tests')->onDelete('cascade');
             $table->string('str');
             $table->timestamps();
         });

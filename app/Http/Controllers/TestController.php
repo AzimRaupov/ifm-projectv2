@@ -24,9 +24,6 @@ class TestController extends Controller
     {
         $step=Step::query()->with('course')->where('id',$request->id)->first();
 
-        if($step->course->type==0){
-            return $testClass->test0($request);
-        }
 
         return $testClass->test1($request);
     }
@@ -124,12 +121,8 @@ dd($tests);
         {   $step=Step::query()->with('course')->where('id',$request->id)->first();
             $user=Auth::user();
             $tests=Test::query()->where('step_id',$request->id)->with('variantss','lists1','lists2','corrects')->where('view',0)->get();
-            if($step->status==1){
 
-                return view('test.verdict',compact(['tests','request']));
-            }
 
-            elseif ($step->course->type==1){
                 $step_student=StepStudent::query()->where('step_id',$step->id)->where('user_id',$user->id)->first();
                 $verdict=TestStudent::query()->where('step_id',$step->id)->get();
                 if(!$step_student){
@@ -139,7 +132,7 @@ dd($tests);
                     return view('test.verdict_type1',compact(['tests','request','verdict']));
 
                 }
-            }
+
 
             return view('test.show2',compact(['tests','request']));
         }

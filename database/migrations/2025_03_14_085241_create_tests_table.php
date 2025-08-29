@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('step_id')->constrained('steps');
-            $table->foreignId('skill_id')->constrained('skills');
+            $table->foreignId('step_id')->constrained('steps')->onDelete('cascade');
+            $table->foreignId('skill_id')->constrained('skills')->onDelete('cascade');
             $table->foreignId('course_id')->constrained('courses');
             $table->string('text');
             $table->enum('type_test',["one_correct","list_correct","question_answer","matching","true_false"]);

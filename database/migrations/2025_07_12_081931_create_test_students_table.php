@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('test_id')->constrained('tests');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('step_id')->constrained('steps');
+            $table->foreignId('step_id')->constrained('steps')->onDelete('cascade');
             $table->boolean('view')->default(0);
             $table->enum('verdict',['0','1','2'])->default('0');
             $table->integer('score')->default(0);

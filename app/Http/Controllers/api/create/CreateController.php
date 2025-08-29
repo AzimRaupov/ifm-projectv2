@@ -12,16 +12,52 @@ use App\Models\Course;
 use App\Models\Link;
 use App\Models\Skill;
 use App\Models\Step;
+use App\Models\StepHeir;
+use App\Models\StudentCourse;
 use App\Models\Test;
 use App\Models\VocabularyStep;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Orhanerday\OpenAi\OpenAi;
 
 class CreateController extends Controller
 {
+    public function img(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            // Сохраняем файл в storage/app/public/uploads
+            $path = $request->file('file')->store('uploads', 'public');
+
+            // Получаем публичный URL
+
+            $url = Storage::url($path); // → /storage/uploads/filename.jpg
+            $url=asset($url);
+            return response()->json(['location' => $url]);
+        }
+
+        return response()->json(['error' => 'Файл не найден'], 400);
+    }
+
+    public function pdf(Request $request)
+    {
+        $course=Course::query()->where('id',$request->id)->with(['steps'=>function ($q) {
+            $q->with('vocabularies');
+        }])->first();
+//        dd($course);
+
+
+
+        $html = view('course.pdf', ['course'=>$course])->render();
+
+        $pdf = Pdf::loadHTML($html);
+
+        return $pdf->download(Str::slug($course->topic) . '.pdf');
+    }
     function course(CreateCourseRequest $request)
     {
         $user=Auth::user();
@@ -31,6 +67,7 @@ class CreateController extends Controller
         $course=Course::query()->create([
             'user_id'=>$user->id,
             'topic'=>$map['topic_course'],
+            'type'=>'private',
             'freetime'=>$request->input('freetime'),
             'level'=>$request->input('level'),
             'date_start'=>$date_start
@@ -49,15 +86,35 @@ class CreateController extends Controller
         Skill::insert($skills);
         $create=[];
         foreach ($data as $list){
-            $create[]=[
-                'course_id'=>$course->id,
-                'title'=>$list['topic'],
-                'experience'=>$list['experience'],
-                'type'=>$list['type'],
-                'heirs' => isset($list['heirs']) ? json_encode($list['heirs']) : null
-            ];
+            $course->increment('ex',$list['experience']);
+            if($list['type']=='parent'){
+                $create=[
+                    'parent_id'=>null,
+                    'course_id'=>$course->id,
+                    'title'=>$list['topic'],
+                    'experience'=>$list['experience'],
+                    'type'=>$list['type'],
+                    'heirs' => isset($list['heirs']) ? json_encode($list['heirs']) : null
+                ];
+                $st=Step::query()->create($create);
+            }
+            if($list['type']=='heir'){
+
+                Step::query()->create([
+                    'parent_id'=>$st->id,
+                    'course_id'=>$course->id,
+                    'title'=>$list['topic'],
+                    'experience'=>$list['experience'],
+                    'type'=>$list['type'],
+                    'heirs' => isset($list['heirs']) ? json_encode($list['heirs']) : null
+                ]);
+            }
+
         }
-        Step::insert($create);
+        StudentCourse::query()->create([
+            'user_id'=>$user->id,
+            'course_id'=>$course->id
+        ]);
         return response()->json([
             'redirect_url' => route('show', ['id' => $course->id])
         ]);

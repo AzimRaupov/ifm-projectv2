@@ -38,27 +38,29 @@ class GenerateVocabularyJob implements ShouldQueue
         $apiKey = env('GEMINI_API_KEY1');
 
         // Формируем prompt с динамическими значениями
-        $prompt = "Я изучаю '{$step->course->topic}' в шаге '{$step->title}' раздели шаг на несколько подшогов и без доб информатсии:
-### Требования к подшагам:
-1. **Заголовак каждому подшагу**
-2. **Информация с примерами и объяснениями в формате html**
-3. **Количество подшагов зависет от сложности шага**.
-4. **Несколько ссылок для изучения подшага**
+        $prompt = "Я изучаю '{$step->course->topic}' в шаге '{$step->title}'. Раздели шаг на несколько подшагов без лишней информации.
 
+### Требования к подшагам:
+1. Заголовок для каждого подшага
+2. Подробная информация с примерами и объяснениями в формате HTML — **только содержимое внутри тега <body>**.
+3. Количество подшагов зависит от сложности шага.
+4. Несколько ссылок для изучения подшага.
+5. Опыт за прочитания лексии по сложности лексии макст 10.
 ### Формат ответа (JSON):
-```json
 [
-    {   'title':str,
-        'info': html,
-        'links': [
-            '/',
-            '/',
-            '/'
+    {
+        \"title\": \"строка\",
+        \"exp\": \"очко опыта\",
+        \"info\": \"HTML-код, только содержимое внутри <body>, без <body> и <html>\",
+        \"links\": [
+            \"/\",
+            \"/\",
+            \"/\"
         ]
     }
 ]
-```
- Пожалуйста, убедитесь,что формат json совпадает.
+
+Пожалуйста, не возвращай полный HTML-документ, только содержимое тега <body>.
 ";
 
         $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
@@ -95,10 +97,12 @@ class GenerateVocabularyJob implements ShouldQueue
                     foreach ($decoded as $item) {
                         $vocabulary = VocabularyStep::create([
                             'step_id' => $step->id,
+                            'course_id'=>$step->course_id,
                             'title' => $item['title'] ?? 'Без названия',
                             'text' => $item['info'] ?? '',
+                            'exp'=>$item['exp']
                         ]);
-
+                       $step->course->increment('ex',$item['exp']);
                         if (!empty($item['links']) && is_array($item['links'])) {
                             foreach ($item['links'] as $link) {
                                 $linksToInsert[] = [
@@ -123,11 +127,11 @@ class GenerateVocabularyJob implements ShouldQueue
             } else {
                 Log::error('Ошибка API', [
                     'status' => $response->status(),
-                    'body' => $response->body()
+                    'body' => $step->id
                 ]);
             }
         } catch (\Exception $e) {
-            Log::error('Ошибка при подключении к API: ' . $e->getMessage());
+            Log::error('Ошибка при подключении к API: ' . $step->id);
         }
 
     }

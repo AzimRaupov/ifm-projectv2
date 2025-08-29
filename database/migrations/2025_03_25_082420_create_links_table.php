@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vocabulary_step_id')->nullable()->constrained('vocabulary_steps');
-            $table->foreignId('step_id')->nullable()->constrained('steps');
+            $table->foreignId('vocabulary_step_id')->nullable()->constrained('vocabulary_steps')->onDelete('cascade');;
+            $table->foreignId('step_id')->nullable()->constrained('steps')->onDelete('cascade');
             $table->string('link');
             $table->timestamps();
         });

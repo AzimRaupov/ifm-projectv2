@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->string('topic');
-            $table->boolean('type')->default(0);
+            $table->enum('type',['public','private'])->default("private");
             $table->integer('step')->default(1);
             $table->integer('ex')->default(0);
             $table->integer('freetime');
             $table->date('date_start');
             $table->enum('status',[0,1,2]);
-            $table->enum('level',['ignorant','knowing','experienced'])->default('ignorant');
+            $table->enum('level',['beginner','intermediate','advanced'])->default('beginner');
             $table->string('logo')->nullable();
             $table->timestamps();
         });

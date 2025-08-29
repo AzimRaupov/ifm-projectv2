@@ -1,10 +1,56 @@
 @extends('layouts.app')
 
-@section('content-main')
-<!-- Step Form -->
-<style>
 
-</style>
+
+
+@section('content-main')
+    <style>
+        .custom-checkbox {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            font-family: sans-serif;
+            font-size: 16px;
+            user-select: none;
+        }
+
+        .custom-checkbox input {
+            display: none;
+        }
+
+        .custom-checkbox span {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgb(245, 202, 153);
+            border-radius: 4px;
+            display: inline-block;
+            margin-right: 8px;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .custom-checkbox input:checked + span {
+            background-color: rgb(245, 202, 153);
+            border-color: rgb(245, 202, 153);
+        }
+
+        .custom-checkbox span::after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .custom-checkbox input:checked + span::after {
+            display: block;
+        }
+    </style>
 <div class="js-step-form"
       style="margin: 20px"
       data-hs-step-form-options='{
@@ -47,7 +93,12 @@
                             <a href="{{$link->link}}">{{$link->link}}</a>
                          @endforeach
                         @if($item->status==0)
-                        <button class="btn btn-warning" id="bt{{$item->id}}" onclick="rd({{$item->id}})" style="width: 100%;margin-top: 10px">Прочитал</button>
+                            <br>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" onclick="readV({{$item->id}})">
+                                <span></span>
+                                Прочитано
+                            </label>
                         @endif
 
                     </div>
@@ -65,7 +116,7 @@
 
 @section('script')
     <script>
-        function rd(vid){
+        function readV(vid){
             $.ajax({
                 url: `{{ route('api.vocabulary.rd') }}`,
                 type: "POST",
@@ -96,8 +147,10 @@
 
                     $el.style.display = 'none';
                     $el.parentElement.appendChild(successMessageTemplate);
+
                 }
             });
+
         });
     </script>
 @endsection

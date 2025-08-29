@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('student_courses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('course_id')->constrained('courses');
+            $table->boolean('status')->default(0);
+            $table->integer('exp')->default(0);
+            $table->integer('complete')->default(0);
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('variant_trues', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('test_id')->constrained('tests');
+            $table->foreignId('test_id')->constrained('tests')->onDelete('cascade');
             $table->string('true');
             $table->timestamps();
         });

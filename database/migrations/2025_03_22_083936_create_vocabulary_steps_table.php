@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('vocabulary_steps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('step_id')->constrained('steps');
+            $table->foreignId('course_id')->constrained('courses');
+            $table->foreignId('step_id')->constrained('steps')->onDelete('cascade');;
             $table->enum('status',['0','1'])->default('0');
            $table->string('title');
             $table->text('text');
+            $table->integer('exp')->default(0);
             $table->timestamps();
         });
     }

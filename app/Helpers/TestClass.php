@@ -3,18 +3,23 @@
 namespace App\Helpers;
 
 use App\Models\Progress;
+use App\Models\Skill;
 use App\Models\SkillStudent;
 use App\Models\Step;
 use App\Models\StepStudent;
+use App\Models\StudentCourse;
 use App\Models\Test;
 use App\Models\TestStudent;
+use App\Models\Variant;
+use App\Models\VariantTrue;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class TestClass
 {
-   public function test0($request)
+    public function test0($request)
    {
 
            $tests = Test::query()
@@ -145,6 +150,7 @@ class TestClass
                 $tskill = SkillStudent::query()->create([
                     'skill_id' => $test->skill->id,
                     'user_id' => $user->id,
+                    'course_id'=>$test->course_id,
                     'score' => 0
                 ]);
             }
@@ -152,7 +158,6 @@ class TestClass
             if (!isset($answer[$i]['answer'])) {
                 TestStudent::query()->create([
                     'step_id'=>$test->step_id,
-
                     'test_id' => $test->id,
                     'user_id' => $user->id,
                     'verdict' => $ok
@@ -208,39 +213,44 @@ class TestClass
                 'step_id'=>$test->step_id,
                 'test_id' => $test->id,
                 'user_id' => $user->id,
+                'ex'=>$colum,
                 'verdict' => $ok
             ]);
 
             $tskill->save();
             $i++;
         }
-       $step=StepStudent::query()->where('id',$request->id)->first();
+       $step=StepStudent::query()->where('step_id',$request->id)->first();
         if(!$step){
             StepStudent::query()->create([
                 'step_id'=>$request->id,
                 'user_id'=>$user->id,
+                'ex'=>$tskill->score,
+                'course_id'=>Step::query()->with('course')->find($request->id)->course->id,
                 'status'=>'1',
 
             ]);
         }
 
-        $progress = Progress::query()
-            ->where('course_id', $test->course_id ?? null)
-            ->whereDate('date', Carbon::now())
-            ->first();
+        $progress = Progress::query()->firstOrNew([
+            'user_id'   => $user->id,
+            'course_id' => $test->course_id ?? null,
+            'date'      => Carbon::today(),
+        ]);
 
-        if ($progress) {
-            $progress->colum += $colum;
-            $progress->save();
-        } else {
-            Progress::query()->create([
-                'course_id' => $test->course_id ?? null,
-                'date' => Carbon::now(),
-                'colum' => $colum,
-            ]);
-        }
+        $progress->colum = ($progress->colum ?? 0) + $colum;
+        StudentCourse::query()->where('user_id',$user->id)->where('course_id',$progress->course_id)->increment('exp',$colum);
+        $progress->save();
 
         return $tests;
     }
+
+
+
+    public function fd()
+    {
+
+    }
+
 
 }

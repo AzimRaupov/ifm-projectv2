@@ -5,19 +5,59 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCourseRequest;
 use App\Models\Course;
 use App\Models\Step;
+use App\Models\StudentCourse;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Cassandra\Date;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\GenerateRodmap;
+use Illuminate\Support\Str;
 use function Pest\Laravel\json;
-
+use setasign\Fpdi\Fpdi;
+use tFPDF;
 class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function certificate(Request $request)
+    {
+        $name = "Азим";
+        $surname = "Иванов";
+
+        // FPDI на базе tFPDF
+        // создаем собственный класс-наследник
+        $pdf = new class extends Fpdi {
+            public function __construct()
+            {
+                parent::__construct();
+            }
+        };
+
+        // Загружаем PDF-шаблон
+        $pageCount = $pdf->setSourceFile(storage_path('app/certificate.pdf'));
+        $templateId = $pdf->importPage(1);
+        $size = $pdf->getTemplateSize($templateId);
+
+        $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
+        $pdf->useTemplate($templateId);
+
+        // 🔹 Подключаем TTF-шрифт напрямую
+        $pdf->SetFont('Arial', 'B', 36);
+        $pdf->SetFont('Arial', '', 28);
+        $pdf->SetTextColor(0, 0, 0);
+
+        // Координаты текста
+        $pdf->SetXY(70, 150);
+        $pdf->Write(10, "$name $surname");
+
+        // Отдаём PDF в браузер
+        return response($pdf->Output('S'))
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="certificate.pdf"');
+    }    public function index()
     {
 
     }
@@ -27,14 +67,11 @@ class CourseController extends Controller
         return view('course.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(CreateCourseRequest $request)
     {
        $user=Auth::user();
         $date_start=Carbon::today();
-      $map=GenerateRodmap::generateRodmap($request,$user);
+      $map=GenerateRodmap::generateDescriptionn($request,$user);
       dd($map);
 
     }
@@ -44,15 +81,14 @@ function progress(Request $request)
     $course = Course::where('id', $request->id)
         ->with([
             'skills',
-            'steps'
+            'steps',
+            'step_student'=>function ($q) {
+                $q->where('status','1');
+            }
         ])
         ->first();
-
-    foreach ($course->steps as $list){
-        if($list->status==1){
-            $complete+=$list->experience;
-        }
-    }
+    $complete=count($course->step_student);
+    $complete = count($course->steps) > 0 ? round(($complete / count($course->steps)) * 100, 2) : 0;
     return view('course.progress',compact(['course','complete']));
 
 }
@@ -62,21 +98,20 @@ function progress(Request $request)
         $course = Course::query()
             ->where('id', $request->input('id'))
             ->firstOrFail();
+        $student_course=StudentCourse::query()->where('user_id',$user->id)->where('course_id',$course->id)->first();
 
-        return view('course.show',compact('course'));
+            return view('course.show_rodmap',compact('course','student_course'));
+
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         //

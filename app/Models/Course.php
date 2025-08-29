@@ -12,6 +12,10 @@ class Course extends Model
     {
         return $this->hasMany(Step::class);
     }
+    public function step_student()
+    {
+        return $this->hasMany(StepStudent::class);
+    }
     public function tests()
     {
         return $this->hasMany(Test::class);
@@ -20,6 +24,11 @@ class Course extends Model
     {
         return $this->hasMany(Skill::class);
     }
+    public function students()
+    {
+        return $this->belongsToMany(User::class,'student_courses');
+    }
+
     public function progress()
     {
         return $this->hasMany(Progress::class);

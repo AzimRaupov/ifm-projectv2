@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class VocabularyStep extends Model
 {
-    protected $fillable=['step_id','title','text'];
+    protected $fillable=['step_id','title','text','exp','course_id'];
 
     public function links()
     {

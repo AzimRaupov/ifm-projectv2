@@ -7,9 +7,12 @@ use App\Helpers\GetTest;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Skill;
+use App\Models\SkillStudent;
 use App\Models\Step;
+use App\Models\StepStudent;
 use App\Models\StudentCourse;
 use App\Models\Test;
+use App\Models\UserActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +21,18 @@ class GetController extends Controller
     function skills(Request $request)
     {
         $skills = Skill::where('course_id', $request->id)
-            ->get(['skill', 'score']);
+            ->get(['id', 'skill', 'score']);
+
+
+        $skillStudent = SkillStudent::where('course_id', $request->id)
+            ->where('user_id', Auth::id())
+            ->pluck('score', 'skill_id');
+
+        foreach ($skills as $skill) {
+            if (isset($skillStudent[$skill->id])) {
+                $skill->score = $skillStudent[$skill->id];
+            }
+        }
 
         return response()->json([
             'skills' => $skills->pluck('skill')->values(),
@@ -39,10 +53,20 @@ class GetController extends Controller
         $studentCourses = Course::whereIn('id', $studentCourseIds)
             ->where('user_id', '!=', $user->id)
             ->get();
+        $action = UserActivity::query()
+            ->where('user_id', $user->id)
+            ->get()
+            ->map(function ($item) {
+                // превращаем date в Carbon и получаем день недели (0 = воскресенье, 1 = понедельник ...)
+                $item->weekday = \Carbon\Carbon::parse($item->date)->dayOfWeek;
+                return $item;
+            });
+
         $allCourses = $course->merge($studentCourses);
         $data=[
             'user'=>$user,
             'courses'=>$allCourses,
+            'action'=>$action,
             'skills'=>[
                 'title'=>$skills,
                 'score'=>$score
@@ -68,9 +92,31 @@ class GetController extends Controller
     }
     function steps($id)
     {
-        $course=Course::query()->where('id',$id)->
-        with('steps')->firstOrFail();
-        return response()->json($course->steps,200);
+        $steps = Step::query()
+            ->whereNull('parent_id')
+            ->where('course_id', $id)
+            ->with(['links','step_heirs'=>function ($q) {
+                $q->with('links')->orderBy('sort');
+            }])
+            ->orderBy('sort')
+            ->get();
+
+        $stepStatuses = StepStudent::query()
+            ->where('course_id', $id)
+            ->pluck('status', 'step_id');
+
+        foreach ($steps as $step) {
+            $step->status = $stepStatuses[$step->id] ?? null;
+
+            foreach ($step->step_heirs as $child) {
+                $child->status = $stepStatuses[$child->id] ?? null;
+            }
+        }
+
+
+
+
+        return response()->json($steps,200);
     }
     public function status_step(Request $request)
     {

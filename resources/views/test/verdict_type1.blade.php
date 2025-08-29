@@ -12,7 +12,7 @@
              aria-labelledby="test_nav{{ $item->id }}">
             <div class="card-body" data-name="{{$item->id}}" data-value="{{$item->type_test}}">
                 <div class="alert {{$verdict[$index]->verdict == '2' ? 'alert-soft-success' : 'alert-soft-danger'}} text-center" role="alert">
-                    {{$verdict[$index]->verdict == '2' ? 'Правильное решение' : 'Неправильное решение'}}
+                    {{$verdict[$index]->verdict == '2' ? 'Правильное решение +'.$item->score.'exp' : 'Неправильное решение'}}
                 </div>
                 <h2 style="text-align: center">{{$item->text}}</h2> <br>
 

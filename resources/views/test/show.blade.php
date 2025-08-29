@@ -13,7 +13,13 @@
 
         <button onclick="clik()" class="btn btn-primary w-100">Проверить</button>
     </div>
-
+<style>
+    input[type="radio"] {
+        transform: scale(1.5); /* увеличь значение, если нужно больше */
+        margin-right: 8px;
+        cursor: pointer;
+    }
+</style>
     <script>
         // Initialize test as an object
         let test = {};

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('progress', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained('courses');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');;
             $table->integer('colum')->default(0);
             $table->date('date');
             $table->timestamps();

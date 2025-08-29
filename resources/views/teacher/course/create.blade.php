@@ -32,9 +32,9 @@
                 <label class="form-label" for="level" style="font-size: 16px; font-weight: 600;">Ваш уроваень учеников</label>
                 <select name="level" id="level" class="form-select"
                         style="border-radius: 10px; padding: 15px; font-size: 16px; background-color: #f0f3f5; border: 1px solid #bdc3c7; transition: all 0.3s ease;">
-                    <option value="ignorant">Не чего не знаю</option>
-                    <option value="knowing">Уже знаю</option>
-                    <option value="experienced">Хорошо знаю</option>
+                    <option value="beginner">Ночинаюший</option>
+                    <option value="intermediate">Продолжаюший</option>
+                    <option value="advanced">Професионал</option>
                 </select>
             </div>
         </div>

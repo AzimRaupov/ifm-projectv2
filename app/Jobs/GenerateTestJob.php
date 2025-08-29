@@ -163,7 +163,7 @@ class GenerateTestJob implements ShouldQueue
                     ];
                     $result_create=Test::query()->create($create_data);
                     $create_data=[];
-
+                     $step->course->increment('ex',$test['score']);
 
                     if($type=="one_correct"){
                         $insert_correct[]=[

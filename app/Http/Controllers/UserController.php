@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\StudentCourse;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,23 +23,30 @@ class UserController extends Controller
            $user=User::query()->where('google_id',$userGoogle->id)->first();
 
            if(!$user){
-               $userr=User::query()->where('email',$userGoogle->email)->first();
-$userr->google_id=$userGoogle->id;
-$userr->save();
-               return redirect()->route('dashboard');
+               $user=User::query()->where('email',$userGoogle->email)->first();
+$user->google_id=$userGoogle->id;
+$user->save();
+               return redirect()->route($user->role.'.dashboard');
 
            }
            else{
                Auth::login($user);
            }
-           return redirect()->route('dashboard');
+
+           return redirect()->route($user->role.'.dashboard');
     }
     public function dashboard(Request $request)
     {
         $user = Auth::user();
-        $courses = Course::where('user_id', $user->id)->with(['steps','progress'])->get();
 
-        foreach ($courses as $course) {
+        $courses_student=StudentCourse::query()->where('user_id', $user->id)->pluck('id');
+        $courses=Course::query()->whereIn('id',$courses_student)->with(['steps',
+            'progress'=>function ($q) use ($user) {
+               $q->where('user_id',$user->id);
+            }
+            ]
+        )->get();
+         foreach ($courses as $course) {
             $complete = 0;
             $sr=0;
             $ps=0;
@@ -68,16 +76,23 @@ $userr->save();
             }
             $course->complete=$complete;
         }
-        return view('dashboard', ['courses' => $courses]);
+        return view('student.dashboard', ['courses' => $courses]);
 
     }
 
-    public function profile()
+    public function profile_settings()
     {
         $user=Auth::user();
 
         return view('user.profile');
 
+
+    }
+    public function profile(Request $request)
+    {
+
+        $user=User::query()->find($request->id);
+        return view('user.public_profile',compact('user'));
 
     }
     public function update(Request $request)

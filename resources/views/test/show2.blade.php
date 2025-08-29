@@ -1,7 +1,93 @@
 @extends('layouts.app')
 
 @section('content-main')
+<style>
+    input[type="radio"],
+    input[type="checkbox"] {
+        transform: scale(1.5); /* увеличивает размер */
+        margin-right: 8px;
+        cursor: pointer;
+    }
+    /*  dfd*/
 
+
+    /* Общий стиль карточек теста */
+    .tests_list.card {
+        max-width: 100%;
+        margin: 0 auto;
+        background-color: #d6e1f1;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    /* Контейнер с шагами matching */
+    .matching-test {
+        gap: 15px;
+    }
+
+    /* На телефонах и планшетах */
+    @media (max-width: 768px) {
+        .tests_list.card {
+            width: 100%;
+            margin-left: 0;
+            padding: 10px;
+        }
+
+        /* Для matching: элементы один под другим */
+        .matching-test .col-md-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        /* Уменьшаем кнопки */
+        .next-tab-btn,
+        .btn-success {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        /* Радиокнопки и чекбоксы с большим кликабельным полем */
+        .form-check-input {
+            transform: scale(1.3);
+            margin-right: 8px;
+        }
+    }
+
+    /* На совсем маленьких экранах */
+    @media (max-width: 480px) {
+        h2 {
+            font-size: 18px;
+        }
+        .list-group-item {
+            font-size: 14px;
+            padding: 8px;
+        }
+    }
+
+    /* Общий стиль для matching */
+    .matching-test {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    /* Колонки для ПК */
+    .matching-test .col-md-6 {
+        flex: 0 0 48%; /* почти 50%, но с зазором */
+        max-width: 48%;
+    }
+
+    /* На телефоне — вертикально */
+    @media (max-width: 768px) {
+        .matching-test .col-md-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
+
+
+</style>
     <br>
     <div class="text-center">
         <ul class="nav nav-segment nav-pills mb-7" role="tablist">
@@ -49,6 +135,7 @@
                             @endforeach
                         @else
                             <p class="text-danger">{{ dd($test) }}</p>
+
                         @endif
 
                     @elseif ($test->type_test == "matching")

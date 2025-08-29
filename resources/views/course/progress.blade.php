@@ -83,6 +83,7 @@
                                     <div class="progress-bar bg-primary" role="progressbar" style="width: {{$complete}}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <span class="ms-4">{{$complete}}%</span>
+
                             </div>
                         </div>
                         <!-- End Card -->
@@ -91,15 +92,20 @@
                         <div class="card mb-3 mb-lg-5">
                             <!-- Header -->
                             <div class="card-header card-header-content-between">
-                                <h4 class="card-header-title">Пройденые шаги</h4>
+                                <h4 class="card-header-title">Пройденые шаги</h4>                             <span>{{$course->step_student->sum('ex').'/'.$course->steps->sum('experience')}} ex</span>
+
                             </div>
                             <!-- End Header -->
 
                             <!-- Body -->
+                            @php
+                                $completedStepIds = $course->step_student->pluck('step_id')->toArray();
+                            @endphp
+
                             <div class="card-body">
                                 <ul class="list-unstyled list-py-2 text-dark mb-0">
                                     @foreach($course->steps as $step)
-                                        @if($step->status==1)
+                                        @if(in_array($step->id, $completedStepIds))
                                     <li><a href="{{route('test.show')}}?id={{$step->id}}">{{$step->title}}</a></li>
                                         @endif
                                             @endforeach
@@ -154,12 +160,11 @@
                             <!-- Body -->
                             <div class="card-body card-body-height" style="overflow: hidden; height: auto; display: flex; justify-content: center; align-items: center;">
                                 <div>
-                                    <canvas id="radarChart" width="550" height="350"></canvas>
+                                    <canvas id="radarChart"></canvas>
                                 </div>
                             </div>
                             <!-- End Body -->
                         </div>
-                        <!-- End Card -->
 
 
                     </div>
@@ -170,6 +175,26 @@
         </div>
         <!-- End Row -->
     </div>
+    <style>
+        #radarChart {
+            max-width: 650px;
+            height: 450px;
+        }
+
+        @media (max-width: 768px) {
+            #radarChart {
+                max-width: 100%;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #radarChart {
+                height: 200px;
+            }
+        }
+
+    </style>
 
 
     <div class="footer">
@@ -249,6 +274,8 @@
                     }]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scale: {
                         pointLabels: {
                             fontSize: 15,

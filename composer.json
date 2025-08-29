@@ -10,6 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "^3.1",
         "geoip2/geoip2": "^3.2",
         "laravel/framework": "^12.0",
         "laravel/octane": "^2.9",
@@ -18,7 +19,11 @@
         "laravel/tinker": "^2.10.1",
         "openai-php/client": "^0.10.3",
         "orhanerday/open-ai": "^5.3",
-        "spiral/roadrunner": "^2025.1"
+        "setasign/fpdf": "^1.8",
+        "setasign/fpdi": "^2.6",
+        "spatie/browsershot": "^5.0",
+        "spiral/roadrunner": "^2025.1",
+        "tecnickcom/tcpdf": "^6.10"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
