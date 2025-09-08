@@ -26,7 +26,10 @@ class CourseController extends Controller
 {
     public function index($id)
     {
-        $course=Course::query()->where('id',$id)->with(['students'])->first();
+        $course=Course::query()->where('id',$id)->with(['students'=>function ($q) {
+            $q->orderBy('exp','desc');
+        }])
+            ->first();
         return view('teacher.course.dashboard',['course'=>$course]);
 
     }
@@ -38,19 +41,20 @@ class CourseController extends Controller
     {
         $user=Auth::user();
         $date_start=Carbon::today();
-        $map=GenerateRodmap::generateDescriptionn($request,$user);
+        $map=GenerateRodmap::generateRodmap($request,$user);
+        $data=$map["map"];
 
         $course=Course::query()->create([
             'user_id'=>$user->id,
             'topic'=>$map['topic_course'],
             'type'=>'public',
+            'step'=>count($data),
             'freetime'=>$request->input('freetime'),
             'level'=>$request->input('level'),
             'date_start'=>$date_start
         ]);
         dispatch(new DownloadLogoJob((object)['id' => $course->id]));
 
-        $data=$map["map"];
         $skills=[];
         foreach ($map['skills'] as $list){
             $skills[] = [
@@ -109,8 +113,14 @@ class CourseController extends Controller
     }
 public function edit(Request $request)
 {
-    $step=Step::query()->where('id',$request->id)->with('vocabularies')->first();
-    return view('teacher.course.edit',['vocabulary'=>$step->vocabularies[0]]);
+    $user=Auth::user();
+    $course=Course::query()->where('type','public')->
+        where('user_id',$user->id)->
+        where('id',$request->id)->
+        with(['steps','skills'])->
+        first();
+
+        return view('teacher.course.edit',['course'=>$course]);
 }
 
     public function subscribe(Request $request)

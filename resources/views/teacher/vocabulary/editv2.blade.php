@@ -254,7 +254,7 @@
             const xhr = new XMLHttpRequest();
             xhr.withCredentials = true; // обязательно, если у тебя CSRF
 
-            xhr.open('POST', '{{ route("api.img.upload") }}');
+            xhr.open('POST', '{{ route("api.upload") }}');
 
             xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
 
@@ -295,6 +295,7 @@
 
             const formData = new FormData();
             formData.append('file', blobInfo.blob(), blobInfo.filename());
+            formData.append('dir', 'vocabulary'); // вот так правильно передаётся папка
 
             xhr.send(formData);
         });

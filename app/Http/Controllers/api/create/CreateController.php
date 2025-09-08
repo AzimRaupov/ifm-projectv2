@@ -27,11 +27,11 @@ use Orhanerday\OpenAi\OpenAi;
 
 class CreateController extends Controller
 {
-    public function img(Request $request)
+    public function upload(Request $request)
     {
         if ($request->hasFile('file')) {
             // Сохраняем файл в storage/app/public/uploads
-            $path = $request->file('file')->store('uploads', 'public');
+            $path = $request->file('file')->store($request->dir, 'public');
 
             // Получаем публичный URL
 
@@ -62,19 +62,20 @@ class CreateController extends Controller
     {
         $user=Auth::user();
         $date_start=Carbon::today();
-        $map=GenerateRodmap::generateRodmap($request,$user);
+        $map=GenerateRodmap::generateDescriptionn($request,$user);
+        $data=$map["map"];
 
         $course=Course::query()->create([
             'user_id'=>$user->id,
             'topic'=>$map['topic_course'],
             'type'=>'private',
+            'step'=>count($data),
             'freetime'=>$request->input('freetime'),
             'level'=>$request->input('level'),
             'date_start'=>$date_start
         ]);
         dispatch(new DownloadLogoJob((object)['id' => $course->id]));
 
-        $data=$map["map"];
         $skills=[];
         foreach ($map['skills'] as $list){
             $skills[] = [
@@ -85,7 +86,7 @@ class CreateController extends Controller
         }
         Skill::insert($skills);
         $create=[];
-        foreach ($data as $list){
+        foreach ($data as $index=>$list){
             $course->increment('ex',$list['experience']);
             if($list['type']=='parent'){
                 $create=[
@@ -94,7 +95,9 @@ class CreateController extends Controller
                     'title'=>$list['topic'],
                     'experience'=>$list['experience'],
                     'type'=>$list['type'],
-                    'heirs' => isset($list['heirs']) ? json_encode($list['heirs']) : null
+                    'heirs' => isset($list['heirs']) ? json_encode($list['heirs']) : null,
+                    'sort'=>$index
+
                 ];
                 $st=Step::query()->create($create);
             }
@@ -106,7 +109,9 @@ class CreateController extends Controller
                     'title'=>$list['topic'],
                     'experience'=>$list['experience'],
                     'type'=>$list['type'],
-                    'heirs' => isset($list['heirs']) ? json_encode($list['heirs']) : null
+                    'heirs' => isset($list['heirs']) ? json_encode($list['heirs']) : null,
+                    'sort'=>$index
+
                 ]);
             }
 

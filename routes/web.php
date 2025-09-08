@@ -8,10 +8,12 @@ Route::get('/', function () {
 })->name('home');
 Route::get('/test/create',[\App\Http\Controllers\api\create\CreateController::class,'c_test'])->name('t');
 
-Route::get('/dashboard',[\App\Http\Controllers\UserController::class,'dashboard'])->middleware(['auth', 'verified'])->name('student.dashboard');
+
+Route::get('/dashboard',[\App\Http\Controllers\UserController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/fg',[\App\Http\Controllers\TestController::class,'send']);
 Route::get('/google/auth',[\App\Http\Controllers\UserController::class,'google_auth'])->name('google.auth');
 Route::get('/google-calback',[\App\Http\Controllers\UserController::class,'google_callback'])->name('google.callback');
+
 Route::middleware('auth')->group(function () {
 
     Route::prefix('course')->group(function (){
@@ -19,7 +21,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/progress',[\App\Http\Controllers\CourseController::class,'progress'])->name('course.progress');
         Route::get('/certificate',[\App\Http\Controllers\CourseController::class,'certificate'])->name('course.certificate');
         Route::get('/subscribe',[\App\Http\Controllers\teacher\CourseController::class,'subscribe'])->name('course.subscribe');
-
+        Route::get('/tutorial',[\App\Http\Controllers\CourseController::class,'tutorial'])->name('course.tutorial');
     });
 
     Route::get('profile/settings',[\App\Http\Controllers\UserController::class,'profile_settings'])->name('profile.settings');

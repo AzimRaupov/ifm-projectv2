@@ -431,28 +431,6 @@
     <script>
        let save_button=document.getElementById('save');
 
-       async function reqman(url,method,body) {
-           try {
-               const response = await fetch(url, {
-                   method: method,
-                   headers: {
-                       "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                       "Content-Type": "application/json",
-                   },
-                   body: JSON.stringify(body),
-               });
-
-               if (!response.ok) {
-                   throw new Error(`Ошибка HTTP: ${response.status}`);
-               }
-
-               const data = await response.json();
-               showSuccessToast();
-               return data;
-           } catch (error) {
-               console.error("Ошибка при загрузке шагов курса:", error);
-           }
-       }
 
 
 
@@ -625,6 +603,7 @@
             console.log("Новый порядок родителей:", order);
             reqman("{{ route('api.teacher.step.sort') }}", "POST", {type:'parents',list:order}).then(rr => {
                 console.log(rr);
+                showSuccessToast();
                 save_button.disabled = false;
             });
 
@@ -641,6 +620,7 @@
 
             reqman("{{ route('api.teacher.step.sort') }}", "POST",  {type:'childs',list:order}).then(rr => {
                 console.log(rr);
+                showSuccessToast()
                 save_button.disabled = false;
             });
         }
@@ -654,7 +634,7 @@
             const xhr = new XMLHttpRequest();
             xhr.withCredentials = true; // обязательно, если у тебя CSRF
 
-            xhr.open('POST', '{{ route("api.img.upload") }}');
+            xhr.open('POST', '{{ route("api.upload") }}');
 
             xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
 
@@ -695,6 +675,7 @@
 
             const formData = new FormData();
             formData.append('file', blobInfo.blob(), blobInfo.filename());
+            formData.append('dir', 'description'); // вот так правильно передаётся папка
 
             xhr.send(formData);
         });

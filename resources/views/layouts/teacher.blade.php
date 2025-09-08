@@ -723,7 +723,7 @@
                     </div>
 
                     <div class="nav-item">
-                        <a class="nav-link " data-placement="left" href="{{route('teacher.dashboard')}}">
+                        <a class="nav-link " data-placement="left" href="{{route('dashboard')}}">
                             <i class="bi bi-bar-chart nav-icon"></i>
                             <span class="nav-link-title">Понель управление</span>
                         </a>
@@ -3959,6 +3959,7 @@
             // =======================================================
             HSCore.components.HSChartJS.init('.js-chart')
 
+            new HSFileAttach('.js-file-attach')
 
             // INITIALIZATION OF CHARTJS
             // =======================================================

@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Course;
 use App\Models\Progress;
 use App\Models\Skill;
 use App\Models\SkillStudent;
@@ -141,19 +142,17 @@ class TestClass
         foreach ($tests as $test) {
             $ok = '1';
 
-            $tskill = SkillStudent::query()
-                ->where('skill_id', $test->skill->id)
-                ->where('user_id', $user->id)
-                ->first();
-
-            if (!$tskill) {
-                $tskill = SkillStudent::query()->create([
+            $tskill = SkillStudent::firstOrCreate(
+                [
                     'skill_id' => $test->skill->id,
                     'user_id' => $user->id,
-                    'course_id'=>$test->course_id,
+                ],
+                [
+                    'course_id' => $test->course_id,
                     'score' => 0
-                ]);
-            }
+                ]
+            );
+
 
             if (!isset($answer[$i]['answer'])) {
                 TestStudent::query()->create([
@@ -220,17 +219,15 @@ class TestClass
             $tskill->save();
             $i++;
         }
-       $step=StepStudent::query()->where('step_id',$request->id)->first();
-        if(!$step){
-            StepStudent::query()->create([
-                'step_id'=>$request->id,
-                'user_id'=>$user->id,
-                'ex'=>$tskill->score,
-                'course_id'=>Step::query()->with('course')->find($request->id)->course->id,
-                'status'=>'1',
+        $step = StepStudent::firstOrCreate(
+            ['step_id' => $request->id, 'user_id' => $user->id],
+            [
+                'ex' => $tskill->score,
+                'course_id' => $test->course_id,
+                'status' => '1',
+            ]
+        );
 
-            ]);
-        }
 
         $progress = Progress::query()->firstOrNew([
             'user_id'   => $user->id,
@@ -239,8 +236,17 @@ class TestClass
         ]);
 
         $progress->colum = ($progress->colum ?? 0) + $colum;
-        StudentCourse::query()->where('user_id',$user->id)->where('course_id',$progress->course_id)->increment('exp',$colum);
         $progress->save();
+
+        StudentCourse::where('user_id', $user->id)
+            ->where('course_id', $progress->course_id)
+            ->update([
+                'exp' => \DB::raw("exp + {$colum}"),
+                'complete' => \DB::raw("complete + 1")
+            ]);
+
+        GlobalMethods::course_cm($test->course_id,$user->id);
+
 
         return $tests;
     }

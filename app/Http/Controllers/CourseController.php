@@ -18,46 +18,22 @@ use setasign\Fpdi\Fpdi;
 use tFPDF;
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
 
+
+    public function tutorial()
+    {
+        return view('course.tutorial');
+    }
     public function certificate(Request $request)
     {
-        $name = "Азим";
-        $surname = "Иванов";
 
-        // FPDI на базе tFPDF
-        // создаем собственный класс-наследник
-        $pdf = new class extends Fpdi {
-            public function __construct()
-            {
-                parent::__construct();
-            }
-        };
+        $user=Auth::user();
+        $course=Course::with('skills')->find($request->id);
+        $course_s=StudentCourse::query()->where('user_id',$user->id)->where('course_id',$course->id)->first();
+        return view('course.certificate.template2',['user'=>$user,'course'=>$course,'course_s'=>$course_s]);
 
-        // Загружаем PDF-шаблон
-        $pageCount = $pdf->setSourceFile(storage_path('app/certificate.pdf'));
-        $templateId = $pdf->importPage(1);
-        $size = $pdf->getTemplateSize($templateId);
-
-        $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
-        $pdf->useTemplate($templateId);
-
-        // 🔹 Подключаем TTF-шрифт напрямую
-        $pdf->SetFont('Arial', 'B', 36);
-        $pdf->SetFont('Arial', '', 28);
-        $pdf->SetTextColor(0, 0, 0);
-
-        // Координаты текста
-        $pdf->SetXY(70, 150);
-        $pdf->Write(10, "$name $surname");
-
-        // Отдаём PDF в браузер
-        return response($pdf->Output('S'))
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'inline; filename="certificate.pdf"');
-    }    public function index()
+    }
+    public function index()
     {
 
     }

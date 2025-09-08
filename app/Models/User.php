@@ -49,4 +49,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function courses()
+    {
+       return $this->belongsToMany(Course::class,'student_courses','user_id','course_id')->withPivot(['complete']);
+    }
 }

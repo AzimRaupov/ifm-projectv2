@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'is_teacher' => \App\Http\Middleware\IsTeacher::class,
         ]);
+        $middleware->redirectUsersTo(fn () => route('dashboard'));
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

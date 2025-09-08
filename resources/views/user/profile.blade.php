@@ -15,13 +15,13 @@
                         </ol>
                     </nav>
 
-                    <h1 class="page-header-title">Settings</h1>
+                    <h1 class="page-header-title">Настройка</h1>
                 </div>
                 <!-- End Col -->
 
                 <div class="col-sm-auto">
-                    <a class="btn btn-primary" href="user-profile-my-profile.html">
-                        <i class="bi-person-fill me-1"></i> My profile
+                    <a class="btn btn-primary" href="{{route('profile.edit',['id'=>$user->id])}}">
+                        <i class="bi-person-fill me-1"></i> Мой профиль
                     </a>
                 </div>
                 <!-- End Col -->
@@ -66,52 +66,24 @@
                    }'>
                             <li class="nav-item">
                                 <a class="nav-link active" href="#content">
-                                    <i class="bi-person nav-icon"></i> Basic information
+                                    <i class="bi-person nav-icon"></i> Основная информация
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#emailSection">
-                                    <i class="bi-at nav-icon"></i> Email
-                                </a>
-                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="#passwordSection">
-                                    <i class="bi-key nav-icon"></i> Password
+                                    <i class="bi-key nav-icon"></i> Пароль
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#preferencesSection">
-                                    <i class="bi-gear nav-icon"></i> Preferences
+                                    <i class="bi-gear nav-icon"></i> Язык
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#twoStepVerificationSection">
-                                    <i class="bi-shield-lock nav-icon"></i> Two-step verification
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#recentDevicesSection">
-                                    <i class="bi-phone nav-icon"></i> Recent devices
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#notificationsSection">
-                                    <i class="bi-bell nav-icon"></i> Notifications
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#connectedAccountsSection">
-                                    <i class="bi-diagram-3 nav-icon"></i> Connected accounts
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#socialAccountsSection">
-                                    <i class="bi-instagram nav-icon"></i> Social accounts
-                                </a>
-                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="#deleteAccountSection">
-                                    <i class="bi-trash nav-icon"></i> Delete account
+                                    <i class="bi-trash nav-icon"></i> Удалить аккаунт
                                 </a>
                             </li>
                         </ul>
@@ -128,9 +100,22 @@
                         <!-- Profile Cover -->
                         <div class="profile-cover">
                             <div class="profile-cover-img-wrapper">
-                                <img id="profileCoverImg" class="profile-cover-img" src="assets/img/1920x400/img2.jpg" alt="Image Description">
+                                <img id="profileCoverImg" class="profile-cover-img" src="{{asset('assets/img/1920x400/img2.jpg')}}" alt="Image Description">
 
-
+                                <!-- Custom File Cover -->
+                                <div class="profile-cover-content profile-cover-uploader p-3">
+                                    <input type="file" class="js-file-attach profile-cover-uploader-input" id="profileCoverUplaoder" data-hs-file-attach-options='{
+                                "textTarget": "#profileCoverImg",
+                                "mode": "image",
+                                "targetAttr": "src",
+                                "allowTypes": [".png", ".jpeg", ".jpg"]
+                             }'>
+                                    <label class="profile-cover-uploader-label btn btn-sm btn-white" for="profileCoverUplaoder">
+                                        <i class="bi-camera-fill"></i>
+                                        <span class="d-none d-sm-inline-block ms-1">Upload header</span>
+                                    </label>
+                                </div>
+                                <!-- End Custom File Cover -->
                             </div>
                         </div>
                         <!-- End Profile Cover -->
@@ -139,11 +124,41 @@
                         <label class="avatar avatar-xxl avatar-circle avatar-uploader profile-cover-avatar" for="editAvatarUploaderModal">
                             <img id="editAvatarImgModal" class="avatar-img" src="assets/img/160x160/img6.jpg" alt="Image Description">
 
+                            <input type="file" class="js-file-attach avatar-uploader-input" id="editAvatarUploaderModal" data-hs-file-attach-options='{
+                            "textTarget": "#editAvatarImgModal",
+                            "mode": "image",
+                            "targetAttr": "src",
+                            "allowTypes": [".png", ".jpeg", ".jpg"]
+                         }'>
 
+                            <span class="avatar-uploader-trigger">
+                  <i class="bi-pencil-fill avatar-uploader-icon shadow-sm"></i>
+                </span>
                         </label>
                         <!-- End Avatar -->
 
+                        <!-- Body -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <span class="d-block fs-5 mb-2">Who can see your profile photo? <i class="bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Your visibility setting only applies to your profile photo. Your header image is always visible to anyone."></i></span>
 
+                                    <!-- Select -->
+                                    <div class="tom-select-custom">
+                                        <select class="js-select form-select" data-hs-tom-select-options='{
+                                "searchInDropdown": false,
+                                "dropdownWidth": "auto"
+                              }'>
+                                            <option value="privacy1" data-option-template='<div class="d-flex align-items-start"><div class="flex-shrink-0"><i class="bi-globe"></i></div><div class="flex-grow-1 ms-2"><span class="d-block fw-semibold">Anyone</span><span class="tom-select-custom-hide small">Visible to anyone who can view your content. Accessible by installed apps.</span></div></div>'>Anyone</option>
+                                            <option value="privacy2" data-option-template='<div class="d-flex align-items-start"><div class="flex-shrink-0"><i class="bi-lock"></i></div><div class="flex-grow-1 ms-2"><span class="d-block fw-semibold">Only you</span><span class="tom-select-custom-hide small">Only visible to you.</span></div></div>'>Only you</option>
+                                        </select>
+                                    </div>
+                                    <!-- End Select -->
+                                </div>
+                                <!-- End Col -->
+                            </div>
+                            <!-- End Row -->
+                        </div>
                         <!-- End Body -->
                     </div>
                     <!-- End Card -->
@@ -157,96 +172,38 @@
                         <!-- Body -->
                         <div class="card-body">
                             <!-- Form -->
-                            <form action="{{ route('user.update') }}" method="post">
-                                @csrf
-
-                                <!-- Полное имя -->
-                                <div class="row mb-4">
-                                    <label for="name" class="col-sm-3 col-form-label form-label">
-                                        Полное имя
-                                        <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Displayed on public forums, such as Front."></i>
-                                    </label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Имя" value="{{ old('name', auth()->user()->name) }}">
-                                        @error('name')
-                                        <div class="text-danger mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <!-- Email -->
-                                <div class="row mb-4">
-                                    <label for="email" class="col-sm-3 col-form-label form-label">Эль.почта</label>
-                                    <div class="col-sm-9">
-                                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Email" value="{{ old('email', auth()->user()->email) }}">
-                                        @error('email')
-                                        <div class="text-danger mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <!-- Язык -->
-                                <div class="row mb-4">
-                                    <label for="lang" class="col-sm-3 col-form-label form-label">Язык</label>
-                                    <div class="col-sm-9">
-                                        <select class="js-select form-select @error('lang') is-invalid @enderror" id="lang" name="lang">
-                                            <option value="tj" {{ old('lang', auth()->user()->lang) == 'tj' ? 'selected' : '' }}>Таджикский</option>
-                                            <option value="ru" {{ old('lang', auth()->user()->lang) == 'ru' ? 'selected' : '' }}>Русский</option>
-                                            <option value="en" {{ old('lang', auth()->user()->lang) == 'en' ? 'selected' : '' }}>English</option>
-                                        </select>
-                                        @error('lang')
-                                        <div class="text-danger mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <!-- Роль -->
-                                <div class="row mb-4">
-                                    <label for="type_user" class="col-sm-3 col-form-label form-label">Роль в жизни</label>
-                                    <div class="col-sm-9">
-                                        <select class="js-select form-select @error('type_user') is-invalid @enderror" id="type_user" name="type_user">
-                                            <option value="schoolboy" {{ old('type_user', auth()->user()->type_user) == 'schoolboy' ? 'selected' : '' }}>Школьник</option>
-                                            <option value="student" {{ old('type_user', auth()->user()->type_user) == 'student' ? 'selected' : '' }}>Студент</option>
-                                            <option value="worker" {{ old('type_user', auth()->user()->type_user) == 'worker' ? 'selected' : '' }}>Работник</option>
-                                        </select>
-                                        @error('type_user')
-                                        <div class="text-danger mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <!-- Кнопка -->
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-                                </div>
-                            </form>
-                            <!-- End Form -->
-                        </div>
-                        <!-- End Body -->
-                    </div>
-                    <!-- End Card -->
-
-                    <!-- Card -->
-                    <div id="emailSection" class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Email</h4>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="card-body">
-                            <p>Your current email address is <span class="fw-semibold">mark@site.com</span></p>
-
-                            <!-- Form -->
                             <form>
                                 <!-- Form -->
                                 <div class="row mb-4">
-                                    <label for="newEmailLabel" class="col-sm-3 col-form-label form-label">New email address</label>
+                                    <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">Имя</label>
+
+
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" name="name" id="emailLabel" placeholder="Email" aria-label="Email" value="mark@site.com">
+                                        </div>
+                                </div>
+                                <!-- End Form -->
+
+                                <!-- Form -->
+                                <div class="row mb-4">
+                                    <label for="emailLabel" class="col-sm-3 col-form-label form-label">Эл.Почта</label>
 
                                     <div class="col-sm-9">
-                                        <input type="email" class="form-control" name="newEmail" id="newEmailLabel" placeholder="Enter new email address" aria-label="Enter new email address">
+                                        <input type="email" class="form-control" name="email" id="emailLabel" placeholder="Email" aria-label="Email" value="mark@site.com">
                                     </div>
                                 </div>
                                 <!-- End Form -->
+
+                                <!-- Form -->
+                                <div class="row mb-4">
+                                    <label for="phoneLabel" class="col-sm-3 col-form-label form-label">Биография</label>
+
+                                    <div class="col-sm-9">
+                                       <textarea name="bio" class="form-control"> </textarea>
+                                    </div>
+                                </div>
+
+
 
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Save changes</button>
@@ -258,10 +215,12 @@
                     </div>
                     <!-- End Card -->
 
+
+
                     <!-- Card -->
                     <div id="passwordSection" class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Change your password</h4>
+                            <h4 class="card-title">Изменить пароль</h4>
                         </div>
 
                         <!-- Body -->
@@ -270,7 +229,7 @@
                             <form id="changePasswordForm">
                                 <!-- Form -->
                                 <div class="row mb-4">
-                                    <label for="currentPasswordLabel" class="col-sm-3 col-form-label form-label">Current password</label>
+                                    <label for="currentPasswordLabel" class="col-sm-3 col-form-label form-label">Текущий пароль</label>
 
                                     <div class="col-sm-9">
                                         <input type="password" class="form-control" name="currentPassword" id="currentPasswordLabel" placeholder="Enter current password" aria-label="Enter current password">
@@ -280,7 +239,7 @@
 
                                 <!-- Form -->
                                 <div class="row mb-4">
-                                    <label for="newPassword" class="col-sm-3 col-form-label form-label">New password</label>
+                                    <label for="newPassword" class="col-sm-3 col-form-label form-label">Новый пороль</label>
 
                                     <div class="col-sm-9">
                                         <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Enter new password" aria-label="Enter new password">
@@ -290,22 +249,21 @@
 
                                 <!-- Form -->
                                 <div class="row mb-4">
-                                    <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label form-label">Confirm new password</label>
+                                    <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label form-label">Повторите новый пароль</label>
 
                                     <div class="col-sm-9">
                                         <div class="mb-3">
                                             <input type="password" class="form-control" name="confirmNewPassword" id="confirmNewPasswordLabel" placeholder="Confirm your new password" aria-label="Confirm your new password">
                                         </div>
 
-                                        <h5>Password requirements:</h5>
+                                        <h5>Требования к паролю:</h5>
 
-                                        <p class="fs-6 mb-2">Ensure that these requirements are met:</p>
+                                        <p class="fs-6 mb-2">Убедитесь, что выполнены следующие требования:</p>
 
                                         <ul class="fs-6">
-                                            <li>Minimum 8 characters long - the more, the better</li>
-                                            <li>At least one lowercase character</li>
-                                            <li>At least one uppercase character</li>
-                                            <li>At least one number, symbol, or whitespace character</li>
+                                            <li>Минимальная длина — 8 символов. Чем больше, тем лучше.</li>
+
+                                            <li>По крайней мере одна цифра, символ или пробел</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -435,667 +393,24 @@
                     </div>
                     <!-- End Card -->
 
-                    <!-- Card -->
-                    <div id="recentDevicesSection" class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Recent devices</h4>
-                        </div>
 
-                        <!-- Body -->
-                        <div class="card-body">
-                            <p class="card-text">View and manage devices where you're currently logged in.</p>
-                        </div>
-                        <!-- End Body -->
-
-                        <!-- Table -->
-                        <div class="table-responsive">
-                            <table class="table table-thead-bordered table-nowrap table-align-middle card-table">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th>Browser</th>
-                                    <th>Device</th>
-                                    <th>Location</th>
-                                    <th>Most recent activity</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                <tr>
-                                    <td class="align-items-center">
-                                        <img class="avatar avatar-xss me-2" src="assets/svg/brands/chrome-icon.svg" alt="Image Description"> Chrome on Windows
-                                    </td>
-                                    <td><i class="bi-laptop fs-3 me-2"></i> Dell XPS 15 <span class="badge bg-soft-success text-success ms-1">Current</span></td>
-                                    <td>London, UK</td>
-                                    <td>Now</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="align-items-center">
-                                        <img class="avatar avatar-xss me-2" src="assets/svg/brands/chrome-icon.svg" alt="Image Description"> Chrome on Android
-                                    </td>
-                                    <td><i class="bi-phone fs-3 me-2"></i> Google Pixel 3a</td>
-                                    <td>London, UK</td>
-                                    <td>15, August 2020 15:08</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="align-items-center">
-                                        <img class="avatar avatar-xss me-2" src="assets/svg/brands/chrome-icon.svg" alt="Image Description"> Chrome on Windows
-                                    </td>
-                                    <td><i class="bi-display fs-3 me-2"></i> Microsoft Studio 2</td>
-                                    <td>London, UK</td>
-                                    <td>12, August 2020 20:07</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- End Table -->
-                    </div>
-                    <!-- End Card -->
-
-                    <!-- Card -->
-                    <div id="notificationsSection" class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Notifications</h4>
-                        </div>
-
-                        <!-- Alert -->
-                        <div class="alert alert-soft-dark card-alert text-center" role="alert">
-                            We need permission from your browser to show notifications. <a class="alert-link" href="#">Request permission</a>
-                        </div>
-                        <!-- End Alert -->
-
-                        <form>
-                            <!-- Table -->
-                            <div class="table-responsive datatable-custom">
-                                <table class="table table-thead-bordered table-nowrap table-align-middle table-first-col-px-0">
-                                    <thead class="thead-light">
-                                    <tr>
-                                        <th>Type</th>
-                                        <th class="text-center">
-                                            <div class="mb-1">
-                                                <img class="avatar avatar-xs" src="assets/svg/illustrations/oc-email-at.svg" alt="Image Description" data-hs-theme-appearance="default">
-                                                <img class="avatar avatar-xs" src="assets/svg/illustrations-light/oc-email-at.svg" alt="Image Description" data-hs-theme-appearance="dark">
-                                            </div>
-                                            Email
-                                        </th>
-                                        <th class="text-center">
-                                            <div class="mb-1">
-                                                <img class="avatar avatar-xs" src="assets/svg/illustrations/oc-globe.svg" alt="Image Description" data-hs-theme-appearance="default">
-                                                <img class="avatar avatar-xs" src="assets/svg/illustrations-light/oc-globe.svg" alt="Image Description" data-hs-theme-appearance="dark">
-                                            </div>
-                                            Browser
-                                        </th>
-                                        <th class="text-center">
-                                            <div class="mb-1">
-                                                <img class="avatar avatar-xs" src="assets/svg/illustrations/oc-phone.svg" alt="Image Description" data-hs-theme-appearance="default">
-                                                <img class="avatar avatar-xs" src="assets/svg/illustrations-light/oc-phone.svg" alt="Image Description" data-hs-theme-appearance="dark">
-                                            </div>
-                                            App
-                                        </th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    <tr>
-                                        <td>New for you</td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox1">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox1"></label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox2">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox2"></label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox3">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox3"></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Account activity <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Get important notifications about you or activity you've missed"></i></td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox4">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox4"></label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox5" checked="">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox5"></label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox6" checked="">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox6"></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>A new browser used to sign in</td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox7" checked="">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox7"></label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox8" checked="">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox8"></label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox9" checked="">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox9"></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>A new device is linked</td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox10">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox10"></label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox11" checked="">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox11"></label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox12">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox12"></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>A new device connected <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Email me when a new device connected"></i></td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox13">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox13"></label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox14" checked="">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox14"></label>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" value="" id="editUserModalAlertsCheckbox15" checked="">
-                                                <label class="form-check-label" for="editUserModalAlertsCheckbox15"></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- End Table -->
-                        </form>
-
-                        <hr>
-
-                        <!-- Body -->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm">
-                                    <!-- Form -->
-                                    <div class="mb-4">
-                                        <p class="card-text">When should we send you notifications?</p>
-
-                                        <!-- Select -->
-                                        <div class="tom-select-custom">
-                                            <select class="js-select form-select" autocomplete="off" data-hs-tom-select-options='{
-                                    "searchInDropdown": false,
-                                    "width": "15rem",
-                                    "hideSearch": true
-                                  }'>
-                                                <option value="whenToSendNotification1">Always</option>
-                                                <option value="whenToSendNotification2">Only when I'm online</option>
-                                            </select>
-                                        </div>
-                                        <!-- End Select -->
-                                    </div>
-                                    <!-- End Form -->
-                                </div>
-                                <!-- End Col -->
-
-                                <div class="col-sm">
-                                    <!-- Form -->
-                                    <div class="mb-4">
-                                        <p class="card-text">Send me a daily summary ("Daily Digest") of task activity.</p>
-
-                                        <div class="row">
-                                            <div class="col-auto mb-2">
-                                                <!-- Select -->
-                                                <div class="tom-select-custom">
-                                                    <select class="js-select form-select" autocomplete="off" data-hs-tom-select-options='{
-                                      "searchInDropdown": false,
-                                      "hideSearch": true,
-                                      "dropdownWidth": "10rem"
-                                    }'>
-                                                        <option value="EveryDay">Every day</option>
-                                                        <option value="weekdays" selected="">Weekdays</option>
-                                                        <option value="Never">Never</option>
-                                                    </select>
-                                                </div>
-                                                <!-- End Select -->
-                                            </div>
-                                            <!-- End Col -->
-
-                                            <div class="col-auto mb-2">
-                                                <!-- Select -->
-                                                <div class="tom-select-custom">
-                                                    <select class="js-select form-select" autocomplete="off" data-hs-tom-select-options='{
-                                      "searchInDropdown": false,
-                                      "hideSearch": true,
-                                      "dropdownWidth": "10rem"
-                                    }'>
-                                                        <option value="0">at 12 AM</option>
-                                                        <option value="1">at 1 AM</option>
-                                                        <option value="2">at 2 AM</option>
-                                                        <option value="3">at 3 AM</option>
-                                                        <option value="4">at 4 AM</option>
-                                                        <option value="5">at 5 AM</option>
-                                                        <option value="6">at 6 AM</option>
-                                                        <option value="7">at 7 AM</option>
-                                                        <option value="8">at 8 AM</option>
-                                                        <option value="9" selected="">at 9 AM</option>
-                                                        <option value="10">at 10 AM</option>
-                                                        <option value="11">at 11 AM</option>
-                                                        <option value="12">at 12 PM</option>
-                                                        <option value="13">at 1 PM</option>
-                                                        <option value="14">at 2 PM</option>
-                                                        <option value="15">at 3 PM</option>
-                                                        <option value="16">at 4 PM</option>
-                                                        <option value="17">at 5 PM</option>
-                                                        <option value="18">at 6 PM</option>
-                                                        <option value="19">at 7 PM</option>
-                                                        <option value="20">at 8 PM</option>
-                                                        <option value="21">at 9 PM</option>
-                                                        <option value="22">at 10 PM</option>
-                                                        <option value="23">at 11 PM</option>
-                                                    </select>
-                                                </div>
-                                                <!-- End Select -->
-                                            </div>
-                                            <!-- End Col -->
-                                        </div>
-                                        <!-- End Row -->
-                                    </div>
-                                    <!-- End Form -->
-                                </div>
-                                <!-- End Col -->
-                            </div>
-                            <!-- End Row -->
-
-                            <p class="card-text">In order to cut back on noise, email notifications are grouped together and only sent when you're idle or offline.</p>
-
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                        <!-- End Body -->
-                    </div>
-                    <!-- End Card -->
-
-                    <!-- Card -->
-                    <div id="connectedAccountsSection" class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Connected accounts</h4>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="card-body">
-                            <p class="card-text">Integrated features from these accounts make it easier to collaborate with people you know on Front Dashboard.</p>
-
-                            <!-- Form -->
-                            <form>
-                                <div class="list-group list-group-lg list-group-flush list-group-no-gutters">
-                                    <!-- List Item -->
-                                    <div class="list-group-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="assets/svg/brands/google-icon.svg" alt="Image Description">
-                                            </div>
-
-                                            <div class="flex-grow-1 ms-3">
-                                                <div class="row align-items-center">
-                                                    <div class="col">
-                                                        <h4 class="mb-0">Google</h4>
-                                                        <p class="fs-5 text-body mb-0">Calendar and contacts</p>
-                                                    </div>
-                                                    <!-- End Col -->
-
-                                                    <div class="col-auto">
-                                                        <!-- Form Switch -->
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" id="connectedAccounts1">
-                                                            <label class="form-check-label" for="connectedAccounts1"></label>
-                                                        </div>
-                                                        <!-- End Form Switch -->
-                                                    </div>
-                                                    <!-- End Col -->
-                                                </div>
-                                                <!-- End Row -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End List Item -->
-
-                                    <!-- List Item -->
-                                    <div class="list-group-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="assets/svg/brands/spec-icon.svg" alt="Image Description">
-                                            </div>
-
-                                            <div class="flex-grow-1 ms-3">
-                                                <div class="row align-items-center">
-                                                    <div class="col">
-                                                        <h4 class="mb-0">Spec</h4>
-                                                        <p class="fs-5 text-body mb-0">Project management</p>
-                                                    </div>
-                                                    <!-- End Col -->
-
-                                                    <div class="col-auto">
-                                                        <!-- Form Switch -->
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" id="connectedAccounts2">
-                                                            <label class="form-check-label" for="connectedAccounts2"></label>
-                                                        </div>
-                                                        <!-- End Form Switch -->
-                                                    </div>
-                                                    <!-- End Col -->
-                                                </div>
-                                                <!-- End Row -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End List Item -->
-
-                                    <!-- List Item -->
-                                    <div class="list-group-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="assets/svg/brands/slack-icon.svg" alt="Image Description">
-                                            </div>
-
-                                            <div class="flex-grow-1 ms-3">
-                                                <div class="row align-items-center">
-                                                    <div class="col">
-                                                        <h4 class="mb-0">Slack</h4>
-                                                        <p class="fs-5 text-body mb-0">Communication <a class="link" href="#">Learn more</a></p>
-                                                    </div>
-                                                    <!-- End Col -->
-
-                                                    <div class="col-auto">
-                                                        <!-- Form Switch -->
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" id="connectedAccounts3" checked="">
-                                                            <label class="form-check-label" for="connectedAccounts3"></label>
-                                                        </div>
-                                                        <!-- End Form Switch -->
-                                                    </div>
-                                                    <!-- End Col -->
-                                                </div>
-                                                <!-- End Row -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End List Item -->
-
-                                    <!-- List Item -->
-                                    <div class="list-group-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="assets/svg/brands/mailchimp-icon.svg" alt="Image Description">
-                                            </div>
-
-                                            <div class="flex-grow-1 ms-3">
-                                                <div class="row align-items-center">
-                                                    <div class="col">
-                                                        <h4 class="mb-0">Mailchimp</h4>
-                                                        <p class="fs-5 text-body mb-0">Email marketing service</p>
-                                                    </div>
-                                                    <!-- End Col -->
-
-                                                    <div class="col-auto">
-                                                        <!-- Form Switch -->
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" id="connectedAccounts4" checked="">
-                                                            <label class="form-check-label" for="connectedAccounts4"></label>
-                                                        </div>
-                                                        <!-- End Form Switch -->
-                                                    </div>
-                                                    <!-- End Col -->
-                                                </div>
-                                                <!-- End Row -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End List Item -->
-
-                                    <!-- List Item -->
-                                    <div class="list-group-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <img class="avatar avatar-xs" src="assets/svg/brands/google-webdev-icon.svg" alt="Image Description">
-                                            </div>
-
-                                            <div class="flex-grow-1 ms-3">
-                                                <div class="row align-items-center">
-                                                    <div class="col">
-                                                        <h4 class="mb-0">Google Webdev</h4>
-                                                        <p class="fs-5 text-body mb-0">Tools for Web Developers <a class="link" href="#">Learn more</a></p>
-                                                    </div>
-                                                    <!-- End Col -->
-
-                                                    <div class="col-auto">
-                                                        <!-- Form Switch -->
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" id="connectedAccounts5">
-                                                            <label class="form-check-label" for="connectedAccounts5"></label>
-                                                        </div>
-                                                        <!-- End Form Switch -->
-                                                    </div>
-                                                    <!-- End Col -->
-                                                </div>
-                                                <!-- End Row -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End List Item -->
-                                </div>
-                            </form>
-                            <!-- End Form -->
-                        </div>
-                        <!-- End Body -->
-                    </div>
-                    <!-- End Card -->
-
-                    <!-- Card -->
-                    <div id="socialAccountsSection" class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Social accounts</h4>
-                        </div>
-
-                        <!-- Body -->
-                        <div class="card-body">
-                            <form>
-                                <div class="list-group list-group-lg list-group-flush list-group-no-gutters">
-                                    <!-- Item -->
-                                    <div class="list-group-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <i class="bi-twitter list-group-icon"></i>
-                                            </div>
-
-                                            <div class="flex-grow-1">
-                                                <div class="row align-items-center">
-                                                    <div class="col-sm mb-2 mb-sm-0">
-                                                        <h4 class="mb-0">Twitter</h4>
-                                                        <a class="fs-5" href="#">www.twitter.com/htmlstream</a>
-                                                    </div>
-                                                    <!-- End Col -->
-
-                                                    <div class="col-sm-auto">
-                                                        <a class="btn btn-white btn-sm" href="javascript:;">Disconnect</a>
-                                                    </div>
-                                                    <!-- End Col -->
-                                                </div>
-                                                <!-- End Row -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Item -->
-
-                                    <!-- Item -->
-                                    <div class="list-group-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <i class="bi-facebook list-group-icon"></i>
-                                            </div>
-
-                                            <div class="flex-grow-1">
-                                                <div class="row align-items-center">
-                                                    <div class="col-sm mb-2 mb-sm-0">
-                                                        <h4 class="mb-0">Facebook</h4>
-                                                        <a class="fs-5" href="#">www.facebook.com/htmlstream</a>
-                                                    </div>
-                                                    <!-- End Col -->
-
-                                                    <div class="col-sm-auto">
-                                                        <a class="btn btn-white btn-sm" href="javascript:;">Disconnect</a>
-                                                    </div>
-                                                    <!-- End Col -->
-                                                </div>
-                                                <!-- End Row -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Item -->
-
-                                    <!-- Item -->
-                                    <div class="list-group-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <i class="bi-slack list-group-icon"></i>
-                                            </div>
-
-                                            <div class="flex-grow-1">
-                                                <div class="row align-items-center">
-                                                    <div class="col-sm mb-2 mb-sm-0">
-                                                        <h4 class="mb-0">Slack</h4>
-                                                        <p class="fs-5 text-body mb-0">Not connected</p>
-                                                    </div>
-                                                    <!-- End Col -->
-
-                                                    <div class="col-sm-auto">
-                                                        <a class="btn btn-white btn-sm" href="javascript:;">Connect</a>
-                                                    </div>
-                                                    <!-- End Col -->
-                                                </div>
-                                                <!-- End Row -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Item -->
-
-                                    <!-- Item -->
-                                    <div class="list-group-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <i class="bi-linkedin list-group-icon"></i>
-                                            </div>
-
-                                            <div class="flex-grow-1">
-                                                <div class="row align-items-center">
-                                                    <div class="col-sm mb-2 mb-sm-0">
-                                                        <h4 class="mb-0">Linkedin</h4>
-                                                        <a class="fs-5" href="#">www.linkedin.com/htmlstream</a>
-                                                    </div>
-                                                    <!-- End Col -->
-
-                                                    <div class="col-sm-auto">
-                                                        <a class="btn btn-white btn-sm" href="javascript:;">Disconnect</a>
-                                                    </div>
-                                                    <!-- End Col -->
-                                                </div>
-                                                <!-- End Row -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Item -->
-
-                                    <!-- Item -->
-                                    <div class="list-group-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <i class="bi-google list-group-icon"></i>
-                                            </div>
-
-                                            <div class="flex-grow-1">
-                                                <div class="row align-items-center">
-                                                    <div class="col-sm mb-2 mb-sm-0">
-                                                        <h4 class="mb-0">Google</h4>
-                                                        <p class="fs-5 text-body mb-0">Not connected</p>
-                                                    </div>
-                                                    <!-- End Col -->
-
-                                                    <div class="col-sm-auto">
-                                                        <a class="btn btn-white btn-sm" href="javascript:;">Connect</a>
-                                                    </div>
-                                                    <!-- End Col -->
-                                                </div>
-                                                <!-- End Row -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Item -->
-                                </div>
-                            </form>
-                        </div>
-                        <!-- End Body -->
-                    </div>
                     <!-- End Card -->
 
                     <!-- Card -->
                     <div id="deleteAccountSection" class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Delete your account</h4>
+                            <h4 class="card-title">Удалить свою учетную запись</h4>
                         </div>
 
                         <!-- Body -->
                         <div class="card-body">
-                            <p class="card-text">When you delete your account, you lose access to Front account services, and we permanently delete your personal data. You can cancel the deletion for 14 days.</p>
-
+                            <p class="card-text">При удалении учётной записи вы теряете доступ к сервисам Ai-PathFinder, а ваши персональные данные удаляются безвозвратно</p>
                             <div class="mb-4">
                                 <!-- Form Check -->
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="deleteAccountCheckbox">
                                     <label class="form-check-label" for="deleteAccountCheckbox">
-                                        Confirm that I want to delete my account.
-                                    </label>
+                                        Подтвердите, что я хочу удалить свою учетную запись.                                    </label>
                                 </div>
                                 <!-- End Form Check -->
                             </div>

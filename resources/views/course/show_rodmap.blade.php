@@ -7,9 +7,11 @@
 @endsection
 @section('head')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+     <script src="{{asset('js/main.js')}}"></script>
 @endsection
 @section('content-main')
+    @include('components.my.modal1')
+
     <div class="content container-fluid">
         <div class="page-header">
             <div class="row align-items-center">
@@ -95,6 +97,13 @@
 @endsection
 
 @section('script')
+    @if($student_course->status==1)
+<script>
+    var modal = new bootstrap.Modal(document.getElementById('certificateModal'));
+    modal.show();
+</script>
+    @endif
+
     <script>
         const lv=document.querySelector('.link_vocabulary');
         async function fetchData() {
@@ -231,12 +240,6 @@
 
     <script>
 
-
-
-
-
-
-
         function view(st) {
             const roadmap = document.getElementById("roadmap");
             roadmap.innerHTML = ""; // Очистить перед отрисовкой
@@ -246,7 +249,6 @@
             let delay = 0;
 
             st.forEach((step, stepIndex) => {
-                setTimeout(() => {
                     const wrapper = document.createElement("div");
                     wrapper.className = "mb-5 fade-in";
                     wrapper.style.maxWidth = "100%";
@@ -256,9 +258,11 @@
 
                     const icon = document.createElement("div");
                     icon.className = "pt-1 flex-shrink-0";
+                    icon.style.cursor = "pointer"; // чтобы было понятно, что кликабельно
                     icon.innerHTML = step.status == '1'
                         ? '<i data-lucide="check-circle" class="text-success"></i>'
                         : '<i data-lucide="circle" class="text-secondary"></i>';
+
 
                     const card = document.createElement("div");
                     card.className = "flex-grow-1";
@@ -266,9 +270,22 @@
                     card.innerHTML = `
 <div>
     <h3 style="color: rgb(55, 48, 163);">${step.title}</h3>
-    <small class="text-muted fs-6">${step.experience}</small>
+    <small class="text-muted fs-6">+${step.experience}exp</small>
 </div>
 `;
+                    icon.onclick = (e) => {
+                        e.stopPropagation(); // чтобы клик не распространялся на card
+                        if(step.status != '1') {
+                            step.status = '1'; // локально обновляем
+                            icon.innerHTML = '<i data-lucide="check-circle" class="text-success"></i>';
+
+                            reqman("{{ route('api.step.statusEdit') }}", "POST", {id:step.id,status:'1'}).then(rr => {
+                                console.log(rr);
+                            });
+                            lucide.createIcons();
+                        }
+                    };
+
                     card.onclick = () => {
                         create_test(step.id);
                         create_vocabulary(step.id);
@@ -282,22 +299,37 @@
 
                     if (step.step_heirs && step.step_heirs.length > 0) {
                         step.step_heirs.forEach((child, childIndex) => {
-                            setTimeout(() => {
                                 const childRow = document.createElement("div");
                                 childRow.className = "d-flex align-items-start gap-4 ms-5 mb-3 fade-in p-3 rounded bg-light border shadow-sm";
                                 childRow.style.maxWidth = "calc(100% - 3rem)";
 
                                 const childIcon = document.createElement("div");
                                 childIcon.className = "pt-1 flex-shrink-0";
+                                childIcon.style.cursor = "pointer";
                                 childIcon.innerHTML = child.status == '1'
-                                    ? '<i data-lucide="check" class="text-success" ></i>'
+                                    ? '<i data-lucide="check" class="text-success"></i>'
                                     : '<i data-lucide="circle" class="text-secondary"></i>';
+
+                                // Клик по иконке дочернего шага
+                                childIcon.onclick = (e) => {
+                                    e.stopPropagation(); // чтобы клик не шел на весь row
+                                    if(child.status != '1') {
+                                        child.status = '1'; // локально обновляем
+                                        childIcon.innerHTML = '<i data-lucide="check" class="text-success"></i>';
+                                        reqman("{{ route('api.step.statusEdit') }}", "POST", {id:child.id,status:'1'}).then(rr => {
+                                            console.log(rr);
+                                        });
+                                       lucide.createIcons();
+                                    }
+                                };
 
                                 const childCard = document.createElement("div");
                                 childCard.className = "flex-grow-1";
 
                                 childCard.innerHTML = `
 <p style="font-size: 16px;color: rgb(55, 48, 163);">${child.title}</p class="h4">
+    <small class="text-muted fs-6">+${step.experience}exp</small>
+
 `;
 
                                 childCard.onclick = () => {
@@ -311,7 +343,6 @@
                                 childRow.appendChild(childCard);
                                 wrapper.appendChild(childRow);
                                 lucide.createIcons();
-                            }, 600 * (childIndex + 1));
                         });
                     }
 
@@ -319,8 +350,7 @@
                     lucide.createIcons();
                 }, delay);
 
-                delay += 1000;
-            });
+
         }
 
 

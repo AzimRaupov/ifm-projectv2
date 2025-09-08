@@ -713,7 +713,7 @@
                     </div>
 
                     <div class="nav-item">
-                        <a class="nav-link" style="border-radius: 10px;" href="{{ route('student.dashboard') }}">
+                        <a class="nav-link" style="border-radius: 10px;" href="{{ route('dashboard') }}">
 
                             <i class="bi bi-stickies nav-icon"></i>
                             <span class="nav-link-title">Мои курсы</span>
@@ -724,7 +724,7 @@
 
 
                     <div class="nav-item">
-                        <a class="nav-link" style="border-radius: 10px;" href="{{ route('student.dashboard') }}">
+                        <a class="nav-link" style="border-radius: 10px;" href="{{ route('dashboard') }}">
                             <i class="bi-bar-chart nav-icon"></i>
                             <span class="nav-link-title">Панель прогресса</span>
                         </a>

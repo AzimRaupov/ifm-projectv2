@@ -15,11 +15,13 @@ Route::post('/create/test',[\App\Http\Controllers\api\create\CreateController::c
 Route::post('/get/test/{id}',[\App\Http\Controllers\api\get\GetController::class,'test'])->name('test');
 Route::post('/info',[\App\Http\Controllers\api\get\GetController::class,'user_info'])->name('user_info');
 Route::post('/create/vocabulary',[\App\Http\Controllers\api\create\CreateController::class,'vocabulary'])->name('create.vocabulary');
-Route::post('/img/upload',[\App\Http\Controllers\api\create\CreateController::class,'img'])->name('img.upload');
+Route::post('/upload',[\App\Http\Controllers\api\create\CreateController::class,'upload'])->name('upload');
 
 Route::post('/user/ping',[\App\Http\Controllers\api\UserController::class,'ping'])->name('user.ping');
 
-
+Route::prefix('/step')->group(function (){
+    Route::post('/statusEdit',[\App\Http\Controllers\api\ApiStepController::class,'statusEdit'])->name('step.statusEdit');
+});
 
 Route::prefix('/teacher')->group(function (){
 

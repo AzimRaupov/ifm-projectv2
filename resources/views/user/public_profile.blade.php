@@ -22,7 +22,7 @@
                 </div>
                 <!-- End Avatar -->
 
-                <h1 class="page-header-title">Ella Lauda <i class="bi-patch-check-fill fs-2 text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Top endorsed"></i></h1>
+                <h1 class="page-header-title">{{$user->name}}</h1>
 
                 <!-- List -->
                 <ul class="list-inline list-px-2">
@@ -169,7 +169,7 @@
                             <!-- End Header -->
 
                             <!-- Body -->
-                            <div class="card-body card-body-height" style="height: 30rem;">
+                            <div class="card-body card-body-height" style="height: 19rem;">
                                 <div>
 
                                     <!-- Header -->
@@ -532,6 +532,7 @@
                                     </thead>
 
                                     <tbody>
+                                    @foreach($user->courses as $course)
                                     <tr>
                                         <td>
                                             <div class="d-flex">
@@ -539,128 +540,28 @@
                                 <span class="avatar-initials">U</span>
                               </span>
                                                 <div class="ms-3">
-                                                    <h5 class="mb-0">UI/UX</h5>
+                                                    <h5 class="mb-0">{{$course->topic}}</h5>
                                                     <small>Updated 2 hours ago</small>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <span class="me-3">0%</span>
+                                                @php
+                                                    $totalSteps = $course->step ?? 0;
+                                                    $completed  = $course->pivot->complete ?? 0;
+                                                    $percent    = $totalSteps > 0 ? round(($completed / $totalSteps) * 100, 2) : 0;
+                                                @endphp
+                                                <span class="me-3">{{ $percent }}%</span>
                                                 <div class="progress table-progress">
-                                                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar" role="progressbar" style="width: {{ $percent }}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="table-text-end">4:25</td>
                                     </tr>
+                                    @endforeach
 
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex">
-                                                <img class="avatar avatar-xs" src="assets/svg/brands/spec-icon.svg" alt="Image Description">
-                                                <div class="ms-3">
-                                                    <h5 class="mb-0">Get a complete audit store</h5>
-                                                    <small>Updated 1 day ago</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <span class="me-3">45%</span>
-                                                <div class="progress table-progress">
-                                                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="table-text-end">18:42</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex">
-                                                <img class="avatar avatar-xs" src="assets/svg/brands/capsule-icon.svg" alt="Image Description">
-                                                <div class="ms-3">
-                                                    <h5 class="mb-0">Build stronger customer relationships</h5>
-                                                    <small>Updated 2 days ago</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <span class="me-3">59%</span>
-                                                <div class="progress table-progress">
-                                                    <div class="progress-bar" role="progressbar" style="width: 59%" aria-valuenow="59" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="table-text-end">9:01</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex">
-                                                <img class="avatar avatar-xs" src="assets/svg/brands/mailchimp-icon.svg" alt="Image Description">
-                                                <div class="ms-3">
-                                                    <h5 class="mb-0">Update subscription method</h5>
-                                                    <small>Updated 2 days ago</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <span class="me-3">57%</span>
-                                                <div class="progress table-progress">
-                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 57%" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="table-text-end">0:37</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex">
-                                                <img class="avatar avatar-xs" src="assets/svg/brands/figma-icon.svg" alt="Image Description">
-                                                <div class="ms-3">
-                                                    <h5 class="mb-0">Create a new theme</h5>
-                                                    <small>Updated 1 week ago</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <span class="me-3">100%</span>
-                                                <div class="progress table-progress">
-                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="table-text-end">24:12</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex">
-                              <span class="avatar avatar-xs avatar-soft-info avatar-circle">
-                                <span class="avatar-initials">I</span>
-                              </span>
-                                                <div class="ms-3">
-                                                    <h5 class="mb-0">Improve social banners</h5>
-                                                    <small>Updated 1 week ago</small>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <span class="me-3">0%</span>
-                                                <div class="progress table-progress">
-                                                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="table-text-end">8:08</td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -749,6 +650,7 @@
                     scales: {
                         y: {
                             type: 'time',
+
                             offset: true,
                             time: {
                                 unit: 'day',

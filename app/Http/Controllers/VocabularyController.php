@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Progress;
 use App\Models\StudentCourse;
 use App\Models\Vocabulary_Student;
 use App\Models\VocabularyStep;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,15 +33,11 @@ class VocabularyController extends Controller
     public function rd(Request $request)
     {
 
-
         $user = Auth::user();
-
         $voc = VocabularyStep::findOrFail($request->id);
-
         $studentStep = Vocabulary_Student::where('user_id', $user->id)
             ->where('vocabulary_id', $voc->id)
             ->first();
-
         if (!$studentStep) {
             Vocabulary_Student::create([
                 'user_id'       => $user->id,
@@ -52,6 +50,13 @@ class VocabularyController extends Controller
                 ->where('course_id', $voc->course_id)
                 ->increment('exp', $voc->exp);
 
+            $progress = Progress::query()->firstOrNew([
+                'user_id'   => $user->id,
+                'course_id' => $voc->course_id ?? null,
+                'date'      => Carbon::today(),
+            ]);
+            $progress->colum = ($progress->colum ?? 0) + $voc->exp;
+            $progress->save();
             return response()->json([
                 'status' => 'ok',
                 'exp_added' => $voc->exp,
