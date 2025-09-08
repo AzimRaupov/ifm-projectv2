@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('new')
+    new HSFileAttach('.js-file-attach')
+
+@endsection
+
 @section('content-main')
 
     <div class="content container-fluid">
@@ -96,15 +101,17 @@
             <div class="col-lg-9">
                 <div class="d-grid gap-3 gap-lg-5">
                     <!-- Card -->
+                    <form action="{{route('account.editBasic')}}" method="post">
+                        @csrf
+
                     <div class="card">
                         <!-- Profile Cover -->
                         <div class="profile-cover">
                             <div class="profile-cover-img-wrapper">
                                 <img id="profileCoverImg" class="profile-cover-img" src="{{asset('assets/img/1920x400/img2.jpg')}}" alt="Image Description">
-
                                 <!-- Custom File Cover -->
                                 <div class="profile-cover-content profile-cover-uploader p-3">
-                                    <input type="file" class="js-file-attach profile-cover-uploader-input" id="profileCoverUplaoder" data-hs-file-attach-options='{
+                                    <input type="file" class="js-file-attach profile-cover-uploader-input" name="photo" id="profileCoverUplaoder" data-hs-file-attach-options='{
                                 "textTarget": "#profileCoverImg",
                                 "mode": "image",
                                 "targetAttr": "src",
@@ -120,7 +127,8 @@
                         </div>
                         <!-- End Profile Cover -->
 
-                        <!-- Avatar -->
+
+
                         <label class="avatar avatar-xxl avatar-circle avatar-uploader profile-cover-avatar" for="editAvatarUploaderModal">
                             <img id="editAvatarImgModal" class="avatar-img" src="assets/img/160x160/img6.jpg" alt="Image Description">
 
@@ -128,6 +136,7 @@
                             "textTarget": "#editAvatarImgModal",
                             "mode": "image",
                             "targetAttr": "src",
+                            "maxFileSize": 55145728,
                             "allowTypes": [".png", ".jpeg", ".jpg"]
                          }'>
 
@@ -202,19 +211,18 @@
                                        <textarea name="bio" class="form-control"> </textarea>
                                     </div>
                                 </div>
-
+                            </form>
 
 
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Save changes</button>
                                 </div>
-                            </form>
                             <!-- End Form -->
                         </div>
                         <!-- End Body -->
                     </div>
                     <!-- End Card -->
-
+                    </form>
 
 
                     <!-- Card -->

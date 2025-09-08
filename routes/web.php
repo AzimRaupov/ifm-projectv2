@@ -24,6 +24,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/tutorial',[\App\Http\Controllers\CourseController::class,'tutorial'])->name('course.tutorial');
     });
 
+    Route::prefix('account')->group(function (){
+        Route::post('/editBasic',[\App\Http\Controllers\teacher\AccountController::class,'editBasic'])->name('account.editBasic');
+    });
+
     Route::get('profile/settings',[\App\Http\Controllers\UserController::class,'profile_settings'])->name('profile.settings');
 
     Route::post('/user/update',[\App\Http\Controllers\UserController::class,'update'])->name('user.update');

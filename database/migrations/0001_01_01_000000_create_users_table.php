@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('google_id')->nullable();
             $table->enum('role',['admin','student','teacher'])->default('student');
+            $table->text('bio')->nullable();
+            $table->string('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

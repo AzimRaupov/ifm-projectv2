@@ -24,7 +24,9 @@ class User extends Authenticatable
         'old',
         'password',
         'chat_id',
-        'google_id'
+        'google_id',
+        'bio',
+        'photo'
     ];
 
     /**
