@@ -101,7 +101,7 @@
             <div class="col-lg-9">
                 <div class="d-grid gap-3 gap-lg-5">
                     <!-- Card -->
-                    <form action="{{route('account.editBasic')}}" method="post">
+                    <form action="{{route('account.updateBasic')}}" method="post" enctype="multipart/form-data">
                         @csrf
 
                     <div class="card">
@@ -111,16 +111,13 @@
                                 <img id="profileCoverImg" class="profile-cover-img" src="{{asset('assets/img/1920x400/img2.jpg')}}" alt="Image Description">
                                 <!-- Custom File Cover -->
                                 <div class="profile-cover-content profile-cover-uploader p-3">
-                                    <input type="file" class="js-file-attach profile-cover-uploader-input" name="photo" id="profileCoverUplaoder" data-hs-file-attach-options='{
+                                    <input type="file" class="js-file-attach profile-cover-uploader-input" id="profileCoverUplaoder" data-hs-file-attach-options='{
                                 "textTarget": "#profileCoverImg",
                                 "mode": "image",
                                 "targetAttr": "src",
                                 "allowTypes": [".png", ".jpeg", ".jpg"]
                              }'>
-                                    <label class="profile-cover-uploader-label btn btn-sm btn-white" for="profileCoverUplaoder">
-                                        <i class="bi-camera-fill"></i>
-                                        <span class="d-none d-sm-inline-block ms-1">Upload header</span>
-                                    </label>
+
                                 </div>
                                 <!-- End Custom File Cover -->
                             </div>
@@ -129,10 +126,17 @@
 
 
 
-                        <label class="avatar avatar-xxl avatar-circle avatar-uploader profile-cover-avatar" for="editAvatarUploaderModal">
-                            <img id="editAvatarImgModal" class="avatar-img" src="assets/img/160x160/img6.jpg" alt="Image Description">
+                        <label class="avatar avatar-xxl avatar avatar-soft-primary avatar-circle avatar-uploader profile-cover-avatar" for="editAvatarUploaderModal">
+                            @if($user->photo)
+                                <img id="editAvatarImgModal" class="avatar-img"
+                                     src="{{ asset('storage/' . $user->photo) }}"
+                                     alt="Image Description">
+                            @else
+                                <span class="avatar-initials">{{ mb_substr($user->name, 0, 1) }}</span>
+                            @endif
 
-                            <input type="file" class="js-file-attach avatar-uploader-input" id="editAvatarUploaderModal" data-hs-file-attach-options='{
+
+                            <input type="file" class="js-file-attach avatar-uploader-input"  name="photo" id="editAvatarUploaderModal" data-hs-file-attach-options='{
                             "textTarget": "#editAvatarImgModal",
                             "mode": "image",
                             "targetAttr": "src",
@@ -146,29 +150,7 @@
                         </label>
                         <!-- End Avatar -->
 
-                        <!-- Body -->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <span class="d-block fs-5 mb-2">Who can see your profile photo? <i class="bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Your visibility setting only applies to your profile photo. Your header image is always visible to anyone."></i></span>
 
-                                    <!-- Select -->
-                                    <div class="tom-select-custom">
-                                        <select class="js-select form-select" data-hs-tom-select-options='{
-                                "searchInDropdown": false,
-                                "dropdownWidth": "auto"
-                              }'>
-                                            <option value="privacy1" data-option-template='<div class="d-flex align-items-start"><div class="flex-shrink-0"><i class="bi-globe"></i></div><div class="flex-grow-1 ms-2"><span class="d-block fw-semibold">Anyone</span><span class="tom-select-custom-hide small">Visible to anyone who can view your content. Accessible by installed apps.</span></div></div>'>Anyone</option>
-                                            <option value="privacy2" data-option-template='<div class="d-flex align-items-start"><div class="flex-shrink-0"><i class="bi-lock"></i></div><div class="flex-grow-1 ms-2"><span class="d-block fw-semibold">Only you</span><span class="tom-select-custom-hide small">Only visible to you.</span></div></div>'>Only you</option>
-                                        </select>
-                                    </div>
-                                    <!-- End Select -->
-                                </div>
-                                <!-- End Col -->
-                            </div>
-                            <!-- End Row -->
-                        </div>
-                        <!-- End Body -->
                     </div>
                     <!-- End Card -->
 
@@ -181,14 +163,13 @@
                         <!-- Body -->
                         <div class="card-body">
                             <!-- Form -->
-                            <form>
                                 <!-- Form -->
                                 <div class="row mb-4">
                                     <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">Имя</label>
 
 
                                         <div class="col-sm-9">
-                                            <input type="email" class="form-control" name="name" id="emailLabel" placeholder="Email" aria-label="Email" value="mark@site.com">
+                                            <input type="text" class="form-control" name="name" id="emailLabel" placeholder="Email" aria-label="Email" value="{{$user->name}}">
                                         </div>
                                 </div>
                                 <!-- End Form -->
@@ -198,7 +179,7 @@
                                     <label for="emailLabel" class="col-sm-3 col-form-label form-label">Эл.Почта</label>
 
                                     <div class="col-sm-9">
-                                        <input type="email" class="form-control" name="email" id="emailLabel" placeholder="Email" aria-label="Email" value="mark@site.com">
+                                        <input type="email" class="form-control" name="email" id="emailLabel" placeholder="Email" aria-label="Email" value="{{$user->email}}">
                                     </div>
                                 </div>
                                 <!-- End Form -->
@@ -208,10 +189,9 @@
                                     <label for="phoneLabel" class="col-sm-3 col-form-label form-label">Биография</label>
 
                                     <div class="col-sm-9">
-                                       <textarea name="bio" class="form-control"> </textarea>
+                                       <textarea name="bio" class="form-control">{{$user->bio}}</textarea>
                                     </div>
                                 </div>
-                            </form>
 
 
                                 <div class="d-flex justify-content-end">
@@ -232,71 +212,77 @@
                         </div>
 
                         <!-- Body -->
-                        <div class="card-body">
-                            <!-- Form -->
-                            <form id="changePasswordForm">
+                        <form action="{{route('account.updatePass')}}" method="post">
+                            @csrf
+
+                            <div class="card-body">
                                 <!-- Form -->
-                                <div class="row mb-4">
-                                    <label for="currentPasswordLabel" class="col-sm-3 col-form-label form-label">Текущий пароль</label>
+                                    @csrf
 
-                                    <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="currentPassword" id="currentPasswordLabel" placeholder="Enter current password" aria-label="Enter current password">
-                                    </div>
-                                </div>
-                                <!-- End Form -->
-
-                                <!-- Form -->
-                                <div class="row mb-4">
-                                    <label for="newPassword" class="col-sm-3 col-form-label form-label">Новый пороль</label>
-
-                                    <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Enter new password" aria-label="Enter new password">
-                                    </div>
-                                </div>
-                                <!-- End Form -->
-
-                                <!-- Form -->
-                                <div class="row mb-4">
-                                    <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label form-label">Повторите новый пароль</label>
-
-                                    <div class="col-sm-9">
-                                        <div class="mb-3">
-                                            <input type="password" class="form-control" name="confirmNewPassword" id="confirmNewPasswordLabel" placeholder="Confirm your new password" aria-label="Confirm your new password">
+                                    <!-- Current Password -->
+                                    <div class="row mb-4">
+                                        <label for="currentPasswordLabel" class="col-sm-3 col-form-label form-label">Текущий пароль</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control @error('currentPassword') is-invalid @enderror"
+                                                   name="currentPassword" id="currentPasswordLabel" placeholder="Введите текущий пароль">
+                                            @error('currentPassword')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
-
-                                        <h5>Требования к паролю:</h5>
-
-                                        <p class="fs-6 mb-2">Убедитесь, что выполнены следующие требования:</p>
-
-                                        <ul class="fs-6">
-                                            <li>Минимальная длина — 8 символов. Чем больше, тем лучше.</li>
-
-                                            <li>По крайней мере одна цифра, символ или пробел</li>
-                                        </ul>
                                     </div>
-                                </div>
-                                <!-- End Form -->
 
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                </div>
-                            </form>
-                            <!-- End Form -->
-                        </div>
-                        <!-- End Body -->
+                                    <!-- New Password -->
+                                    <div class="row mb-4">
+                                        <label for="newPassword" class="col-sm-3 col-form-label form-label">Новый пароль</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control @error('newPassword') is-invalid @enderror"
+                                                   name="newPassword" id="newPassword" placeholder="Введите новый пароль">
+                                            @error('newPassword')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <!-- Confirm Password -->
+                                    <div class="row mb-4">
+                                        <label for="newPassword_confirmation" class="col-sm-3 col-form-label form-label">Повторите новый пароль</label>
+                                        <div class="col-sm-9">
+                                            <div class="mb-3">
+                                                <input type="password" class="form-control @error('newPassword_confirmation') is-invalid @enderror"
+                                                       name="newPassword_confirmation" id="newPassword_confirmation" placeholder="Повторите новый пароль">
+                                                @error('newPassword_confirmation')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <h5>Требования к паролю:</h5>
+                                            <p class="fs-6 mb-2">Убедитесь, что выполнены следующие требования:</p>
+                                            <ul class="fs-6">
+                                                <li>Минимальная длина — 8 символов</li>
+                                                <li>Хотя бы одна цифра, символ или пробел</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                <!-- End Form -->
+                            </div>
+                        </form>
                     </div>
                     <!-- End Card -->
 
                     <!-- Card -->
                     <div id="preferencesSection" class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Preferences</h4>
+                            <h4 class="card-title">Язык</h4>
                         </div>
 
                         <!-- Body -->
                         <div class="card-body">
                             <!-- Form -->
-                            <form>
+                            <form action="" method="post">
                                 <!-- Form -->
                                 <div class="row mb-4">
                                     <label for="languageLabel" class="col-sm-3 col-form-label form-label">Language</label>
@@ -367,39 +353,7 @@
                     </div>
                     <!-- End Card -->
 
-                    <!-- Card -->
-                    <div id="twoStepVerificationSection" class="card">
-                        <div class="card-header">
-                            <div class="d-flex align-items-center">
-                                <h4 class="mb-0">Two-step verification</h4>
-                                <span class="badge bg-soft-danger text-danger ms-2">Disabled</span>
-                            </div>
-                        </div>
 
-                        <!-- Body -->
-                        <div class="card-body">
-                            <p class="card-text">Start by entering your password so that we know it's you. Then we'll walk you through two more simple steps.</p>
-
-                            <form>
-                                <!-- Form -->
-                                <div class="row mb-4">
-                                    <label for="accountPasswordLabel" class="col-sm-3 col-form-label form-label">Account password</label>
-
-                                    <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="currentPassword" id="accountPasswordLabel" placeholder="Enter current password" aria-label="Enter current password">
-                                        <small class="form-text">This is the password you use to log in to your Front account.</small>
-                                    </div>
-                                </div>
-                                <!-- End Form -->
-
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Set up</button>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- End Body -->
-                    </div>
-                    <!-- End Card -->
 
 
                     <!-- End Card -->
@@ -412,11 +366,13 @@
 
                         <!-- Body -->
                         <div class="card-body">
+                            <form action="{{route('account.deleteAcc')}}" method="post">
+                                @csrf
                             <p class="card-text">При удалении учётной записи вы теряете доступ к сервисам Ai-PathFinder, а ваши персональные данные удаляются безвозвратно</p>
                             <div class="mb-4">
                                 <!-- Form Check -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="deleteAccountCheckbox">
+                                    <input class="form-check-input" type="checkbox" name="confirm" id="deleteAccountCheckbox" value="1">
                                     <label class="form-check-label" for="deleteAccountCheckbox">
                                         Подтвердите, что я хочу удалить свою учетную запись.                                    </label>
                                 </div>
@@ -424,9 +380,9 @@
                             </div>
 
                             <div class="d-flex justify-content-end gap-3">
-                                <a class="btn btn-white" href="#">Learn more</a>
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger">Удалть</button>
                             </div>
+                            </form>
                         </div>
                         <!-- End Body -->
                     </div>

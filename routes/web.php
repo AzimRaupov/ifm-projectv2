@@ -25,7 +25,9 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('account')->group(function (){
-        Route::post('/editBasic',[\App\Http\Controllers\teacher\AccountController::class,'editBasic'])->name('account.editBasic');
+        Route::post('/updateBasic',[\App\Http\Controllers\AccountController::class,'updateBasic'])->name('account.updateBasic');
+        Route::post('/updatePass',[\App\Http\Controllers\AccountController::class,'updatePass'])->name('account.updatePass');
+        Route::post('deleteAcc',[\App\Http\Controllers\AccountController::class,'deleteAcc'])->name('account.deleteAcc');
     });
 
     Route::get('profile/settings',[\App\Http\Controllers\UserController::class,'profile_settings'])->name('profile.settings');

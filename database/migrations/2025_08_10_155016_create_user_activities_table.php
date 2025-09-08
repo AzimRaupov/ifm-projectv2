@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('user_activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');;
            $table->date('date');
             $table->integer('minutes')->default(0);
             $table->timestamps();

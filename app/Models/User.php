@@ -55,4 +55,6 @@ class User extends Authenticatable
     {
        return $this->belongsToMany(Course::class,'student_courses','user_id','course_id')->withPivot(['complete']);
     }
+
+
 }

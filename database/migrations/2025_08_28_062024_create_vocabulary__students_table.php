@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('vocabulary__students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('step_id')->constrained('steps');
             $table->foreignId('vocabulary_id')->constrained('vocabulary_steps');
             $table->enum('status',['0','1'])->default('0');

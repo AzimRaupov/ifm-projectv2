@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+class AccountController extends Controller
+{
+
+    public function updateBasic(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'bio'   => 'nullable|string',
+            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:5120', // до 5MB
+        ]);
+
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->bio = $validated['bio'] ?? $user->bio;
+
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('avatars', 'public');
+            $user->photo = $path;
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Изменения сохранены!');
+    }
+
+
+    public function updatePass(Request $request)
+    {
+        $user = Auth::user();
+
+        // Валидация
+        $request->validate([
+            'currentPassword'      => 'required',
+            'newPassword'          => 'required|min:6|confirmed',
+        ], [
+            'newPassword.confirmed' => 'Пароли не совпадают',
+        ]);
+
+        // Проверяем текущий пароль
+        if (!Hash::check($request->currentPassword, $user->password)) {
+            return back()->withErrors(['currentPassword' => 'Неверный текущий пароль']);
+        }
+
+        // Меняем пароль
+        $user->password = Hash::make($request->newPassword);
+        $user->save();
+
+        return back()->with('success', 'Пароль успешно изменён!');
+    }
+
+    public function deleteAcc(Request $request)
+    {
+        $user = Auth::user();
+        $request->validate([
+            'confirm' => 'accepted',
+        ], [
+            'confirm.accepted' => 'Вы должны подтвердить удаление аккаунта',
+        ]);
+
+        Auth::logout();
+
+        $user->delete();
+return redirect('/');
+    }
+
+}
