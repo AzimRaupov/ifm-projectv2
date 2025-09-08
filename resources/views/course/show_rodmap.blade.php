@@ -6,7 +6,6 @@
     {{$course->topic}}
 @endsection
 @section('head')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
      <script src="{{asset('js/main.js')}}"></script>
 @endsection
 @section('content-main')

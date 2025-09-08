@@ -41,7 +41,7 @@ $user->save();
     {
         $user = Auth::user();
 
-       if($user->role=="teacher"){
+       if($user->role=="student"){
            $courses_student=StudentCourse::query()->where('user_id', $user->id)->get();
 
            $courses=Course::query()->whereIn('id',$courses_student->pluck('course_id'))->with(['steps',
