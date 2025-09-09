@@ -22,45 +22,7 @@
 
 @section('content-main')
 
-    <style>
-        #successToast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #28a745;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-family: Arial, sans-serif;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 9999;
-            min-width: 200px;
-        }
-        #successToast.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        #successToast svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
-    </style>
 
-    <div id="successToast" role="alert" aria-live="assertive" aria-atomic="true">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M13.485 1.929a.75.75 0 0 1 0 1.06L6.72 9.754a.75.75 0 0 1-1.06 0L2.515 6.609a.75.75 0 0 1 1.06-1.06l2.088 2.09 6.703-6.712a.75.75 0 0 1 1.06 0z"/>
-        </svg>
-        Успешно сохранено!
-    </div>
 
     <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
         <form action="{{route('teacher.step.update')}}" method="post" class="form-update">
@@ -70,7 +32,7 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Изменитӣ шаг</h5>
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Изменить шаг</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="">
@@ -93,7 +55,7 @@
                                 </div>
 
                                 <a href="javascript:;" class="js-create-field form-link">
-                                    <i class="bi-plus-circle me-1"></i> Добавть цылку
+                                    <i class="bi-plus-circle me-1"></i> Добавть сылку
                                 </a>
                             </div>
                         </div>
@@ -110,8 +72,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary button-update">Save changes</button>
+                    <button type="button" class="btn btn-white" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary button-update">Сохранить</button>
                 </div>
             </div>
 
@@ -126,7 +88,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Удалить шаг</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{route('teacher.step.destroy')}}" method="post" class="form-destroy">
@@ -134,11 +96,11 @@
                     <input type="hidden" name="id" value="" id="step_id_dell">
 
                 <div class="modal-body">
-                    <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                    <p>Вы уверены, что хотите удалить этот шаг? Это действие нельзя будет отменить, и все связанные данные будут удалены. Пожалуйста, подтвердите своё решение.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary button-destroy">Save changes</button>
+                    <button type="button" class="btn btn-white" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary button-destroy" data-bs-dismiss="modal">Удалить</button>
                 </div>
                 </form>
             </div>
@@ -149,7 +111,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Добавить подшаг</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{route('teacher.step.new.child')}}" method="post" class="form-new_child">
@@ -163,8 +125,8 @@
                         <input type="number" name="experience" id="experience" class="form-control">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary button-new_child">Save changes</button>
+                        <button type="button" class="btn btn-white" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary button-new_child" data-bs-dismiss="modal">Добавить</button>
                     </div>
                 </form>
             </div>
@@ -180,15 +142,13 @@
 
                 <div class="col-auto">
                     <div class="col-auto d-flex gap-2">
-                        <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" onclick="generate()">
-                            <i data-lucide="cpu" class="lucide-icon-small"></i> Генерировать
+                        <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" onclick="addParent()">
+                            <i data-lucide="cpu" class="lucide-icon-small"></i> Добавить шаг
                         </button>
                         <button class="btn btn-outline-success btn-sm d-flex align-items-center gap-1 js-save-form" onclick="save()">
                             <i data-lucide="save" class="lucide-icon-small"></i> Сохранить
                         </button>
-                        <button class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" onclick="deletee()">
-                            <i data-lucide="trash-2" class="lucide-icon-small"></i> Удалить
-                        </button>
+
                     </div>
 
                 </div>
@@ -736,6 +696,9 @@
             document.getElementById('step_id_parent').value=step.id;
             var modal = new bootstrap.Modal(document.getElementById('new_child'));
             modal.show();
+        }
+        function addParent(){
+
         }
 
     </script>

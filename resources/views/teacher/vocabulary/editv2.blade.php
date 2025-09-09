@@ -2,7 +2,7 @@
 @section('head')
     <script src="https://cdn.tiny.cloud/1/yc1vna9wb6j6dcol17ksd2cfbwws4l2i4w40l3lzdyi4uxyj/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="{{asset('')}}"></script>
+    <script src="{{asset('js/main.js')}}"></script>
 @endsection
 
 @section('new')
@@ -190,13 +190,11 @@
                 return;
             }
 
-            // Создаём AbortController и таймер для таймаута
             const controller = new AbortController();
             const timeoutId = setTimeout(() => {
                 controller.abort();
-            }, 30000); // 30 секунд
+            }, 30000);
 
-            // Блокируем кнопку, чтобы избежать повторных кликов
             const button = this;
             button.disabled = true;
             button.textContent = 'Обработка...';
@@ -205,27 +203,22 @@
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': csrf,
-                    // Заголовок 'Content-Type' не нужен, т.к. FormData
                 },
                 body: formData,
                 signal: controller.signal
             })
                 .then(res => {
-                    clearTimeout(timeoutId); // Отменяем таймер таймаута
+                    clearTimeout(timeoutId);
 
-                    // Проверяем, успешен ли HTTP-статус (200-299)
                     if (!res.ok) {
-                        // Если статус не 200, читаем текст ответа и выбрасываем ошибку
                         return res.text().then(text => {
                             let errorDetails = text;
-                            // Пытаемся распарсить JSON, если он есть
                             try {
                                 const json = JSON.parse(text);
                                 if (json.message) {
                                     errorDetails = json.message;
                                 }
                             } catch (e) {
-                                // Если не JSON, оставляем текст как есть
                             }
                             throw new Error(`Ошибка HTTP ${res.status}: ${errorDetails}`);
                         });
@@ -235,7 +228,7 @@
                     return res.json();
                 })
                 .then(data => {
-
+                    showSuccessToast('Успешно сгенерировано!')
                     console.log('Данные от сервера:', data);
                     location.reload();
                 })

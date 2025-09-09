@@ -27,14 +27,14 @@ class UserController extends Controller
                $user=User::query()->where('email',$userGoogle->email)->first();
 $user->google_id=$userGoogle->id;
 $user->save();
-               return redirect()->route($user->role.'.dashboard');
+               return redirect()->route('dashboard');
 
            }
            else{
                Auth::login($user);
            }
 
-           return redirect()->route($user->role.'.dashboard');
+           return redirect()->route('dashboard');
     }
 
     public function dashboard(Request $request)

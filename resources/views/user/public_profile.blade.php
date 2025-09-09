@@ -9,15 +9,26 @@
             <!-- Profile Cover -->
             <div class="profile-cover">
                 <div class="profile-cover-img-wrapper">
-                    <img class="profile-cover-img" src="assets/img/1920x400/img1.jpg" alt="Image Description">
+                    <img class="profile-cover-img" src="{{asset('assets/img/1920x400/img1.jpg')}}" alt="Image Description">
                 </div>
             </div>
 
-            <!-- Profile Header -->
+
+
             <div class="text-center mb-5">
                 <!-- Avatar -->
-                <div class="avatar avatar-xxl avatar-circle profile-cover-avatar">
-                    <img class="avatar-img" src="assets/img/160x160/img9.jpg" alt="Image Description">
+                <div class="avatar avatar-xxl avatar-circle profile-cover-avatar avatar-soft-primary">
+
+                    @if(isset($user->photo) && $user->photo)
+                        <img id="editAvatarImgModal" class="avatar-img"
+                             src="{{ asset('storage/' . $user->photo) }}"
+                             alt="Фото профиля пользователя {{ $user->name }}">
+                    @else
+                        <span class="avatar-initials">{{ mb_substr($user->name, 0, 1) }}</span>
+
+                    @endif
+
+
                     <span class="avatar-status avatar-status-success"></span>
                 </div>
                 <!-- End Avatar -->
@@ -26,20 +37,11 @@
 
                 <!-- List -->
                 <ul class="list-inline list-px-2">
-                    <li class="list-inline-item">
-                        <i class="bi-building me-1"></i>
-                        <span>Htmlstream</span>
-                    </li>
 
                     <li class="list-inline-item">
-                        <i class="bi-geo-alt me-1"></i>
-                        <a href="#">San Francisco,</a>
-                        <a href="#">US</a>
-                    </li>
+                        <i class="bi-mortarboard me-1"></i>
+                        <span>Ученик</span>
 
-                    <li class="list-inline-item">
-                        <i class="bi-calendar-week me-1"></i>
-                        <span>Joined March 2017</span>
                     </li>
                 </ul>
                 <!-- End List -->
@@ -64,67 +66,67 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="user-profile.html">Profile</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="user-profile-teams.html">Teams</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="user-profile-projects.html">Projects <span class="badge bg-soft-dark text-dark rounded-circle ms-1">3</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="user-profile-connections.html">Connections</a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link " href="user-profile-teams.html">Teams</a>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link " href="user-profile-projects.html">Projects <span class="badge bg-soft-dark text-dark rounded-circle ms-1">3</span></a>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link " href="user-profile-connections.html">Connections</a>--}}
+{{--                    </li>--}}
 
-                    <li class="nav-item ms-auto">
-                        <div class="d-flex gap-2">
-                            <!-- Form Check -->
-                            <div class="form-check form-check-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="connectCheckbox">
-                                <label class="form-check-label btn btn-sm" for="connectCheckbox">
-                      <span class="form-check-default">
-                        <i class="bi-person-plus-fill"></i> Connect
-                      </span>
-                                    <span class="form-check-active">
-                        <i class="bi-check-lg me-2"></i> Connected
-                      </span>
-                                </label>
-                            </div>
-                            <!-- End Form Check -->
+{{--                    <li class="nav-item ms-auto">--}}
+{{--                        <div class="d-flex gap-2">--}}
+{{--                            <!-- Form Check -->--}}
+{{--                            <div class="form-check form-check-switch">--}}
+{{--                                <input class="form-check-input" type="checkbox" value="" id="connectCheckbox">--}}
+{{--                                <label class="form-check-label btn btn-sm" for="connectCheckbox">--}}
+{{--                      <span class="form-check-default">--}}
+{{--                        <i class="bi-person-plus-fill"></i> Connect--}}
+{{--                      </span>--}}
+{{--                                    <span class="form-check-active">--}}
+{{--                        <i class="bi-check-lg me-2"></i> Connected--}}
+{{--                      </span>--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                            <!-- End Form Check -->--}}
 
-                            <a class="btn btn-icon btn-sm btn-white" href="#">
-                                <i class="bi-list-ul me-1"></i>
-                            </a>
+{{--                            <a class="btn btn-icon btn-sm btn-white" href="#">--}}
+{{--                                <i class="bi-list-ul me-1"></i>--}}
+{{--                            </a>--}}
 
-                            <!-- Dropdown -->
-                            <div class="dropdown nav-scroller-dropdown">
-                                <button type="button" class="btn btn-white btn-icon btn-sm" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi-three-dots-vertical"></i>
-                                </button>
+{{--                            <!-- Dropdown -->--}}
+{{--                            <div class="dropdown nav-scroller-dropdown">--}}
+{{--                                <button type="button" class="btn btn-white btn-icon btn-sm" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">--}}
+{{--                                    <i class="bi-three-dots-vertical"></i>--}}
+{{--                                </button>--}}
 
-                                <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
-                                    <span class="dropdown-header">Settings</span>
+{{--                                <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">--}}
+{{--                                    <span class="dropdown-header">Settings</span>--}}
 
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bi-share-fill dropdown-item-icon"></i> Share profile
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bi-slash-circle dropdown-item-icon"></i> Block page and profile
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                                    </a>
+{{--                                    <a class="dropdown-item" href="#">--}}
+{{--                                        <i class="bi-share-fill dropdown-item-icon"></i> Share profile--}}
+{{--                                    </a>--}}
+{{--                                    <a class="dropdown-item" href="#">--}}
+{{--                                        <i class="bi-slash-circle dropdown-item-icon"></i> Block page and profile--}}
+{{--                                    </a>--}}
+{{--                                    <a class="dropdown-item" href="#">--}}
+{{--                                        <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits--}}
+{{--                                    </a>--}}
 
-                                    <div class="dropdown-divider"></div>
+{{--                                    <div class="dropdown-divider"></div>--}}
 
-                                    <span class="dropdown-header">Feedback</span>
+{{--                                    <span class="dropdown-header">Feedback</span>--}}
 
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bi-flag dropdown-item-icon"></i> Report
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- End Dropdown -->
-                        </div>
-                    </li>
+{{--                                    <a class="dropdown-item" href="#">--}}
+{{--                                        <i class="bi-flag dropdown-item-icon"></i> Report--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!-- End Dropdown -->--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
                 </ul>
             </div>
             <!-- End Nav -->
@@ -137,34 +139,9 @@
                         <div class="card">
                             <!-- Header -->
                             <div class="card-header card-header-content-between">
-                                <h4 class="card-header-title">Activity stream</h4>
+                                <h4 class="card-header-title">Лента активности</h4>
 
-                                <!-- Dropdown -->
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm rounded-circle" id="contentActivityStreamDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi-three-dots-vertical"></i>
-                                    </button>
 
-                                    <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="contentActivityStreamDropdown">
-                                        <span class="dropdown-header">Settings</span>
-
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-share-fill dropdown-item-icon"></i> Share connections
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                                        </a>
-
-                                        <div class="dropdown-divider"></div>
-
-                                        <span class="dropdown-header">Feedback</span>
-
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-chat-left-dots dropdown-item-icon"></i> Report
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- End Dropdown -->
                             </div>
                             <!-- End Header -->
 
@@ -489,7 +466,7 @@
                         <div class="card">
                             <!-- Header -->
                             <div class="card-header card-header-content-between">
-                                <h4 class="card-header-title">Projects</h4>
+                                <h4 class="card-header-title">Курсы</h4>
 
                                 <!-- Dropdown -->
                                 <div class="dropdowm">
@@ -497,24 +474,6 @@
                                         <i class="bi-three-dots-vertical"></i>
                                     </button>
 
-                                    <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="projectReportDropdown">
-                                        <span class="dropdown-header">Settings</span>
-
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-share-fill dropdown-item-icon"></i> Share connections
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                                        </a>
-
-                                        <div class="dropdown-divider"></div>
-
-                                        <span class="dropdown-header">Feedback</span>
-
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-chat-left-dots dropdown-item-icon"></i> Report
-                                        </a>
-                                    </div>
                                 </div>
                                 <!-- End Dropdown -->
                             </div>
@@ -525,8 +484,8 @@
                                 <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
                                     <thead class="thead-light">
                                     <tr>
-                                        <th>Project</th>
-                                        <th style="width: 40%;">Progress</th>
+                                        <th>Курс</th>
+                                        <th style="width: 40%;">Пройдено</th>
                                         <th class="table-text-end">Hours spent</th>
                                     </tr>
                                     </thead>
@@ -536,12 +495,11 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex">
-                              <span class="avatar avatar-xs avatar-soft-dark avatar-circle">
-                                <span class="avatar-initials">U</span>
-                              </span>
+                               <span class="avatar avatar-xs avatar-soft-dark avatar-circle">
+                              <img src="{{$course->logo}}" class="avatar-img" alt="">
+                               </span>
                                                 <div class="ms-3">
                                                     <h5 class="mb-0">{{$course->topic}}</h5>
-                                                    <small>Updated 2 hours ago</small>
                                                 </div>
                                             </div>
                                         </td>

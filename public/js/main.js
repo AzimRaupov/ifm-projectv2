@@ -13,6 +13,15 @@ function showSuccessToast(message = "Успешно сохранено!") {
     }, 3000);
 }
 
+function showErrorToast(message) {
+    const toast = document.getElementById('errorToast');
+    const msgEl = document.getElementById('errorMessage');
+    if (toast && msgEl) {
+        msgEl.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+}
 
 function formpost(form) {
 
@@ -41,7 +50,8 @@ function formpost(form) {
     })
         .catch(err => {
         console.error(err);
-        // alert('❌ Ошибка при сохранении');
+            showErrorToast('Ошибка при сохранении');
+
     });
 
 }
