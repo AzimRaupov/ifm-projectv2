@@ -611,8 +611,8 @@
 
 
 
-                            <a class="dropdown-item" href="{{route('profile.edit')}}">Профиль &amp; аккаунт</a>
-                            <a class="dropdown-item" href="#">Настройки</a>
+                            <a class="dropdown-item profile_pub">Профиль &amp; аккаунт</a>
+                            <a class="dropdown-item profile_setting" href="{{route('profile.settings')}}">Настройки</a>
 
                             <div class="dropdown-divider">
 
@@ -731,12 +731,6 @@
                     </div>
 
                     <!-- Дополнительные кнопки -->
-                    <div class="nav-item">
-                        <a class="nav-link" style="border-radius: 10px;" href="#">
-                            <i class="bi-gear nav-icon"></i>
-                            <span class="nav-link-title">Настройки</span>
-                        </a>
-                    </div>
 
                     <div class="nav-item">
                         <a class="nav-link" style="border-radius: 10px;" href="#">
@@ -750,20 +744,25 @@
                     <small class="bi-three-dots nav-subtitle-replacer"></small>
 
                     <div class="nav-item">
-                        <a class="nav-link dropdown-toggle" style="border-radius: 10px;" href="#navbarVerticalMenuPagesUserProfileMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbarVerticalMenuPagesUserProfileMenu">
+                        <a class="nav-link profile_pub" href="">
                             <i class="bi-person nav-icon"></i>
                             <span class="nav-link-title">Профиль</span>
                         </a>
-                        <div id="navbarVerticalMenuPagesUserProfileMenu" class="collapse">
-                        </div>
                     </div>
 
                     <div class="nav-item">
-                        <a class="nav-link" style="border-radius: 10px;" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a class="nav-link" href="{{route('profile.settings')}}">
+                            <i class="bi-gear nav-icon"></i>
+                            <span class="nav-link-title">Настройки</span>
+                        </a>
+                    </div>
+
+                    <div class="nav-item">
+                        <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="bi-box-arrow-right nav-icon"></i>
                             <span class="nav-link-title">Выход</span>
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
                     </div>
@@ -4111,7 +4110,11 @@
         user=list.user;
         courses=list.courses;
 
+        let links_profile = document.querySelectorAll('.profile_pub');
 
+        links_profile.forEach((link, index) => {
+            link.href = "{{ route('profile.edit') }}" + "?id=" + user.id;
+        });
         console.log(main_content);
         user_name.textContent=user.name;
         user_type.textContent=user.email;

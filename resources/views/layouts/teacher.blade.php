@@ -611,8 +611,8 @@
 
 
 
-                            <a class="dropdown-item" href="{{route('profile.edit')}}">Профиль &amp; аккаунт</a>
-                            <a class="dropdown-item" href="#">Настройки</a>
+                            <a class="dropdown-item profile_pub" href="">Профиль &amp; аккаунт</a>
+                            <a class="dropdown-item" href="{{route('profile.settings')}}">Настройки</a>
 
                             <div class="dropdown-divider"></div>
 
@@ -734,7 +734,7 @@
                     <small class="bi-three-dots nav-subtitle-replacer"></small>
 
                     <div class="nav-item">
-                        <a class="nav-link" href="">
+                        <a class="nav-link profile_pub" href="">
                             <i class="bi-person nav-icon"></i>
                             <span class="nav-link-title">Профиль</span>
                         </a>
@@ -4110,6 +4110,12 @@
         user=list.user;
         courses=list.courses;
 
+
+        let links_profile = document.querySelectorAll('.profile_pub');
+
+        links_profile.forEach((link, index) => {
+            link.href = "{{ route('profile.edit') }}" + "?id=" + user.id;
+        });
 
         console.log(main_content);
         user_name.textContent=user.name;
