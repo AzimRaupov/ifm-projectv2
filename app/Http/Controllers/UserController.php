@@ -117,9 +117,13 @@ $user->save();
     {
 
         $user=User::query()->with('courses')->find($request->id);
+        if($user->role=="student") {
 //        dd($user);
-        return view('user.public_profile',compact('user'));
-
+            return view('user.public_profile', compact('user'));
+        }
+        elseif($user->role=="teacher"){
+            return view('teacher.account.public_profile', compact('user'));
+        }
     }
 
     public function update(Request $request)

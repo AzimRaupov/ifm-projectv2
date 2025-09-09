@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
+
+
+    public function courses(Request $request)
+    {
+        $user=User::query()->find($request->id);
+        $courses=Course::query()->with('students')->where('user_id',$user->id)->where('type','public')->get();
+       return view('teacher.account.courses',compact('courses','user'));
+
+     }
 
     public function updateBasic(Request $request)
     {

@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('account')->group(function (){
+
         Route::post('/updateBasic',[\App\Http\Controllers\AccountController::class,'updateBasic'])->name('account.updateBasic');
         Route::post('/updatePass',[\App\Http\Controllers\AccountController::class,'updatePass'])->name('account.updatePass');
         Route::post('deleteAcc',[\App\Http\Controllers\AccountController::class,'deleteAcc'])->name('account.deleteAcc');
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/test',[\App\Http\Controllers\TestController::class,'show2'])->name('test.show');
     Route::get('/show',[\App\Http\Controllers\CourseController::class,'show'])->name('show');
 //    Route::resource('/course',\App\Http\Controllers\CourseController::class);
+    Route::get('/profile/courses',[\App\Http\Controllers\AccountController::class,'courses'])->name('profile.courses');
     Route::get('/profile', [\App\Http\Controllers\UserController::class, 'profile'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

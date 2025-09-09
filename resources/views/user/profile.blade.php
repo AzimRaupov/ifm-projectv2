@@ -127,14 +127,14 @@
 
 
                         <label class="avatar avatar-xxl avatar avatar-soft-primary avatar-circle avatar-uploader profile-cover-avatar" for="editAvatarUploaderModal">
-                            @if($user->photo)
+                            @if(isset($user->photo) && $user->photo)
                                 <img id="editAvatarImgModal" class="avatar-img"
                                      src="{{ asset('storage/' . $user->photo) }}"
-                                     alt="Image Description">
+                                     alt="Фото профиля пользователя {{ $user->name }}">
                             @else
-                                <span class="avatar-initials">{{ mb_substr($user->name, 0, 1) }}</span>
-                            @endif
+                                <span class="avatar-initials avatar-soft-primary">{{ mb_substr($user->name, 0, 1) }}</span>
 
+                            @endif
 
                             <input type="file" class="js-file-attach avatar-uploader-input"  name="photo" id="editAvatarUploaderModal" data-hs-file-attach-options='{
                             "textTarget": "#editAvatarImgModal",

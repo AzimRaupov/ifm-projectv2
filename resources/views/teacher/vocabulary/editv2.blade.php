@@ -2,7 +2,7 @@
 @section('head')
     <script src="https://cdn.tiny.cloud/1/yc1vna9wb6j6dcol17ksd2cfbwws4l2i4w40l3lzdyi4uxyj/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-
+    <script src="{{asset('')}}"></script>
 @endsection
 
 @section('new')
@@ -42,22 +42,37 @@
         </div>
     </div>
 
+    <div class="content container-fluid" style="margin-bottom: 0px;">
+        <!-- Page Header -->
+        <div class="page-header" style="margin-bottom: 0px;">
+            <div class="row align-items-end">
+                <div class="col-sm mb-2 mb-sm-0">
 
 
-    <div class="bg-light border-bottom shadow-sm p-2 mb-3 d-flex justify-content-between align-items-center sticky-top" style="z-index: 1030;">
-        <strong>🔧 Панель инструментов</strong>
-        <div class="d-flex gap-2">
-            <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" onclick="generate_vocabulary_view()">
-                <i data-lucide="cpu" class="lucide-icon-small"></i> Генерировать
-            </button>
-            <button class="btn btn-outline-success btn-sm d-flex align-items-center gap-1 js-save-form">
-                <i data-lucide="save" class="lucide-icon-small"></i> Сохранить
-            </button>
-            <button class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" onclick="delete_vocabulary()">
-                <i data-lucide="trash-2" class="lucide-icon-small"></i> Удалить
-            </button>
+                    <h1 class="page-header-title">Редактировать: {{$step->course->topic}}</h1>
+                </div>
+                <!-- End Col -->
+
+                <div class="col-lg-auto">
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" onclick="generate_vocabulary_view()">
+                            <i data-lucide="cpu" class="lucide-icon-small"></i> Генерировать
+                        </button>
+                        <button class="btn btn-outline-success btn-sm d-flex align-items-center gap-1 js-save-form">
+                            <i data-lucide="save" class="lucide-icon-small"></i> Сохранить
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" onclick="delete_vocabulary()">
+                            <i data-lucide="trash-2" class="lucide-icon-small"></i> Удалить
+                        </button>
+                    </div>
+                </div>
+                <!-- End Col -->
+            </div>
         </div>
+        <!-- End Page Header -->
     </div>
+
+
 
 
     <div class="text-center">
@@ -163,40 +178,80 @@
 
             const form = document.querySelector('.generate-vocabulary');
             if (!form) {
-                alert('Форма не найдена!');
+                alert('Ошибка: форма не найдена!');
                 return;
             }
 
             const formData = new FormData(form);
             const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-            // Создаём AbortController и таймер
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 секунд
+            if (!csrf) {
+                alert('Ошибка: CSRF-токен не найден!');
+                return;
+            }
 
-            fetch(form.getAttribute('action') || window.location.href, {
+            // Создаём AbortController и таймер для таймаута
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => {
+                controller.abort();
+            }, 30000); // 30 секунд
+
+            // Блокируем кнопку, чтобы избежать повторных кликов
+            const button = this;
+            button.disabled = true;
+            button.textContent = 'Обработка...';
+
+            fetch(form.getAttribute('action'), {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': csrf,
+                    // Заголовок 'Content-Type' не нужен, т.к. FormData
                 },
                 body: formData,
                 signal: controller.signal
             })
                 .then(res => {
-                    clearTimeout(timeoutId); // Убираем таймер, если ответ получен
-                    return res.ok ? res.json() : res.text().then(text => Promise.reject(text));
+                    clearTimeout(timeoutId); // Отменяем таймер таймаута
+
+                    // Проверяем, успешен ли HTTP-статус (200-299)
+                    if (!res.ok) {
+                        // Если статус не 200, читаем текст ответа и выбрасываем ошибку
+                        return res.text().then(text => {
+                            let errorDetails = text;
+                            // Пытаемся распарсить JSON, если он есть
+                            try {
+                                const json = JSON.parse(text);
+                                if (json.message) {
+                                    errorDetails = json.message;
+                                }
+                            } catch (e) {
+                                // Если не JSON, оставляем текст как есть
+                            }
+                            throw new Error(`Ошибка HTTP ${res.status}: ${errorDetails}`);
+                        });
+                    }
+
+                    // Если запрос успешен, возвращаем JSON-ответ
+                    return res.json();
                 })
                 .then(data => {
-                    alert('✅ Успешно отправлено!');
-                    console.log(data);
+
+                    console.log('Данные от сервера:', data);
+                    location.reload();
                 })
                 .catch(err => {
+                    // Обработка ошибок сети, таймаута и ошибок сервера
                     if (err.name === 'AbortError') {
-                        alert('⏱ Время ожидания истекло (30 секунд)');
+                        alert('⏱ Время ожидания запроса (30 сек) истекло. Попробуйте снова.');
                     } else {
-                        console.error(err);
-                        alert('❌ Ошибка при отправке');
+                        alert('❌ Произошла ошибка. Подробности в консоли.');
+                        console.error('Ошибка:', err);
                     }
+                })
+                .finally(() => {
+                    // Снимаем блокировку с кнопки, независимо от результата
+                    button.disabled = false;
+                    button.textContent = 'Save changes';
                 });
         });
     </script>

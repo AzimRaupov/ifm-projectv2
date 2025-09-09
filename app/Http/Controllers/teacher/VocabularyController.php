@@ -8,6 +8,7 @@ use App\Models\Link;
 use App\Models\Step;
 use App\Models\VocabularyStep;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class VocabularyController extends Controller
@@ -21,12 +22,15 @@ class VocabularyController extends Controller
     }
     public function generate(Request $request)
     {
+        $user=Auth::user();
         $step=Step::query()->where('id',$request->input('id'))->with(['course','vocabularies'])->first();
-        $result=TeacherHelpers::generateVocabulary($step,$request)[0];
+        $result=TeacherHelpers::generateVocabulary($step,$request,$user)[0];
         $v=VocabularyStep::query()->create([
             'step_id'=>$step->id,
+            'course_id'=>$step->course_id,
             'title'=>$result['title'],
-            'text'=>$result['info']
+            'text'=>$result['info'],
+            'exp'=>$result['exp'],
         ]);
         foreach ($result['links'] as $link){
             Link::query()->create([

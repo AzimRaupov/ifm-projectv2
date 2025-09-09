@@ -701,10 +701,11 @@
                             <span class="nav-link-title">Гланая</span>
                         </a>
                     </div>
+
                     <div class="nav-item">
-                        <a class="nav-link" style="background-color: #00c9a7;color: white;" data-placement="left" href="{{route('teacher.course.create')}}">
-                            <i class="bi bi-plus-circle-fill nav-icon"></i>
-                            <span class="nav-link-title">Новый курс</span>
+                        <a class="nav-link {{ (request()->routeIs('teacher.course.create')) ? 'active' : '' }}" href="{{ route('teacher.course.create') }}">
+                            <i class="bi bi-plus-circle nav-icon"></i>
+                            <span class="nav-link-title">Создать курс</span>
                         </a>
                     </div>
 
@@ -723,49 +724,37 @@
                     </div>
 
                     <div class="nav-item">
-                        <a class="nav-link " data-placement="left" href="{{route('dashboard')}}">
+                        <a class="nav-link {{ (request()->routeIs('dashboard')) ? 'active' : '' }}" href="{{ route('dashboard') }}">
                             <i class="bi bi-bar-chart nav-icon"></i>
-                            <span class="nav-link-title">Понель управление</span>
+                            <span class="nav-link-title">Панель управления</span>
                         </a>
                     </div>
 
                     <span class="dropdown-header mt-4">Аккаунт</span>
                     <small class="bi-three-dots nav-subtitle-replacer"></small>
 
-
-                    <!-- Collapse -->
-                    <div class="navbar-nav nav-compact">
-
+                    <div class="nav-item">
+                        <a class="nav-link" href="">
+                            <i class="bi-person nav-icon"></i>
+                            <span class="nav-link-title">Профиль</span>
+                        </a>
                     </div>
-                    <div id="navbarVerticalMenuPagesMenu">
 
+                    <div class="nav-item">
+                        <a class="nav-link" href="{{route('profile.settings')}}">
+                            <i class="bi-gear nav-icon"></i>
+                            <span class="nav-link-title">Настройки</span>
+                        </a>
+                    </div>
 
-                        <!-- Collapse -->
-                        <div class="nav-item">
-                            <a class="nav-link" href="#navbarVerticalMenuPagesUserProfileMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUserProfileMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesUserProfileMenu">
-                                <i class="bi-person nav-icon"></i>
-                                <span class="nav-link-title">Профиль <span class="badge bg-primary rounded-pill ms-1">5</span></span>
-                            </a>
-
-
-                        </div>
-
-                        <div class="nav-item">
-                            <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit();" data-bs-toggle="modal" data-bs-target="#welcomeMessageModal">
-
-                                <i class="bi-person nav-icon"></i>
-                                <span class="nav-link-title">Выход <span class="badge bg-primary rounded-pill ms-1">5</span></span>
-
-                            </a>
-
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-
-                        </div>
-
-
+                    <div class="nav-item">
+                        <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="bi-box-arrow-right nav-icon"></i>
+                            <span class="nav-link-title">Выход</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </div>
                     <!-- End Collapse -->
 
@@ -4109,6 +4098,8 @@
     })()
 </script>
 <script>
+    let user_g=[];
+
     user_name=document.getElementById('user-name');
     user_type=document.getElementById('user-email');
     main_content=document.getElementById('content-main');
@@ -4199,6 +4190,7 @@
         })
         .then(data => {
             console.log(data);
+            view_profile(data);
 
             main(data);
             // radar(data.skills);

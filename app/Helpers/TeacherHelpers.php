@@ -15,7 +15,7 @@ class TeacherHelpers
 {
 
 
-    static public function generateVocabulary($step,$request)
+    static public function generateVocabulary($step,$request,$user)
     {
         $apiKey = env('GEMINI_API_KEY1');
 
@@ -30,11 +30,13 @@ class TeacherHelpers
 2. Подробная информация с примерами и объяснениями в формате HTML — **только содержимое внутри тега <body>**, без самого тега <body> и без тега <html>.
 4. Несколько ссылок для изучения теми.
 5. Если нет предпочтеня учителя сам подбери.
-
+6. Очко опыта по 10 бальнойсистеме
+7. Язык ответа на '{$user->leng}'
 
 ### Формат ответа (JSON):
 [
        \"title\": \"строка\",
+       \"exp\": \"опыт за прочитание\",
         \"info\": \"HTML-код, только содержимое внутри <body>, без <body> и <html>\",
         \"links\": [
             \"/\",
