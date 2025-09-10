@@ -692,13 +692,13 @@
             <div class="navbar-vertical-content">
                 <div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav">
                     <!-- Collapse -->
-                    <span class="dropdown-header mt-4">Навигатсия</span>
+                    <span class="dropdown-header mt-4">Навигация</span>
                     <small class="bi-three-dots nav-subtitle-replacer"></small>
 
                     <div class="nav-item">
                         <a class="nav-link " data-placement="left" href="{{route('home')}}">
                             <i class="bi-house-door nav-icon"></i>
-                            <span class="nav-link-title">Гланая</span>
+                            <span class="nav-link-title">Главная</span>
                         </a>
                     </div>
 

@@ -879,7 +879,7 @@
 </aside>
 
 <main id="content-main" role="main" class="main" style="">
-@import('components.my.toas')
+@include('components.my.toas')
     @yield('content-main')
 
 </main>

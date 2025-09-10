@@ -145,104 +145,80 @@
             <div class="card card-lg mb-5">
                 <div class="card-body">
                     <!-- Form -->
-                    <form class="js-validate needs-validation" novalidate="" action="{{route('register')}}" method="post">
+                    <form class="js-validate needs-validation  mx-auto" style="max-width: 600px;" novalidate action="{{ route('register') }}" method="post">
                         @csrf
-                        <div class="text-center">
-                            <div class="mb-5">
-                                <h1 class="display-5">Создайте свой аккаунт</h1>
-                                <p>У вас есть аккаунт? <a class="link" href="{{route('login')}}">Вход</a></p>
-                            </div>
-
-
-
-                            <span class="divider-center text-muted mb-4">Заполните все поля</span>
+                        <div class="text-center mb-4">
+                            <h1 class="display-6">Регистрация</h1>
+                            <p class="text-muted">Уже есть аккаунт?
+                                <a class="link-primary" href="{{ route('login') }}">Войти</a>
+                            </p>
                         </div>
 
-                        <label class="form-label" for="fullNameSrEmail">Полное имя</label>
-
-                        <!-- Form -->
+                        <!-- Имя и возраст -->
                         <div class="row">
-                            <div class="col-sm-6">
-                                <!-- Form -->
-                                <div class="mb-4">
-                                    <input type="text" class="form-control form-control-lg" name="name" id="fullNameSrEmail" placeholder="Mark" aria-label="Mark" required="">
-                                    <span class="invalid-feedback">Please enter your first name.</span>
-                                </div>
-                                <!-- End Form -->
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="name">Полное имя</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                       name="name" id="name" value="{{ old('name') }}" placeholder="Иван Иванов" required>
+                                @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <div class="col-sm-6">
-                                <!-- Form -->
-                                <div class="mb-4">
-                                    <input type="number" name="old" class="form-control form-control-lg" placeholder="Сколько ва лет?" aria-label="17" required="">
-                                    <span class="invalid-feedback">Please enter your last name.</span>
-                                </div>
-                                <!-- End Form -->
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="old">Возраст</label>
+                                <input type="number" class="form-control @error('old') is-invalid @enderror"
+                                       name="old" id="old" value="{{ old('old') }}" placeholder="18" required>
+                                @error('old')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label class="form-label" for="signupSrEmail">Ваш электроный адрес</label>
-                            <input type="email" class="form-control form-control-lg" name="email" id="signupSrEmail" placeholder="Markwilliams@site.com" aria-label="Markwilliams@site.com" required="">
-                            <span class="invalid-feedback">Please enter a valid email address.</span>
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Электронная почта</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                   name="email" id="email" value="{{ old('email') }}" placeholder="example@mail.com" required>
+                            @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <div class="mb-4">
-                            <label class="form-label" for="user_type">Роль в жизни</label>
-                            <select name="user_type" class="form-select">
-                                <option value="schoolboy">Школьник</option>
-                                <option value="student">Студет</option>
-                                <option value="worker">Работник</option>
 
+                        <!-- Роль -->
+                        <div class="mb-3">
+                            <label class="form-label" for="user_role">Роль</label>
+                            <select name="role" id="role" class="form-select @error('role') is-invalid @enderror" required>
+                                <option value="" disabled {{ old('role') ? '' : 'selected' }}>Выберите...</option>
+                                <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Ученик</option>
+                                <option value="teacher" {{ old('role') == 'teacher' ? 'selected' : '' }}>Учитель</option>
                             </select>
-                            <span class="invalid-feedback">Please enter a valid email address.</span>
-
+                            @error('role')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+
+                        <!-- Пароль -->
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Пароль</label>
+                            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                   name="password" id="password" placeholder="Минимум 8 символов" required>
+                            @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Подтверждение пароля -->
                         <div class="mb-4">
-                            <label class="form-label" for="signupSrPassword">Пароль</label>
-
-                            <div class="input-group input-group-merge" data-hs-validation-validate-class="">
-                                <input type="password" class="js-toggle-password form-control form-control-lg" name="password" id="signupSrPassword" placeholder="8+ characters required" aria-label="8+ characters required" required="" minlength="8" data-hs-toggle-password-options='{
-                           "target": [".js-toggle-password-target-1", ".js-toggle-password-target-2"],
-                           "defaultClass": "bi-eye-slash",
-                           "showClass": "bi-eye",
-                           "classChangeTarget": ".js-toggle-password-show-icon-1"
-                         }'>
-                                <a class="js-toggle-password-target-1 input-group-append input-group-text" href="javascript:;">
-                                    <i class="js-toggle-password-show-icon-1 bi-eye"></i>
-                                </a>
-                            </div>
-
-                            <span class="invalid-feedback">Your password is invalid. Please try again.</span>
+                            <label class="form-label" for="password_confirmation">Повторите пароль</label>
+                            <input type="password" class="form-control"
+                                   name="password_confirmation" id="password_confirmation"
+                                   placeholder="Введите пароль ещё раз" required>
                         </div>
-                        <!-- End Form -->
 
-                        <!-- Form -->
-                        <div class="mb-4">
-                            <label class="form-label" for="signupSrConfirmPassword">Повторите пороль</label>
-
-                            <div class="input-group input-group-merge" data-hs-validation-validate-class="">
-                                <input type="password" class="js-toggle-password form-control form-control-lg" name="password_confirmation" id="signupSrConfirmPassword" placeholder="8+ characters required" aria-label="8+ characters required" required="" minlength="8" data-hs-toggle-password-options='{
-                           "target": [".js-toggle-password-target-1", ".js-toggle-password-target-2"],
-                           "defaultClass": "bi-eye-slash",
-                           "showClass": "bi-eye",
-                           "classChangeTarget": ".js-toggle-password-show-icon-2"
-                         }'>
-                                <a class="js-toggle-password-target-2 input-group-append input-group-text" href="javascript:;">
-                                    <i class="js-toggle-password-show-icon-2 bi-eye"></i>
-                                </a>
-                            </div>
-
-                            <span class="invalid-feedback">Password does not match the confirm password.</span>
-                        </div>
-                        <!-- End Form -->
-
-                        <!-- Form Check -->
-
-                        <!-- End Form Check -->
-
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Регстратсия</button>
-
+                        <!-- Кнопка -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Создать аккаунт</button>
                         </div>
                     </form>
                     <!-- End Form -->

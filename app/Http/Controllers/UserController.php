@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
+use function Pest\Laravel\freezeTime;
 
 class UserController extends Controller
 {
@@ -89,11 +90,12 @@ $user->save();
                    if ($student->pivot->status == 1) {
                        $totalCertificate++;
                    }
-                   $students_t->put($student->id, $student);
+                   $student->name_course=$course->topic;
+                   $student->step_course=$course->step;
+                   $students_t->push($student); // сохраняет pivot
                }
            }
 //           dd($courses, $totalStudents, $totalCertificate);
-
            return view('teacher.dashboard',[
                'courses'=>$courses,
                'totalStudents'=>$totalStudents,
@@ -101,15 +103,17 @@ $user->save();
                'students'=>$students_t
                ]);
        }
-
     }
 
     public function profile_settings()
     {
         $user=Auth::user();
-
-        return view('user.profile',['user'=>$user]);
-
+        if($user->role=='student') {
+            return view('user.profile', ['user' => $user]);
+        }
+        elseif($user->role=="teacher"){
+            return view('teacher.account.settings', ['user' => $user]);
+        }
 
     }
 

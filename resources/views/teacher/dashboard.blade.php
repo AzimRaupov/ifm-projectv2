@@ -27,12 +27,12 @@
                     <div class="col-sm mb-2 mb-sm-0">
 
 
-                        <h1 class="page-header-title">Kanban</h1>
+                        <h1 class="page-header-title">Панель управления</h1>
                     </div>
                     <!-- End Col -->
 
                     <div class="col-lg-auto">
-                        <span class="text-cap small">Team members:</span>
+                        <span class="text-cap small">Ученики:</span>
 
                         <div class="d-flex">
                             <!-- Avatar Group -->
@@ -95,7 +95,7 @@
                             <i class="bi bi-people fs-3"></i>
                         </div>
                         <div>
-                            <h6 class="text-muted">Студенты</h6>
+                            <h6 class="text-muted">Ученики</h6>
                             <h4 class="fw-bold mb-0">{{$students->count()}}</h4>
                         </div>
                     </div>
@@ -172,14 +172,14 @@
                             <div class="row mb-3 text-center">
                                 <div class="col">
                                     <div class="text-center">
-                                        <span class="d-block h4 mb-1"></span>
-                                        <span class="d-block fs-6">Студеньы</span>
+                                        <span class="d-block h4 mb-1">{{$course->students->count()}}</span>
+                                        <span class="d-block fs-6">Ученики</span>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="text-center">
                                         <span class="d-block h4 mb-1">0</span>
-                                        <span class="d-block fs-6">Учашися</span>
+                                        <span class="d-block fs-6">Учащийся</span>
                                     </div>
                                 </div>
                                 <div class="col">
@@ -207,7 +207,7 @@
                 <div class="row justify-content-between align-items-center flex-grow-1">
                     <div class="col-12 col-md">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-header-title">Users</h5>
+                            <h5 class="card-header-title">Все ученики</h5>
                         </div>
                     </div>
 
@@ -241,10 +241,10 @@
                  }'>
                     <thead class="thead-light">
                     <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Country</th>
-                        <th>Status</th>
+                        <th>Имя</th>
+                        <th>Курс</th>
+                        <th>Пройдено на</th>
+                        <th>Дата поступление</th>
                     </tr>
                     </thead>
 
@@ -253,9 +253,16 @@
                     @foreach($students as $student)
                     <tr>
                         <td>
-                            <a class="d-flex align-items-center" href="../user-profile.html">
+                            <a class="d-flex align-items-center" target="_blank" href="{{route('profile.edit',['id'=>$student->id])}}">
                                 <div class="avatar avatar-soft-primary avatar-circle">
-                                    <span class="avatar-initials">A</span>
+                                    @if(isset($student->photo) && $student->photo)
+                                        <img id="editAvatarImgModal" class="avatar-img"
+                                             src="{{ asset('storage/' . $student->photo) }}"
+                                             alt="Фото профиля пользователя {{ $student->name }}">
+                                    @else
+                                        <span class="avatar-initials">{{ mb_substr($student->name, 0, 1) }}</span>
+
+                                    @endif
                                 </div>
                                 <div class="ms-3">
                                     <span class="d-block h5 text-inherit mb-0">{{$student->name}}</span>
@@ -264,13 +271,12 @@
                             </a>
                         </td>
                         <td>
-                            <span class="d-block h5 mb-0">Seller</span>
-                            <span class="d-block fs-5">Branding products</span>
+                            <span class="d-block h5 mb-0">{{$student->name_course}}</span>
                         </td>
-                        <td>United States</td>
-                        <td>
-                            <span class="legend-indicator bg-warning"></span>Pending
-                        </td>
+                        <td>{{$student->pivot->complete}}</td>
+
+                        <td>{{ $student->pivot->created_at }}</td>
+
                     </tr>
                     @endforeach
 
