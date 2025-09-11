@@ -107,7 +107,7 @@ class TestClass
            Step::where('id', $request->id)->update(['status' => '1']);
 
            $progress = Progress::query()
-               ->where('course_id', $test->course_id ?? null)
+               ->where('course_id', $course_id ?? null)
                ->whereDate('date', Carbon::now())
                ->first();
 
@@ -116,7 +116,7 @@ class TestClass
                $progress->save();
            } else {
                Progress::query()->create([
-                   'course_id' => $test->course_id ?? null,
+                   'course_id' => $course_id ?? null,
                    'date' => Carbon::now(),
                    'colum' => $colum,
                ]);
@@ -138,6 +138,7 @@ class TestClass
         $ok = '1';
         $colum = 0;
         $user = Auth::user();
+        $course_id = Step::find($request->id)->course_id ?? null;
 
         foreach ($tests as $test) {
             $ok = '1';
@@ -148,7 +149,7 @@ class TestClass
                     'user_id' => $user->id,
                 ],
                 [
-                    'course_id' => $test->course_id,
+                    'course_id' => $course_id,
                     'score' => 0
                 ]
             );
@@ -223,7 +224,7 @@ class TestClass
             ['step_id' => $request->id, 'user_id' => $user->id],
             [
                 'ex' => $tskill->score,
-                'course_id' => $test->course_id,
+                'course_id' => $course_id,
                 'status' => '1',
             ]
         );
@@ -231,7 +232,7 @@ class TestClass
 
         $progress = Progress::query()->firstOrNew([
             'user_id'   => $user->id,
-            'course_id' => $test->course_id ?? null,
+            'course_id' => $course_id ?? null,
             'date'      => Carbon::today(),
         ]);
 
@@ -239,16 +240,16 @@ class TestClass
         $progress->save();
 
         StudentCourse::where('user_id', $user->id)
-            ->where('course_id', $progress->course_id)
+            ->where('course_id', $course_id)
             ->update([
                 'exp' => \DB::raw("exp + {$colum}"),
                 'complete' => \DB::raw("complete + 1")
             ]);
 
-        GlobalMethods::course_cm($test->course_id,$user->id);
 
+        GlobalMethods::course_cm($course_id,$user->id);
 
-        return $tests;
+return response()->json(['l'=>$course_id,'p'=>$user->id]);
     }
 
 

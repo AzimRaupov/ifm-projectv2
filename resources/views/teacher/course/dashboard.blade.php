@@ -1,5 +1,12 @@
 @extends('layouts.teacher')
 
+@php
+    $data = array_fill(0, 12, 0);
+        foreach($progressByMonth as $item){
+            $data[$item->month - 1] = $item->total; // month 1–12, массив 0–11
+        }
+@endphp
+
 @section('content-main')
     <div class="content container-fluid">
         <!-- Page Header -->
@@ -8,8 +15,8 @@
                 <div class="col-sm mb-2 mb-sm-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb breadcrumb-no-gutter">
-                            <li class="breadcrumb-item"><a class="breadcrumb-link" href="javascript:;">Pages</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Referrals</li>
+                            <li class="breadcrumb-item"><a class="breadcrumb-link" href="{{route('teacher.course.edit',['id'=>$course->id])}}">{{$course->topic}}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Кантроль</li>
                         </ol>
                     </nav>
 
@@ -18,7 +25,7 @@
                 <!-- End Col -->
 
                 <div class="col-sm-6 col-md-5 col-lg-4">
-                    <small class="text-cap">Цылка для подключение к курсу:</small>
+                    <small class="text-cap">Ссылка для подключения к курсу:</small>
 
                     <!-- Input Group -->
                     <div class="input-group">
@@ -51,24 +58,9 @@
                 <div class="text-center">
                     <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations/oc-megaphone.svg')}}" alt="Image Description" data-hs-theme-appearance="default" style="min-height: 6rem;">
                     <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations-light/oc-megaphone.svg')}}" alt="Image Description" data-hs-theme-appearance="dark" style="min-height: 6rem;">
-                    <span class="text-cap text-body">Number of referrals</span>
-                    <span class="d-block display-4 text-dark mb-2">150</span>
+                    <span class="text-cap text-body">Все студенты</span>
+                    <span class="d-block display-4 text-dark mb-2">{{$course->students->count()}}</span>
 
-                    <div class="row col-divider">
-                        <div class="col text-end">
-                <span class="d-block fw-semibold text-success">
-                  <i class="bi-graph-up"></i> 12%
-                </span>
-                            <span class="d-block">change</span>
-                        </div>
-                        <!-- End Col -->
-
-                        <div class="col text-start">
-                            <span class="d-block fw-semibold text-dark">25</span>
-                            <span class="d-block">last week</span>
-                        </div>
-                        <!-- End Col -->
-                    </div>
                     <!-- End Row -->
                 </div>
                 <!-- End Card -->
@@ -79,24 +71,9 @@
                 <div class="text-center">
                     <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations/oc-money-profits.svg')}}" alt="Image Description" data-hs-theme-appearance="default" style="min-height: 6rem;">
                     <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations-light/oc-money-profits.svg')}}" alt="Image Description" data-hs-theme-appearance="dark" style="min-height: 6rem;">
-                    <span class="text-cap text-body">Amount earned</span>
-                    <span class="d-block display-4 text-dark mb-2">$7,253.00</span>
+                    <span class="text-cap text-body">Ученики</span>
+                    <span class="d-block display-4 text-dark mb-2">{{$course->students->count()-$certificate}}</span>
 
-                    <div class="row col-divider">
-                        <div class="col text-end">
-                <span class="d-block fw-semibold text-success">
-                  <i class="bi-graph-up"></i> 5.6%
-                </span>
-                            <span class="d-block">change</span>
-                        </div>
-                        <!-- End Col -->
-
-                        <div class="col text-start">
-                            <span class="d-block fw-semibold text-dark">$582.00</span>
-                            <span class="d-block">last week</span>
-                        </div>
-                        <!-- End Col -->
-                    </div>
                     <!-- End Row -->
                 </div>
                 <!-- End Card -->
@@ -107,24 +84,10 @@
                 <div class="text-center">
                     <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations/oc-growing.svg')}}" alt="Image Description" data-hs-theme-appearance="default" style="min-height: 6rem;">
                     <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations-light/oc-growing.svg')}}" alt="Image Description" data-hs-theme-appearance="dark" style="min-height: 6rem;">
-                    <span class="text-cap text-body">Referral completed</span>
-                    <span class="d-block display-4 text-dark mb-2">25</span>
+                    <span class="text-cap text-body">Выпускники</span>
+                    <span class="d-block display-4 text-dark mb-2">{{$certificate}}</span>
 
-                    <div class="row col-divider">
-                        <div class="col text-end">
-                <span class="d-block fw-semibold text-danger">
-                  <i class="bi-graph-down"></i> 2.3%
-                </span>
-                            <span class="d-block">change</span>
-                        </div>
-                        <!-- End Col -->
 
-                        <div class="col text-start">
-                            <span class="d-block fw-semibold text-dark">7</span>
-                            <span class="d-block">last week</span>
-                        </div>
-                        <!-- End Col -->
-                    </div>
                     <!-- End Row -->
                 </div>
                 <!-- End Card -->
@@ -133,7 +96,6 @@
         <!-- End Stats -->
 
         <div class="my-5">
-            <p class="text-muted"><i class="bi-exclamation-octagon"></i> Last referral: August 25, 2020.</p>
         </div>
 
         <div class="row">
@@ -142,7 +104,7 @@
                 <div class="card h-100">
                     <!-- Header -->
                     <div class="card-header card-header-content-sm-between">
-                        <h4 class="card-header-title mb-2 mb-sm-0">Total sales earnings</h4>
+                        <h4 class="card-header-title mb-2 mb-sm-0">Статистика выполнения курса</h4>
 
                         <!-- Daterangepicker -->
                         <button id="js-daterangepicker-predefined" class="btn btn-ghost-secondary btn-sm dropdown-toggle">
@@ -160,9 +122,9 @@
                             <canvas id="referrals" class="js-chart" style="height: 15rem;" data-hs-chartjs-options='{
                           "type": "bar",
                           "data": {
-                            "labels": ["Jan", "Feb", "March", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            "labels": ["Янв", "Фев", "Март", "Апр", "Май", "Июнь", "Июль", "Авг", "Сен", "Окт", "Ноя", "Дек"],
                             "datasets": [{
-                              "data": [200, 300, 290, 350, 150, 350, 300, 100, 125, 220, 390, 220],
+                              "data": [{{ implode(',', $data) }}],
                               "backgroundColor": "#377dff",
                               "hoverBackgroundColor": "#377dff",
                               "borderColor": "#377dff",
@@ -186,7 +148,7 @@
                                       "family": "Open Sans, sans-serif"
                                     },
                                   "padding": 10,
-                                  "postfix": "$"
+                                  "postfix": ""
                                 }
                               },
                               "x": {
@@ -209,7 +171,7 @@
                             "cornerRadius": 2,
                             "plugins": {
                               "tooltip": {
-                                "prefix": "$",
+                                "postfix": "exp",
                                 "hasIndicator": true,
                                 "mode": "index",
                                 "intersect": false
@@ -234,8 +196,9 @@
                 <div class="card h-100">
                     <!-- Header -->
                     <div class="card-header card-header-content-between">
-                        <h4 class="card-header-title">Таблитца лидеров <i class="bi-patch-check-fill text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="This report is based on 100% of sessions."></i></h4>
-                        <a class="btn btn-ghost-secondary btn-sm" href="#">View all</a>
+                        <h4 class="card-header-title">Таблица лидеров
+                            <i class="bi bi-award-fill text-warning" title="Лучший результат"></i>
+                        </h4>
                     </div>
                     <!-- End Header -->
 
@@ -244,21 +207,28 @@
                         <div class="list-group list-group-flush list-group-no-gutters">
                             <!-- Item -->
 
+                            @foreach($course->students as $student)
                             <div class="list-group-item">
                                 <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <img class="avatar avatar-xss avatar-circle" src="{{asset('assets/vendor/flag-icon-css/flags/1x1/us.svg')}}" alt="Flag">
-                                    </div>
+                                    <div class="flex-shrink-0 avatar avatar-soft-primary avatar-circle">
+                                        @if(isset($student->photo) && $student->photo)
+                                            <img id="editAvatarImgModal" class="avatar-img"
+                                                 src="{{ asset('storage/' . $student->photo) }}"
+                                                 alt="Фото профиля пользователя {{ $student->name }}">
+                                        @else
+                                            <span class="avatar-initials">{{ mb_substr($student->name, 0, 1) }}</span>
+
+                                        @endif                                    </div>
 
                                     <div class="flex-grow-1 ms-2">
                                         <div class="row align-items-center">
                                             <div class="col">
-                                                <span class="d-block">United States</span>
+                                                <span class="d-block">{{$student->name}}</span>
                                             </div>
                                             <!-- End Col -->
 
                                             <div class="col-auto">
-                                                <h5>$4,302.00</h5>
+                                                <h5>{{$student->pivot->exp}}exp</h5>
                                             </div>
                                             <!-- End Col -->
                                         </div>
@@ -266,8 +236,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- End Item -->
-
+                            @endforeach
 
                         </div>
                     </div>
@@ -278,73 +247,88 @@
         </div>
         <!-- End Row -->
 
-        <!-- Card -->
-        <div class="card">
+        <div class="card mx-4 mt-7">
             <!-- Header -->
             <div class="card-header">
-                <h4 class="card-header-title">Referral users</h4>
+                <div class="row justify-content-between align-items-center flex-grow-1">
+                    <div class="col-12 col-md">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-header-title">Все ученики</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <!-- Filter -->
+                        <form>
+                            <!-- Search -->
+                            <div class="input-group input-group-merge input-group-flush">
+                                <div class="input-group-prepend input-group-text">
+                                    <i class="bi-search"></i>
+                                </div>
+                                <input id="datatableWithSearchInput" type="search" class="form-control" placeholder="Search users" aria-label="Search users">
+                            </div>
+                            <!-- End Search -->
+                        </form>
+                        <!-- End Filter -->
+                    </div>
+                </div>
             </div>
             <!-- End Header -->
 
             <!-- Table -->
             <div class="table-responsive datatable-custom">
-                <table id="datatable" class="table table-lg table-borderless table-thead-bordered table-nowrap table-align-middle card-table" data-hs-datatables-options='{
+                <table class="js-datatable table table-borderless table-thead-bordered table-nowrap table-align-middle card-table"
+                       data-hs-datatables-options='{
                    "order": [],
-                   "info": {
-                     "totalQty": "#datatableWithPaginationInfoTotalQty"
-                   },
-                   "entries": "#datatableEntries",
-                   "pageLength": 15,
+                   "search": "#datatableWithSearchInput",
                    "isResponsive": false,
                    "isShowPaging": false,
-                   "pagination": "datatablePagination"
+                   "pagination": "datatableWithSearchPagination"
                  }'>
                     <thead class="thead-light">
                     <tr>
-                        <th>Студенты</th>
-                        <th>Профил</th>
-                        <th>Опыт</th>
-                        <th>Пройдено</th>
+                        <th>Имя</th>
+                        <th>Полученый опыт</th>
+                        <th>Пройдено на</th>
+                        <th>Дата поступление</th>
                     </tr>
                     </thead>
 
                     <tbody>
 
                     @foreach($course->students as $student)
-                    <tr>
-                        <td>
-                            <a class="d-flex align-items-center" href="user-profile.html">
-                                <div class="flex-shrink-0">
-                                    <div class="avatar avatar-soft-info avatar-circle">
-                                        <span class="avatar-initials">B</span>
+                        <tr>
+                            <td>
+                                <a class="d-flex align-items-center" target="_blank" href="{{route('profile.edit',['id'=>$student->id])}}">
+                                    <div class="avatar avatar-soft-primary avatar-circle">
+                                        @if(isset($student->photo) && $student->photo)
+                                            <img id="editAvatarImgModal" class="avatar-img"
+                                                 src="{{ asset('storage/' . $student->photo) }}"
+                                                 alt="Фото профиля пользователя {{ $student->name }}">
+                                        @else
+                                            <span class="avatar-initials">{{ mb_substr($student->name, 0, 1) }}</span>
+
+                                        @endif
                                     </div>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <span class="d-block h5 text-inherit mb-0">{{$student->name}}</span>
-                                    <span class="d-block fs-6 text-body">{{$student->email}}</span>
-                                </div>
-                            </a>
-                        </td>
-                        <td>89340</td>
-                        <td>
-                            <div class="input-group input-group-sm input-group-merge table-input-group">
-                                <input id="referralsKeyCode12" type="text" class="form-control" readonly="" value="https://htmlstream.com/wer9n8x">
-                                <a class="js-clipboard input-group-append input-group-text" href="javascript:;" data-bs-toggle="tooltip" title="Copy to clipboard" data-hs-clipboard-options='{
-                        "type": "tooltip",
-                        "successText": "Copied!",
-                        "contentTarget": "#referralsKeyCode12",
-                        "classChangeTarget": "#referralsKeyCodeIcon12",
-                        "defaultClass": "bi-clipboard",
-                        "successClass": "bi-check"
-                       }'>
-                                    <i id="referralsKeyCodeIcon12" class="bi-clipboard"></i>
+                                    <div class="ms-3">
+                                        <span class="d-block h5 text-inherit mb-0">{{$student->name}}</span>
+                                        <span class="d-block fs-5 text-body">{{$student->email}}</span>
+                                    </div>
                                 </a>
-                            </div>
-                        </td>
-                        <td>39</td>
-                        <td>$20.00</td>
-                    </tr>
+                            </td>
+                            <td>
+                                <span class="d-block h5 mb-0">{{$student->pivot->exp}}</span>
+                            </td>
+                            <td>{{round(($student->pivot->complete / $course->step)*100,2)}}%</td>
+
+                            <td>{{ $student->pivot->created_at }}</td>
+
+                        </tr>
                     @endforeach
+
+
+
+
 
 
                     </tbody>
@@ -354,46 +338,26 @@
 
             <!-- Footer -->
             <div class="card-footer">
-                <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
-                    <div class="col-sm mb-2 mb-sm-0">
-                        <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
-                            <span class="me-2">Showing:</span>
-
-                            <!-- Select -->
-                            <div class="tom-select-custom">
-                                <select id="datatableEntries" class="js-select form-select form-select-borderless w-auto" autocomplete="off" data-hs-tom-select-options='{
-                            "searchInDropdown": false,
-                            "hideSearch": true
-                          }'>
-                                    <option value="10">10</option>
-                                    <option value="15" selected="">15</option>
-                                    <option value="20">20</option>
-                                </select>
-                            </div>
-                            <!-- End Select -->
-
-                            <span class="text-secondary me-2">of</span>
-
-                            <!-- Pagination Quantity -->
-                            <span id="datatableWithPaginationInfoTotalQty"></span>
-                        </div>
-                    </div>
-                    <!-- End Col -->
-
-                    <div class="col-sm-auto">
-                        <div class="d-flex justify-content-center justify-content-sm-end">
-                            <!-- Pagination -->
-                            <nav id="datatablePagination" aria-label="Activity pagination"></nav>
-                        </div>
-                    </div>
-                    <!-- End Col -->
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center justify-content-sm-end">
+                    <nav id="datatableWithSearchPagination" aria-label="Activity pagination"></nav>
                 </div>
-                <!-- End Row -->
+                <!-- End Pagination -->
             </div>
             <!-- End Footer -->
         </div>
-        <!-- End Card -->
+
     </div>
 
 
+@endsection
+
+@section('script')
+    <script>
+        (function () {
+            // INITIALIZATION OF DATATABLES
+            // =======================================================
+            HSCore.components.HSDatatables.init('.js-datatable')
+        })()
+    </script>
 @endsection

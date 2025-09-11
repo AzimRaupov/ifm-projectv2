@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+
 Route::get('/test/create',[\App\Http\Controllers\api\create\CreateController::class,'c_test'])->name('t');
 
 

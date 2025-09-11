@@ -588,17 +588,14 @@
                     <!-- Account -->
                     <div class="dropdown">
                         <a class="navbar-dropdown-account-wrapper" href="javascript:;" id="accountNavbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" data-bs-dropdown-animation="">
-                            <div class="avatar avatar-sm avatar-circle">
-                                <img class="avatar-img" src="{{asset('assets/img/160x160/img6.jpg')}}" alt="Image Description">
-                                <span class="avatar-status avatar-sm-status avatar-status-success"></span>
+                            <div class="avatar avatar-sm avatar-soft-primary avatar-circle avatr-img">
                             </div>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-account" aria-labelledby="accountNavbarDropdown" style="width: 16rem;">
                             <div class="dropdown-item-text">
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar avatar-sm avatar-circle">
-                                        <img class="avatar-img" src="{{asset('assets/img/160x160/img6.jpg')}}" alt="Image Description">
+                                    <div class="avatar avatar-sm avatar-soft-primary avatar-circle avatr-img" >
                                     </div>
                                     <div class="flex-grow-1 ms-3">
                                         <h5 class="mb-0" id="user-name">None</h5>
@@ -1635,102 +1632,6 @@
                                 <!-- End Style Switcher -->
                             </li>
 
-                            <li class="nav-item">
-                                <!-- Account -->
-                                <div class="dropdown">
-                                    <a class="navbar-dropdown-account-wrapper" href="javascript:;" id="accountNavbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" data-bs-dropdown-animation="">
-                                        <div class="avatar avatar-sm avatar-circle">
-                                            <img class="avatar-img" src="{{asset('assets/img/160x160/img6.jpg')}}" alt="Image Description">
-                                            <span class="avatar-status avatar-sm-status avatar-status-success"></span>
-                                        </div>
-                                    </a>
-
-                                    <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-account" aria-labelledby="accountNavbarDropdown" style="width: 16rem;">
-                                        <div class="dropdown-item-text">
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar avatar-sm avatar-circle">
-                                                    <img class="avatar-img" src="{{asset('assets/img/160x160/img6.jpg')}}" alt="Image Description">
-                                                </div>
-                                                <div class="flex-grow-1 ms-3">
-                                                    <h5 class="mb-0">Mark Williams</h5>
-                                                    <p class="card-text text-body">mark@site.com</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="dropdown-divider"></div>
-
-                                        <!-- Dropdown -->
-                                        <div class="dropdown">
-                                            <a class="navbar-dropdown-submenu-item dropdown-item dropdown-toggle" href="javascript:;" id="navSubmenuPagesAccountDropdown1" data-bs-toggle="dropdown" aria-expanded="false">Set status</a>
-
-                                            <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-sub-menu" aria-labelledby="navSubmenuPagesAccountDropdown1">
-                                                <a class="dropdown-item" href="#">
-                                                    <span class="legend-indicator bg-success me-1"></span> Available
-                                                </a>
-                                                <a class="dropdown-item" href="#">
-                                                    <span class="legend-indicator bg-danger me-1"></span> Busy
-                                                </a>
-                                                <a class="dropdown-item" href="#">
-                                                    <span class="legend-indicator bg-warning me-1"></span> Away
-                                                </a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#"> Reset status
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <!-- End Dropdown -->
-
-                                        <a class="dropdown-item" href="#">Profile &amp; account</a>
-                                        <a class="dropdown-item" href="#">Settings</a>
-
-                                        <div class="dropdown-divider"></div>
-
-                                        <a class="dropdown-item" href="#">
-                                            <div class="d-flex align-items-center">
-                                                <div class="flex-shrink-0">
-                                                    <div class="avatar avatar-sm avatar-dark avatar-circle">
-                                                        <span class="avatar-initials">HS</span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1 ms-2">
-                                                    <h5 class="mb-0">Htmlstream <span class="badge bg-primary rounded-pill text-uppercase ms-1">PRO</span></h5>
-                                                    <span class="card-text">hs.example.com</span>
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <div class="dropdown-divider"></div>
-
-                                        <!-- Dropdown -->
-                                        <div class="dropdown">
-                                            <a class="navbar-dropdown-submenu-item dropdown-item dropdown-toggle" href="javascript:;" id="navSubmenuPagesAccountDropdown2" data-bs-toggle="dropdown" aria-expanded="false">Customization</a>
-
-                                            <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-sub-menu" aria-labelledby="navSubmenuPagesAccountDropdown2">
-                                                <a class="dropdown-item" href="#">
-                                                    Invite people
-                                                </a>
-                                                <a class="dropdown-item" href="#">
-                                                    Analytics
-                                                    <i class="bi-box-arrow-in-up-right"></i>
-                                                </a>
-                                                <a class="dropdown-item" href="#">
-                                                    Customize Front
-                                                    <i class="bi-box-arrow-in-up-right"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <!-- End Dropdown -->
-
-                                        <a class="dropdown-item" href="#">Manage team</a>
-
-                                        <div class="dropdown-divider"></div>
-
-                                        <a class="dropdown-item" href="{{route('logout')}}">Выход</a>
-                                    </div>
-                                </div>
-                                <!-- End Account -->
-                            </li>
                         </ul>
                         <!-- End Navbar -->
                     </div>
@@ -2706,102 +2607,6 @@
                                     <!-- End Style Switcher -->
                                 </li>
 
-                                <li class="nav-item">
-                                    <!-- Account -->
-                                    <div class="dropdown">
-                                        <a class="navbar-dropdown-account-wrapper" href="javascript:;" id="accountNavbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" data-bs-dropdown-animation="">
-                                            <div class="avatar avatar-sm avatar-circle">
-                                                <img class="avatar-img" src="{{asset('assets/img/160x160/img6.jpg')}}" alt="Image Description">
-                                                <span class="avatar-status avatar-sm-status avatar-status-success"></span>
-                                            </div>
-                                        </a>
-
-                                        <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-account" aria-labelledby="accountNavbarDropdown" style="width: 16rem;">
-                                            <div class="dropdown-item-text">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-sm avatar-circle">
-                                                        <img class="avatar-img" src="{{asset('assets/img/160x160/img6.jpg')}}" alt="Image Description">
-                                                    </div>
-                                                    <div class="flex-grow-1 ms-3">
-                                                        <h5 class="mb-0">Mark Williams</h5>
-                                                        <p class="card-text text-body">mark@site.com</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="dropdown-divider"></div>
-
-                                            <!-- Dropdown -->
-                                            <div class="dropdown">
-                                                <a class="navbar-dropdown-submenu-item dropdown-item dropdown-toggle" href="javascript:;" id="navSubmenuPagesAccountDropdown1" data-bs-toggle="dropdown" aria-expanded="false">Set status</a>
-
-                                                <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-sub-menu" aria-labelledby="navSubmenuPagesAccountDropdown1">
-                                                    <a class="dropdown-item" href="#">
-                                                        <span class="legend-indicator bg-success me-1"></span> Available
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        <span class="legend-indicator bg-danger me-1"></span> Busy
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        <span class="legend-indicator bg-warning me-1"></span> Away
-                                                    </a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="#"> Reset status
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <!-- End Dropdown -->
-
-                                            <a class="dropdown-item" href="#">Profile &amp; account</a>
-                                            <a class="dropdown-item" href="#">Settings</a>
-
-                                            <div class="dropdown-divider"></div>
-
-                                            <a class="dropdown-item" href="#">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-shrink-0">
-                                                        <div class="avatar avatar-sm avatar-dark avatar-circle">
-                                                            <span class="avatar-initials">HS</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-grow-1 ms-2">
-                                                        <h5 class="mb-0">Htmlstream <span class="badge bg-primary rounded-pill text-uppercase ms-1">PRO</span></h5>
-                                                        <span class="card-text">hs.example.com</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-
-                                            <div class="dropdown-divider"></div>
-
-                                            <!-- Dropdown -->
-                                            <div class="dropdown">
-                                                <a class="navbar-dropdown-submenu-item dropdown-item dropdown-toggle" href="javascript:;" id="navSubmenuPagesAccountDropdown2" data-bs-toggle="dropdown" aria-expanded="false">Customization</a>
-
-                                                <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-sub-menu" aria-labelledby="navSubmenuPagesAccountDropdown2">
-                                                    <a class="dropdown-item" href="#">
-                                                        Invite people
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Analytics
-                                                        <i class="bi-box-arrow-in-up-right"></i>
-                                                    </a>
-                                                    <a class="dropdown-item" href="#">
-                                                        Customize Front
-                                                        <i class="bi-box-arrow-in-up-right"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <!-- End Dropdown -->
-
-                                            <a class="dropdown-item" href="#">Manage team</a>
-
-                                            <div class="dropdown-divider"></div>
-
-                                            <a class="dropdown-item" href="#">Sign out</a>
-                                        </div>
-                                    </div>
-                                    <!-- End Account -->
-                                </li>
 
                                 <li class="nav-item">
                                     <!-- Toggler -->
@@ -4109,15 +3914,30 @@
 
     function main(list){
         console.log(list)
-        user=list.user;
-        courses=list.courses;
-
+        let user=list.user;
+        let courses=list.courses;
+        let avatars = document.querySelectorAll('.avatr-img'); // исправил
 
         let links_profile = document.querySelectorAll('.profile_pub');
 
         links_profile.forEach((link, index) => {
             link.href = "{{ route('profile.edit') }}" + "?id=" + user.id;
         });
+
+        let html_avatar = `
+        <img class="avatar-img" src="{{asset('storage/')}}/${user.photo}" alt="Image Description">
+    `;
+
+        if (!user.photo) {
+            html_avatar = `
+            <span class="avatar-initials">${user.name.charAt(0)}</span>
+        `;
+        }
+
+        avatars.forEach((avatar) => {
+            avatar.innerHTML = html_avatar; // исправил
+        });
+
 
         console.log(main_content);
         user_name.textContent=user.name;

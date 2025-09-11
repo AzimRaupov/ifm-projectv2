@@ -588,17 +588,15 @@
                     <!-- Account -->
                     <div class="dropdown">
                         <a class="navbar-dropdown-account-wrapper" href="javascript:;" id="accountNavbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" data-bs-dropdown-animation="">
-                            <div class="avatar avatar-sm avatar-circle">
-                                <img class="avatar-img" src="{{asset('assets/img/160x160/img6.jpg')}}" alt="Image Description">
-                                <span class="avatar-status avatar-sm-status avatar-status-success"></span>
+                            <div class="avatar avatar-sm avatar-soft-primary avatar-circle avatr-img">
                             </div>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-account" aria-labelledby="accountNavbarDropdown" style="width: 16rem;">
                             <div class="dropdown-item-text">
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar avatar-sm avatar-circle">
-                                        <img class="avatar-img" src="{{asset('assets/img/160x160/img6.jpg')}}" alt="Image Description">
+                                    <div class="avatar avatar-sm avatar-circle avatar-soft-primary avatr-img">
+
                                     </div>
                                     <div class="flex-grow-1 ms-3">
                                         <h5 class="mb-0" id="user-name">None</h5>
@@ -4107,14 +4105,32 @@
     main_content=document.getElementById('content-main');
 
     function main(list){
-        user=list.user;
-        courses=list.courses;
+        let user=list.user;
+        let courses=list.courses;
+        let avatars = document.querySelectorAll('.avatr-img'); // исправил
 
         let links_profile = document.querySelectorAll('.profile_pub');
 
         links_profile.forEach((link, index) => {
             link.href = "{{ route('profile.edit') }}" + "?id=" + user.id;
         });
+
+
+        let html_avatar = `
+        <img class="avatar-img" src="{{asset('storage/')}}/${user.photo}" alt="Image Description">
+    `;
+
+        if (!user.photo) {
+            html_avatar = `
+            <span class="avatar-initials">${user.name.charAt(0)}</span>
+        `;
+        }
+
+        avatars.forEach((avatar) => {
+            avatar.innerHTML = html_avatar; // исправил
+        });
+
+
         console.log(main_content);
         user_name.textContent=user.name;
         user_type.textContent=user.email;

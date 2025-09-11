@@ -51,29 +51,35 @@ $user->save();
                    }
                ]
            )->get();
-           foreach ($courses as $index => $course) {
-               $complete = 0;
-               $sr=0;
-               $ps=0;
-               $i=0;
-               $course->complete = count($course->steps) > 0 ? round(($courses_student[$index]->complete / count($course->steps)) * 100, 2) : 0;
-               if($course->progress){
-                   foreach ($course->progress as $list) {
-                       if ($i<count($course->progress)-1) {
-                           $sr+=$list->colum;
+           foreach ($courses as $course) {
+               $course->complete = 0;
+               $course->sr = 0;
+               $course->ps = 0;
+               $course->pr = 0;
+
+               // Найти студента для данного курса
+               $student_course = collect($courses_student)->firstWhere('course_id', $course->id);
+
+               if ($student_course && count($course->steps) > 0) {
+                   $course->complete = round(($student_course->complete / $course->step) * 100, 2);
+               }
+
+               if (!empty($course->progress)) {
+                   $sr = 0;
+                   $ps = 0;
+                   $count_progress = count($course->progress);
+
+                   foreach ($course->progress as $i => $list) {
+                       if ($i < $count_progress - 1) {
+                           $sr += $list->colum;
                        } else {
-                           $ps+=$list->colum;
+                           $ps += $list->colum;
                        }
-                       $i++;
                    }
-                   $course->sr=count($course->progress)-1>0?($sr/(count($course->progress)-1)):0;
-                   $course->ps=$ps;
-                   if ($course->sr!= 0){
-                       $course->pr=round((($ps-$course->sr)/$course->sr)*100,1);
-                   }
-                   else{
-                       $course->pr=0;
-                   }
+
+                   $course->sr = ($count_progress - 1) > 0 ? ($sr / ($count_progress - 1)) : 0;
+                   $course->ps = $ps;
+                   $course->pr = $course->sr != 0 ? round((($ps - $course->sr) / $course->sr) * 100, 1) : 0;
                }
            }
            return view('student.dashboard', ['courses' => $courses]);

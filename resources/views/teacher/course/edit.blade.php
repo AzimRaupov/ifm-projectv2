@@ -29,17 +29,13 @@
                             "targetAttr": "src",
                             "allowTypes": [".png", ".jpeg", ".jpg"]
                          }'>
-                            <label class="profile-cover-uploader-label btn btn-sm btn-white" for="profileCoverUplaoder">
-                                <i class="bi-camera-fill"></i>
-                                <span class="d-none d-sm-inline-block ms-1">Upload header</span>
-                            </label>
+
                         </div>
                         <!-- End Custom File Cover -->
                     </div>
                 </div>
 
                 <form action="{{route('teacher.course.update')}}" class="course-update" method="post" enctype="multipart/form-data">
-                    <button type="submit">dfsds</button>
                     <input type="hidden" name="id" value="{{$course->id}}">
                     <div class="text-center mb-5">
                     <!-- Avatar -->
@@ -63,26 +59,15 @@
                     </label>
                     <!-- End Avatar -->
 
-                        <h1 class="page-header-title">
-                            <input type="text" name="topic" value="{{$course->topic}}">
-                        </h1>
+                        <h1 class="page-header-title">{{$course->topic}}</h1>
 
                     <!-- List -->
                     <ul class="list-inline list-px-2">
-                        <li class="list-inline-item">
-                            <i class="bi-building me-1"></i>
-                            <span>Pixeel Ltd.</span>
-                        </li>
 
-                        <li class="list-inline-item">
-                            <i class="bi-geo-alt me-1"></i>
-                            <a href="#">London,</a>
-                            <a href="#">UK</a>
-                        </li>
 
                         <li class="list-inline-item">
                             <i class="bi-calendar-week me-1"></i>
-                            <span>Joined March 2013</span>
+                            <span>{{$course->created_at->format('F Y')}}</span>
                         </li>
                     </ul>
                     <!-- End List -->
@@ -105,17 +90,9 @@
 
                     <ul class="nav nav-tabs align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link active disabled" href="#">Profile</a>
+                            <a class="nav-link active disabled" href="#">Редактор</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Teams</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Projects <span class="badge bg-soft-dark text-dark rounded-circle ms-1">3</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Connections</a>
-                        </li>
+
 
                         <li class="nav-item ms-auto">
                             <div class="d-flex gap-2">
@@ -123,9 +100,7 @@
                                     <i class="bi-save me-1"></i> Сохранить изменение
                                 </a>
 
-                                <a class="btn btn-white btn-icon btn-sm" href="#">
-                                    <i class="bi-list-ul me-1"></i>
-                                </a>
+
 
                                 <!-- Dropdown -->
                                 <div class="dropdown nav-scroller-dropdown">
@@ -134,25 +109,15 @@
                                     </button>
 
                                     <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
-                                        <span class="dropdown-header">Settings</span>
 
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-share-fill dropdown-item-icon"></i> Share profile
+                                        <a class="dropdown-item" href="{{route('teacher.course.show',['id'=>$course->id])}}">
+                                            <i class="bi-pencil-fill dropdown-item-icon"></i> Изменит шаги
                                         </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-slash-circle dropdown-item-icon"></i> Block page and profile
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
+                                        <a class="dropdown-item" href="{{route('teacher.course.index',$course->id)}}">
+                                            <i class="bi-people dropdown-item-icon"></i> Ученики
                                         </a>
 
-                                        <div class="dropdown-divider"></div>
 
-                                        <span class="dropdown-header">Feedback</span>
-
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-flag dropdown-item-icon"></i> Report
-                                        </a>
                                     </div>
                                 </div>
                                 <!-- End Dropdown -->
@@ -221,25 +186,7 @@
                         </div>
                         <!-- End Card -->
 
-                        <!-- Card -->
-                        <div class="card card-lg mb-3 mb-lg-5">
-                            <!-- Body -->
-                            <div class="card-body text-center">
-                                <div class="mb-4">
-                                    <img class="avatar avatar-xl avatar-4x3" src="{{asset('assets/svg/illustrations/oc-unlock.svg')}}" alt="Image Description" data-hs-theme-appearance="default">
-                                    <img class="avatar avatar-xl avatar-4x3" src="{{asset('assets/svg/illustrations-light/oc-unlock.svg')}}" alt="Image Description" data-hs-theme-appearance="dark">
-                                </div>
 
-                                <div class="mb-3">
-                                    <h3>2-step verification</h3>
-                                    <p>Protect your account now and enable 2-step verification in the settings.</p>
-                                </div>
-
-                                <a class="btn btn-primary" href="account-settings.html#twoStepVerificationSection">Enable now</a>
-                            </div>
-                            <!-- End Body -->
-                        </div>
-                        <!-- End Card -->
                     </div>
                     <!-- End Col -->
 
@@ -248,7 +195,7 @@
                         <div class="card card-centered mb-3 mb-lg-5">
                             <!-- Header -->
                             <div class="card-header card-header-content-between">
-                                <h4 class="card-header-title">Activity stream</h4>
+                                <h4 class="card-header-title">Информация о курсе</h4>
 
                                 <!-- Dropdown -->
                                 <div class="dropdown">
@@ -280,60 +227,17 @@
                             <!-- End Header -->
 
                             <!-- Body -->
-                            <div class="card-body card-body-height">
-                                <img class="avatar avatar-xxl mb-3" src="{{asset('assets/svg/illustrations/oc-error.svg')}}" alt="Image Description" data-hs-theme-appearance="default">
-                                <img class="avatar avatar-xxl mb-3" src="{{asset('assets/svg/illustrations-light/oc-error.svg')}}" alt="Image Description" data-hs-theme-appearance="dark">
-                                <p class="card-text">No data to show</p>
-                                <a class="btn btn-white btn-sm" href="user-profile-my-profile.html#">Start your Activity</a>
+                            <div class="card-body">
+                                <label class="form-label" for="topic">Название курса</label>
+                                <input type="text" name="topic" id="topic" class="form-control" value="{{$course->topic}}">
+                                <label class="form-label" for="description">Описание курса</label>
+                                <textarea name="description" id="description" class="form-control" cols="30" rows="10">{{$course->description}}</textarea>
                             </div>
                             <!-- End Body -->
                         </div>
                         <!-- End Card -->
 
                         <!-- Card -->
-                        <div class="card card-centered mb-3 mb-lg-5">
-                            <!-- Header -->
-                            <div class="card-header card-header-content-between">
-                                <h4 class="card-header-title">Projects</h4>
-
-                                <!-- Dropdown -->
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm rounded-circle" id="projectReportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi-three-dots-vertical"></i>
-                                    </button>
-
-                                    <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="projectReportDropdown">
-                                        <span class="dropdown-header">Settings</span>
-
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-share-fill dropdown-item-icon"></i> Share connections
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                                        </a>
-
-                                        <div class="dropdown-divider"></div>
-
-                                        <span class="dropdown-header">Feedback</span>
-
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-chat-left-dots dropdown-item-icon"></i> Report
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- End Dropdown -->
-                            </div>
-                            <!-- End Header -->
-
-                            <!-- Body -->
-                            <div class="card-body card-body-height card-body-centered">
-                                <img class="avatar avatar-xxl mb-3" src="{{asset('assets/svg/illustrations/oc-error.svg')}}" alt="Image Description" data-hs-theme-appearance="default">
-                                <img class="avatar avatar-xxl mb-3" src="{{asset('assets/svg/illustrations-light/oc-error.svg')}}" alt="Image Description" data-hs-theme-appearance="dark">
-                                <p class="card-text">No data to show</p>
-                                <a class="btn btn-white btn-sm" href="projects.html">Start your Projects</a>
-                            </div>
-                            <!-- End Body -->
-                        </div>
                         <!-- End Card -->
                     </div>
                     <!-- End Col -->

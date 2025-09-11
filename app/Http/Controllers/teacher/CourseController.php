@@ -20,6 +20,7 @@ use App\Models\VariantTrue;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class CourseController extends Controller
@@ -39,10 +40,17 @@ class CourseController extends Controller
         }
         foreach ($request->skills as $index => $skill) {
             if (isset($course->skills[$index])) {
-                // Обновляем существующий навык
                 $existingSkill = $course->skills[$index];
+
+                if(strlen($skill)>0){
                 $existingSkill->skill = $skill;
-                $existingSkill->save();
+                    $existingSkill->save();
+
+                }
+                else{
+                    $existingSkill->delete();
+                }
+
             } elseif($skill) {
                 Skill::query()->create([
                     'course_id' => $course->id,
@@ -51,17 +59,34 @@ class CourseController extends Controller
                 ]);
             }
         }
-
+       if($request->input('description')){
+           $course->description=$request->description;
+       }
         $course->save();
         return response()->json([ 'success' => true,'re'=>$request->all()],200);
     }
     public function index($id)
     {
+        $user=Auth::user();
         $course=Course::query()->where('id',$id)->with(['students'=>function ($q) {
-            $q->orderBy('exp','desc');
+            $q->orderBy(DB::raw('exp + complete'), 'desc');
         }])
             ->first();
-        return view('teacher.course.dashboard',['course'=>$course]);
+        $certificate = $course->students->where('pivot.status', 1)->count();
+
+        $progressByMonth = DB::table('progress')
+            ->select(
+                DB::raw('YEAR(date) as year'),
+                DB::raw('MONTH(date) as month'),
+                DB::raw('SUM(colum) as total')
+            )
+            ->where('course_id', $course->id)
+            ->groupBy(DB::raw('YEAR(date)'), DB::raw('MONTH(date)'))
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get();
+
+        return view('teacher.course.dashboard',['course'=>$course,'certificate'=>$certificate,'progressByMonth'=>$progressByMonth]);
 
     }
     public function create()
