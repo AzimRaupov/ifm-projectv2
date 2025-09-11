@@ -25,36 +25,37 @@ function showErrorToast(message) {
 
 function formpost(form) {
 
-        if (!form) {
+    if (!form) {
         alert('Форма не найдена');
         return;
     }
 
 
-        const formData = new FormData(form);
-        const action = form.getAttribute('action');
-        const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    const formData = new FormData(form);
+    const action = form.getAttribute('action');
+    const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-        fetch(action, {
+    fetch(action, {
         method: 'POST',
         headers: {
-        'X-CSRF-TOKEN': csrf
-    },
+            'X-CSRF-TOKEN': csrf
+        },
         body: formData
     })
         .then(res => res.ok ? res.json() : Promise.reject(res))
         .then(data => {
-        fetchData();
+            fetchData();
             showSuccessToast();
 
-    })
+        })
         .catch(err => {
-        console.error(err);
+            console.error(err);
             showErrorToast('Ошибка при сохранении');
 
-    });
+        });
 
 }
+
 const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
 async function reqman(url, method, body) {
@@ -78,3 +79,40 @@ async function reqman(url, method, body) {
         console.error("Ошибка при загрузке шагов курса:", error);
     }
 }
+
+
+
+    async function submitFormAsync(formElement) {
+    const url = formElement.action;
+    const method = formElement.method.toUpperCase();
+
+    // Создаем FormData объект
+    const formData = new FormData(formElement);
+
+    try {
+    const response = await fetch(url, {
+    method: method,
+    body: formData,
+    headers: {
+    // Laravel CSRF защита
+    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+}
+});
+
+    if (!response.ok) {
+    throw new Error(`Ошибка: ${response.status}`);
+}
+
+    const result = await response.json(); // Предполагаем, что сервер возвращает JSON
+
+    console.log('Ответ сервера:', result);
+
+    // Вернуть результат
+    return result;
+
+} catch (error) {
+    console.error('Ошибка при отправке формы:', error);
+    return {error: error.message};
+}
+}
+

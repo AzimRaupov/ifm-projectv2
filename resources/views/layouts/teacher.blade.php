@@ -719,6 +719,7 @@
 
                         <div id="navbarVerticalMenuDashboards" class="nav-collapse collapse" data-bs-parent="#navbarVerticalMenu" >
 
+
                         </div>
 
                     </div>
@@ -4100,13 +4101,14 @@
 <script>
     let user_g=[];
 
-    user_name=document.getElementById('user-name');
-    user_type=document.getElementById('user-email');
-    main_content=document.getElementById('content-main');
-    all_courses=document.getElementById('navbarVerticalMenuDashboards');
+   let user_name=document.getElementById('user-name');
+   let user_type=document.getElementById('user-email');
+   let main_content=document.getElementById('content-main');
+   let all_courses=document.getElementById('navbarVerticalMenuDashboards');
     console.log(all_courses);
 
     function main(list){
+        console.log(list)
         user=list.user;
         courses=list.courses;
 
@@ -4196,9 +4198,10 @@
         })
         .then(data => {
             console.log(data);
-            view_profile(data);
 
             main(data);
+            view_profile(data);
+
             // radar(data.skills);
         })
         .catch(error => console.error("Ошибка:", error));

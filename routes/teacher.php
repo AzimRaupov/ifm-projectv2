@@ -12,7 +12,7 @@ Route::middleware(['auth', 'is_teacher'])->group(function () {
     });
      Route::prefix('course')->group(function (){
 
-
+        Route::post('/update',[\App\Http\Controllers\teacher\CourseController::class,'update'])->name('course.update');
         Route::get('/edit/',[\App\Http\Controllers\teacher\CourseController::class,'edit'])->name('course.edit');
         Route::get('/show',[\App\Http\Controllers\teacher\CourseController::class,'show'])->name('course.show');
         Route::get('/create',[\App\Http\Controllers\teacher\CourseController::class,'create'])->name('course.create');

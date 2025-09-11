@@ -237,7 +237,7 @@
                     if (err.name === 'AbortError') {
                         alert('⏱ Время ожидания запроса (30 сек) истекло. Попробуйте снова.');
                     } else {
-                        alert('❌ Произошла ошибка. Подробности в консоли.');
+                        showErrorToast('роизошла ошибка.');
                         console.error('Ошибка:', err);
                     }
                 })
@@ -411,11 +411,11 @@
             })
                 .then(res => res.ok ? res.json() : Promise.reject(res))
                 .then(data => {
-                    alert('✅ Успешно сохранено!');
-                })
+                 showSuccessToast('Успешно сохранено!')
+                 })
                 .catch(err => {
                     console.error(err);
-                    alert('❌ Ошибка при сохранении');
+                    showErrorToast('Ошибка при сохранении')
                 });
         });
     </script>

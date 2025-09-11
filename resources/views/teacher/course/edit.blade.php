@@ -1,7 +1,14 @@
 @extends('layouts.teacher')
 
+
+@section('head')
+    <script src="{{asset('js/main.js')}}" ></script>
+@endsection
+
 @section('new')
-    new HSFileAttach('.js-file-attach')
+    new HSFileAttach('.js-file-attach');
+
+    new HSAddField('.js-add-field');
 
 @endsection
 
@@ -30,15 +37,20 @@
                         <!-- End Custom File Cover -->
                     </div>
                 </div>
-                <!-- End Profile Cover -->
 
-                <!-- Profile Header -->
-                <div class="text-center mb-5">
+                <form action="{{route('teacher.course.update')}}" class="course-update" method="post" enctype="multipart/form-data">
+                    <button type="submit">dfsds</button>
+                    <input type="hidden" name="id" value="{{$course->id}}">
+                    <div class="text-center mb-5">
                     <!-- Avatar -->
                     <label class="avatar avatar-xxl avatar-circle avatar-uploader profile-cover-avatar" for="editAvatarUploaderModal">
-                        <img id="editAvatarImgModal" class="avatar-img" src="{{$course->logo}}" alt="Image Description">
+                        @if(Str::startsWith($course->logo, 'course'))
+                            <img id="editAvatarImgModal" class="avatar-img" src="{{ asset('storage/' . $course->logo) }}" alt="Image Description">
+                        @else
+                            <img id="editAvatarImgModal" class="avatar-img" src="{{ $course->logo }}" alt="Image Description">
+                        @endif
 
-                        <input type="file" class="js-file-attach avatar-uploader-input" id="editAvatarUploaderModal" data-hs-file-attach-options='{
+                        <input type="file" class="js-file-attach avatar-uploader-input" name="logo-course" id="editAvatarUploaderModal" data-hs-file-attach-options='{
                           "textTarget": "#editAvatarImgModal",
                           "mode": "image",
                           "targetAttr": "src",
@@ -51,7 +63,9 @@
                     </label>
                     <!-- End Avatar -->
 
-                    <h1 class="page-header-title">{{$course->topic}} <i class="bi-patch-check-fill fs-2 text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Top endorsed"></i></h1>
+                        <h1 class="page-header-title">
+                            <input type="text" name="topic" value="{{$course->topic}}">
+                        </h1>
 
                     <!-- List -->
                     <ul class="list-inline list-px-2">
@@ -105,8 +119,8 @@
 
                         <li class="nav-item ms-auto">
                             <div class="d-flex gap-2">
-                                <a class="btn btn-white btn-sm" href="account-settings.html">
-                                    <i class="bi-person-plus-fill me-1"></i> Edit profile
+                                <a class="btn btn-primary btn-sm" onclick="save_all_cheng()">
+                                    <i class="bi-save me-1"></i> Сохранить изменение
                                 </a>
 
                                 <a class="btn btn-white btn-icon btn-sm" href="#">
@@ -151,44 +165,57 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <!-- Card -->
-                        <div class="card card-body mb-3 mb-lg-5">
-                            <h5>Complete your profile</h5>
-
-                            <!-- Progress -->
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="progress flex-grow-1">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <span class="ms-4">15%</span>
-                            </div>
-                            <!-- End Progress -->
-                        </div>
                         <!-- End Card -->
 
                         <!-- Card -->
                         <div class="card mb-3 mb-lg-5">
                             <!-- Header -->
                             <div class="card-header card-header-content-between">
-                                <h4 class="card-header-title">Profile</h4>
+                                <h4 class="card-header-title">Навыки</h4>
                             </div>
                             <!-- End Header -->
 
                             <!-- Body -->
                             <div class="card-body">
-                                <ul class="list-unstyled list-py-2 text-dark mb-0">
-                                    <li class="pb-0"><span class="card-subtitle">About</span></li>
-                                    <li><i class="bi-person dropdown-item-icon"></i> Mark Williams</li>
-                                    <li><i class="bi-briefcase dropdown-item-icon"></i> No department</li>
-                                    <li><i class="bi-building dropdown-item-icon"></i> Pixeel Ltd.</li>
+                                <div id="links_content">
+                                    <div class="js-add-field row mb-4"
+                                         data-hs-add-field-options='{
+        "template": "#addEmailFieldTemplate",
+        "container": "#addEmailFieldContainer",
+        "defaultCreated": 0,
+        "limit": 20
+      }'>
 
-                                    <li class="pt-4 pb-0"><span class="card-subtitle">Contacts</span></li>
-                                    <li><i class="bi-at dropdown-item-icon"></i> mark@site.com</li>
-                                    <li><i class="bi-phone dropdown-item-icon"></i> +1 (555) 752-01-10</li>
+                                        <div class="col-sm-9">
 
-                                    <li class="pt-4 pb-0"><span class="card-subtitle">Teams</span></li>
-                                    <li class="fs-6 text-body"><i class="bi-people dropdown-item-icon"></i> You are not a member of any teams</li>
-                                    <li class="fs-6 text-body"><i class="bi-stickies dropdown-item-icon"></i> You are not working on any projects</li>
-                                </ul>
+                                            <div id="addEmailFieldContainer">
+                                                @foreach($course->skills as $skill)
+                                                <div style>
+
+                                                    <input type="text" class="js-input-mask form-control"
+                                                           value="{{$skill->skill}}"
+                                                           name="skills[]"
+                                                           placeholder="Навык"
+                                                           aria-label="Навык">
+                                                </div>
+                                                @endforeach
+                                            </div>
+
+                                            <a href="javascript:;" class="js-create-field form-link">
+                                                <i class="bi-plus-circle me-1"></i> Добавть сылку
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- End Form -->
+
+                                    <!-- Add Phone Input Field -->
+                                    <div id="addEmailFieldTemplate" style="display: none;">
+
+                                        <input type="text" class="js-input-mask form-control" name="skills[]" placeholder="Видите навык" aria-label="Видите навык">
+
+
+                                    </div>
+                                </div>
                             </div>
                             <!-- End Body -->
                         </div>
@@ -311,6 +338,7 @@
                     </div>
                     <!-- End Col -->
                 </div>
+                </form>
                 <!-- End Row -->
             </div>
             <!-- End Col -->
@@ -358,4 +386,17 @@
 @endsection
 
 @section('script')
+    <script>
+        function save_all_cheng(){
+            let form=document.querySelector('.course-update');
+            submitFormAsync(form).then(response => {
+                if (response.success) {
+                    showSuccessToast('Изменения сохранены!')
+                } else {
+                  showErrorToast('Что-то пошло не так.');
+                 }
+            });
+        }
+    </script>
+
 @endsection

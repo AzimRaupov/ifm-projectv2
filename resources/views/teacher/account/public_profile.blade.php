@@ -16,9 +16,15 @@
                 <!-- Profile Header -->
                 <div class="text-center mb-5">
                     <!-- Avatar -->
-                    <div class="avatar avatar-xxl avatar-circle profile-cover-avatar">
-                        <img class="avatar-img" src="assets/img/160x160/img9.jpg" alt="Image Description">
-                        <span class="avatar-status avatar-status-success"></span>
+                    <div class="avatar avatar-xxl avatar-circle avatar-soft-primary profile-cover-avatar">
+                        @if(isset($user->photo) && $user->photo)
+                            <img id="editAvatarImgModal" class="avatar-img"
+                                 src="{{ asset('storage/' . $user->photo) }}"
+                                 alt="Фото профиля пользователя {{ $user->name }}">
+                        @else
+                            <span class="avatar-initials">{{ mb_substr($user->name, 0, 1) }}</span>
+
+                        @endif                        <span class="avatar-status avatar-status-success"></span>
                     </div>
                     <!-- End Avatar -->
 

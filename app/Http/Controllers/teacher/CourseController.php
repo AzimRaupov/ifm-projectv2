@@ -24,6 +24,37 @@ use Illuminate\Support\Facades\Http;
 
 class CourseController extends Controller
 {
+
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        $course=Course::query()->with('skills')->find($request->id);
+        if($request->hasFile('logo-course')){
+            $path=$request->file('logo-course')->store('course/logo','public');
+            $course->logo=$path;
+        }
+        if($request->input('topic')){
+            $course->topic=$request->input('topic');
+        }
+        foreach ($request->skills as $index => $skill) {
+            if (isset($course->skills[$index])) {
+                // Обновляем существующий навык
+                $existingSkill = $course->skills[$index];
+                $existingSkill->skill = $skill;
+                $existingSkill->save();
+            } elseif($skill) {
+                Skill::query()->create([
+                    'course_id' => $course->id,
+                    'user_id'   => $user->id,
+                    'skill'     => $skill,
+                ]);
+            }
+        }
+
+        $course->save();
+        return response()->json([ 'success' => true,'re'=>$request->all()],200);
+    }
     public function index($id)
     {
         $course=Course::query()->where('id',$id)->with(['students'=>function ($q) {
@@ -102,6 +133,7 @@ class CourseController extends Controller
     public function gen(Request $request,TestClass $testClass){
         $testClass->one_correct($request,"");
     }
+
     public function show(Request $request)
     {
         $user=Auth::user();

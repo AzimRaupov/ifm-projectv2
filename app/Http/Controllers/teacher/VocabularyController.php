@@ -38,7 +38,7 @@ class VocabularyController extends Controller
                 'link'=>$link
             ]);
         }
-        return response(['vocabulary'=>$v],200);
+        return response($v,200);
 
     }
     public function update(Request $request)
