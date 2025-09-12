@@ -140,7 +140,7 @@ class GenerateTestJob implements ShouldQueue
                     Log::error("Неверный JSON от Gemini: " . $text);
                     return;
                 }
-                \Log::info('Received tests:', $tests);
+                Log::info('Received tests:', $tests);
 
                 $create_data=[];
                 $insert_variant=[];
