@@ -12,7 +12,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class GenerateVocabularyJob implements ShouldQueue
 {
@@ -31,7 +30,6 @@ class GenerateVocabularyJob implements ShouldQueue
     {
         $step = Step::with('course')->find($this->step_id);
         if (!$step || !$step->course) {
-            Log::error("Step or course not found for step_id: {$this->step_id}");
             return;
         }
 
@@ -88,7 +86,6 @@ class GenerateVocabularyJob implements ShouldQueue
                     $decoded = json_decode($clean, true);
 
                     if (!is_array($decoded)) {
-                        Log::error('Невозможно декодировать JSON: ' . $clean);
                         return;
                     }
 
@@ -119,19 +116,13 @@ class GenerateVocabularyJob implements ShouldQueue
                     }
 
                     $step->load('vocabularies.links');
-                    Log::info("Vocabulary successfully generated for step_id: {$step->id}");
                     return;
                 } else {
-                    Log::error('Не удалось найти нужные данные в ответе API');
                 }
             } else {
-                Log::error('Ошибка API', [
-                    'status' => $response->status(),
-                    'body' => $step->id
-                ]);
+
             }
         } catch (\Exception $e) {
-            Log::error('Ошибка при подключении к API: ' . $step->id);
         }
 
     }

@@ -15,7 +15,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class GenerateTestJob implements ShouldQueue
 {
@@ -34,7 +33,6 @@ class GenerateTestJob implements ShouldQueue
         $step = Step::with('course.steps')->find($this->stepId);
 
         if (!$step || !$step->course) {
-            Log::error("Step или Course не найдены: step_id={$this->stepId}");
             return;
         }
 
@@ -137,10 +135,8 @@ class GenerateTestJob implements ShouldQueue
                 $tests = json_decode(trim($clean), true);
 
                 if (!is_array($tests)) {
-                    Log::error("Неверный JSON от Gemini: " . $text);
                     return;
                 }
-                Log::info('Received tests:', $tests);
 
                 $create_data=[];
                 $insert_variant=[];
@@ -226,14 +222,11 @@ class GenerateTestJob implements ShouldQueue
                 MatchingList2::query()->insert($insert_list2);
                 Variant::query()->insert($insert_variant);
                 VariantTrue::query()->insert($insert_correct);
-                Log::info("Тесты успешно созданы для step_id={$this->stepId}");
                 return;
             }
 
-            Log::error("Gemini API ошибка: " . $response->status() . " — " . $response->body());
 
         } catch (\Exception $e) {
-            Log::error("GenerateTestJob exception: " . $e->getMessage());
         }
     }
 }
