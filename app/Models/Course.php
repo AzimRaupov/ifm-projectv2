@@ -8,6 +8,15 @@ class Course extends Model
 {
     protected $fillable=['user_id','topic','type','freetime','date_start','step','logo','level'];
 
+
+
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class,'user_id');
+
+    }
+
     public function steps()
     {
         return $this->hasMany(Step::class);
