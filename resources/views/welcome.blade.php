@@ -9,8 +9,8 @@
     <meta name="keywords" content="">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="assets/img/logo.png" rel="icon">
+    <link href="assets/img/logo.png" rel="apple-touch-icon">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -57,12 +57,12 @@
                 <li><a href="#teachers">Учителя</a></li>
                 <li><a href="#services">Сервис</a></li>
                 <li><a href="#courses">Курсы</a></li>
-                <li><a href="#contact">Контакты</a></li>
+                <li><a href="#faq">Вопросы</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <a class="btn-getstarted" href="index.html#about">Начать сейчас</a>
+        <a class="btn-getstarted" href="{{route('register')}}">Начать сейчас</a>
 
     </div>
 </header>
@@ -177,278 +177,12 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about section">
-
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-            <div class="row gy-4 align-items-center justify-content-between">
-
-                <div class="col-xl-5" data-aos="fade-up" data-aos-delay="200">
-                    <span class="about-meta">MORE ABOUT US</span>
-                    <h2 class="about-title">Voluptas enim suscipit temporibus</h2>
-                    <p class="about-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-
-                    <div class="row feature-list-wrapper">
-                        <div class="col-md-6">
-                            <ul class="feature-list">
-                                <li><i class="bi bi-check-circle-fill"></i> Lorem ipsum dolor sit amet</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Consectetur adipiscing elit</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Sed do eiusmod tempor</li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="feature-list">
-                                <li><i class="bi bi-check-circle-fill"></i> Incididunt ut labore et</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Dolore magna aliqua</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Ut enim ad minim veniam</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="info-wrapper">
-                        <div class="row gy-4">
-                            <div class="col-lg-5">
-                                <div class="profile d-flex align-items-center gap-3">
-                                    <img src="assets/img/avatar-1.webp" alt="CEO Profile" class="profile-image">
-                                    <div>
-                                        <h4 class="profile-name">Mario Smith</h4>
-                                        <p class="profile-position">CEO &amp; Founder</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-7">
-                                <div class="contact-info d-flex align-items-center gap-2">
-                                    <i class="bi bi-telephone-fill"></i>
-                                    <div>
-                                        <p class="contact-label">Call us anytime</p>
-                                        <p class="contact-number">+123 456-789</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="image-wrapper">
-                        <div class="images position-relative" data-aos="zoom-out" data-aos-delay="400">
-                            <img src="assets/img/about-5.webp" alt="Business Meeting" class="img-fluid main-image rounded-4">
-                            <img src="assets/img/about-2.webp" alt="Team Discussion" class="img-fluid small-image rounded-4">
-                        </div>
-                        <div class="experience-badge floating">
-                            <h3>15+ <span>Years</span></h3>
-                            <p>Of experience in business service</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </section><!-- /About Section -->
 
     <!-- Features Section -->
-    <section id="features" class="features section">
-
-        <!-- Section Title -->
-        <div class="container section-title" data-aos="fade-up">
-            <h2>Features</h2>
-            <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-        </div><!-- End Section Title -->
-
-        <div class="container">
-
-            <div class="d-flex justify-content-center">
-
-                <ul class="nav nav-tabs" data-aos="fade-up" data-aos-delay="100">
-
-                    <li class="nav-item">
-                        <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-1">
-                            <h4>Modisit</h4>
-                        </a>
-                    </li><!-- End tab nav item -->
-
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-2">
-                            <h4>Praesenti</h4>
-                        </a><!-- End tab nav item -->
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-3">
-                            <h4>Explica</h4>
-                        </a>
-                    </li><!-- End tab nav item -->
-
-                </ul>
-
-            </div>
-
-            <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
-
-                <div class="tab-pane fade active show" id="features-tab-1">
-                    <div class="row">
-                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
-                            <h3>Voluptatem dignissimos provident</h3>
-                            <p class="fst-italic">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua.
-                            </p>
-                            <ul>
-                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-                                <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6 order-1 order-lg-2 text-center">
-                            <img src="assets/img/features-illustration-1.webp" alt="" class="img-fluid">
-                        </div>
-                    </div>
-                </div><!-- End tab content item -->
-
-                <div class="tab-pane fade" id="features-tab-2">
-                    <div class="row">
-                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
-                            <h3>Neque exercitationem debitis</h3>
-                            <p class="fst-italic">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua.
-                            </p>
-                            <ul>
-                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-                                <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-                                <li><i class="bi bi-check2-all"></i> <span>Provident mollitia neque rerum asperiores dolores quos qui a. Ipsum neque dolor voluptate nisi sed.</span></li>
-                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6 order-1 order-lg-2 text-center">
-                            <img src="assets/img/features-illustration-2.webp" alt="" class="img-fluid">
-                        </div>
-                    </div>
-                </div><!-- End tab content item -->
-
-                <div class="tab-pane fade" id="features-tab-3">
-                    <div class="row">
-                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
-                            <h3>Voluptatibus commodi accusamu</h3>
-                            <ul>
-                                <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-                                <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-                                <li><i class="bi bi-check2-all"></i> <span>Provident mollitia neque rerum asperiores dolores quos qui a. Ipsum neque dolor voluptate nisi sed.</span></li>
-                            </ul>
-                            <p class="fst-italic">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua.
-                            </p>
-                        </div>
-                        <div class="col-lg-6 order-1 order-lg-2 text-center">
-                            <img src="assets/img/features-illustration-3.webp" alt="" class="img-fluid">
-                        </div>
-                    </div>
-                </div><!-- End tab content item -->
-
-            </div>
-
-        </div>
-
-    </section><!-- /Features Section -->
 
     <!-- Features Cards Section -->
-    <section id="features-cards" class="features-cards section">
-
-        <div class="container">
-
-            <div class="row gy-4">
-
-                <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="feature-box orange">
-                        <i class="bi bi-award"></i>
-                        <h4>Corporis voluptates</h4>
-                        <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
-                    </div>
-                </div><!-- End Feature Borx-->
-
-                <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="feature-box blue">
-                        <i class="bi bi-patch-check"></i>
-                        <h4>Explicabo consectetur</h4>
-                        <p>Est autem dicta beatae suscipit. Sint veritatis et sit quasi ab aut inventore</p>
-                    </div>
-                </div><!-- End Feature Borx-->
-
-                <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="feature-box green">
-                        <i class="bi bi-sunrise"></i>
-                        <h4>Ullamco laboris</h4>
-                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
-                    </div>
-                </div><!-- End Feature Borx-->
-
-                <div class="col-xl-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="feature-box red">
-                        <i class="bi bi-shield-check"></i>
-                        <h4>Labore consequatur</h4>
-                        <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
-                    </div>
-                </div><!-- End Feature Borx-->
-
-            </div>
-
-        </div>
-
-    </section><!-- /Features Cards Section -->
 
 
-
-
-    <section id="teachers" class="py-5 bg-light">
-        <div class="container">
-            <!-- Section Title -->
-            <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="fw-bold">Учителя</h2>
-                <p class="text-muted">Профессиональные наставники, готовые помочь вам достигать целей</p>
-            </div>
-
-            <div class="row g-4">
-
-               @foreach($teachers as $teacher)
-                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card border-0 shadow-sm hover-scale">
-                        <img src="{{{asset('storage/'.$teacher->logo)}}}" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;" alt="Saul Goodman">
-                        <div class="card-body text-center">
-                            <h5 class="card-title fw-bold">{{$teacher->name}}</h5>
-                            <p class="text-primary mb-2">CEO & Founder</p>
-                            <div class="mb-2">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                            </div>
-                            <p class="text-muted small">{{$teacher->bio}}</p>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Дополнительный CSS для hover эффекта -->
-    <style>
-        .hover-scale {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .hover-scale:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-    </style>
-
-    <!-- Stats Section -->
-
-    <!-- Services Section -->
     <section id="services" class="services section light-background">
 
         <!-- Section Title -->
@@ -469,7 +203,7 @@
                         <div>
                             <h3>Генерация дорожных карт</h3>
                             <p>AI создаёт пошаговую дорожную карту обучения по выбранной теме, подбирая оптимальный порядок шагов для усвоения материала.</p>
-                            <a href="service-details.html" class="read-more">Подробнее <i class="bi bi-arrow-right"></i></a>
+                            <a href="{{route('register')}}" class="read-more">Подробнее <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
                 </div><!-- End Service Card -->
@@ -482,7 +216,7 @@
                         <div>
                             <h3>Создание учебных материалов</h3>
                             <p>AI автоматически подбирает и генерирует тексты, изображения и презентации для каждого шага вашего курса.</p>
-                            <a href="service-details.html" class="read-more">Подробнее <i class="bi bi-arrow-right"></i></a>
+                            <a href="{{route('register')}}" class="read-more">Подробнее <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
                 </div><!-- End Service Card -->
@@ -495,7 +229,7 @@
                         <div>
                             <h3>Автоматическая генерация тестов</h3>
                             <p>AI создаёт интерактивные тесты и задания для проверки знаний на каждом шаге курса, экономя ваше время и усилия.</p>
-                            <a href="service-details.html" class="read-more">Подробнее <i class="bi bi-arrow-right"></i></a>
+                            <a href="{{route('register')}}" class="read-more">Подробнее <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
                 </div><!-- End Service Card -->
@@ -506,9 +240,9 @@
                             <i class="bi bi-camera-video"></i>
                         </div>
                         <div>
-                            <h3>Генерация видеоуроков</h3>
-                            <p>AI автоматически создаёт видеоуроки и обучающие ролики по вашим темам, делая обучение наглядным и удобным.</p>
-                            <a href="service-details.html" class="read-more">Подробнее <i class="bi bi-arrow-right"></i></a>
+                            <h3>Поиск видеоуроков</h3>
+                            <p>AI автоматически найдёт видеоуроки и обучающие ролики по вашим темам, делая обучение наглядным и удобным.</p>
+                            <a href="{{route('register')}}" class="read-more">Подробнее <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
                 </div><!-- End Service Card -->
@@ -518,6 +252,24 @@
         </div>
 
     </section><!-- /Services Section -->
+
+
+
+    <!-- Дополнительный CSS для hover эффекта -->
+    <style>
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+    </style>
+
+    <!-- Stats Section -->
+
+    <!-- Services Section -->
+
     <section id="courses" class="services section light-background">
 
         <!-- Section Title -->
@@ -551,22 +303,54 @@
         </div>
 
     </section><!-- /Services Section -->
+    <section id="teachers" class="py-5 bg-light">
+        <div class="container">
+            <!-- Section Title -->
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">Учителя</h2>
+                <p class="text-muted">Профессиональные наставники, готовые помочь вам достигать целей</p>
+            </div>
+
+            <div class="row g-4">
+
+                @foreach($teachers as $teacher)
+                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card border-0 shadow-sm hover-scale">
+                            <img src="{{{asset('storage/'.$teacher->logo)}}}" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;" alt="Saul Goodman">
+                            <div class="card-body text-center">
+                                <h5 class="card-title fw-bold">{{$teacher->name}}</h5>
+                                <p class="text-primary mb-2">CEO & Founder</p>
+                                <div class="mb-2">
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                </div>
+                                <p class="text-muted small">{{$teacher->bio}}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+            </div>
+        </div>
+    </section>
 
     <!-- Pricing Section -->
 
     <!-- Faq Section -->
     <section class="faq-9 faq section light-background" id="faq">
-
         <div class="container">
             <div class="row">
 
                 <div class="col-lg-5" data-aos="fade-up">
-                    <h2 class="faq-title">Have a question? Check out the FAQ</h2>
-                    <p class="faq-description">Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero sit amet adipiscing sem neque sed ipsum.</p>
+                    <h2 class="faq-title">Часто задаваемые вопросы</h2>
+                    <p class="faq-description">
+                        Наша AI-платформа создаёт персонализированные обучающие дорожные карты. Она подходит для учеников, преподавателей и всех, кто хочет прокачать навыки через самообучение. Курсы формируются автоматически на основе целей и уровня знаний.
+                    </p>
                     <div class="faq-arrow d-none d-lg-block" data-aos="fade-up" data-aos-delay="200">
-                        <svg class="faq-arrow" width="200" height="211" viewBox="0 0 200 211" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M198.804 194.488C189.279 189.596 179.529 185.52 169.407 182.07L169.384 182.049C169.227 181.994 169.07 181.939 168.912 181.884C166.669 181.139 165.906 184.546 167.669 185.615C174.053 189.473 182.761 191.837 189.146 195.695C156.603 195.912 119.781 196.591 91.266 179.049C62.5221 161.368 48.1094 130.695 56.934 98.891C84.5539 98.7247 112.556 84.0176 129.508 62.667C136.396 53.9724 146.193 35.1448 129.773 30.2717C114.292 25.6624 93.7109 41.8875 83.1971 51.3147C70.1109 63.039 59.63 78.433 54.2039 95.0087C52.1221 94.9842 50.0776 94.8683 48.0703 94.6608C30.1803 92.8027 11.2197 83.6338 5.44902 65.1074C-1.88449 41.5699 14.4994 19.0183 27.9202 1.56641C28.6411 0.625793 27.2862 -0.561638 26.5419 0.358501C13.4588 16.4098 -0.221091 34.5242 0.896608 56.5659C1.8218 74.6941 14.221 87.9401 30.4121 94.2058C37.7076 97.0203 45.3454 98.5003 53.0334 98.8449C47.8679 117.532 49.2961 137.487 60.7729 155.283C87.7615 197.081 139.616 201.147 184.786 201.155L174.332 206.827C172.119 208.033 174.345 211.287 176.537 210.105C182.06 207.125 187.582 204.122 193.084 201.144C193.346 201.147 195.161 199.887 195.423 199.868C197.08 198.548 193.084 201.144 195.528 199.81C196.688 199.192 197.846 198.552 199.006 197.935C200.397 197.167 200.007 195.087 198.804 194.488ZM60.8213 88.0427C67.6894 72.648 78.8538 59.1566 92.1207 49.0388C98.8475 43.9065 106.334 39.2953 114.188 36.1439C117.295 34.8947 120.798 33.6609 124.168 33.635C134.365 33.5511 136.354 42.9911 132.638 51.031C120.47 77.4222 86.8639 93.9837 58.0983 94.9666C58.8971 92.6666 59.783 90.3603 60.8213 88.0427Z" fill="currentColor"></path>
-                        </svg>
+                        <!-- SVG стрелки остаются без изменений -->
                     </div>
                 </div>
 
@@ -574,52 +358,60 @@
                     <div class="faq-container">
 
                         <div class="faq-item faq-active">
-                            <h3>Non consectetur a erat nam at lectus urna duis?</h3>
+                            <h3>Что такое обучение в формате дорожной карты?</h3>
                             <div class="faq-content">
-                                <p>Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.</p>
+                                <p>Это визуальный путь, состоящий из шагов с учебными материалами, заданиями и тестами. Вы всегда видите, где находитесь и что предстоит изучить дальше.</p>
                             </div>
                             <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div><!-- End Faq item-->
+                        </div>
 
                         <div class="faq-item">
-                            <h3>Feugiat scelerisque varius morbi enim nunc faucibus?</h3>
+                            <h3>Как работает генерация курсов с помощью AI?</h3>
                             <div class="faq-content">
-                                <p>Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.</p>
+                                <p>Вы указываете свою цель (например, "выучить Python", "подготовиться к собеседованию" или "развить soft-skills"), и AI формирует персонализированный курс с материалами, видео и тестами.</p>
                             </div>
                             <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div><!-- End Faq item-->
+                        </div>
 
                         <div class="faq-item">
-                            <h3>Dolor sit amet consectetur adipiscing elit pellentesque?</h3>
+                            <h3>Кто может использовать платформу?</h3>
                             <div class="faq-content">
-                                <p>Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis</p>
+                                <p>Платформа подходит для всех: учеников, студентов, преподавателей и специалистов. Вы можете пройти готовый курс, создать свой или сгенерировать индивидуальный маршрут с помощью AI.</p>
                             </div>
                             <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div><!-- End Faq item-->
+                        </div>
 
                         <div class="faq-item">
-                            <h3>Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?</h3>
+                            <h3>Могут ли учителя управлять курсами и учениками?</h3>
                             <div class="faq-content">
-                                <p>Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.</p>
+                                <p>Да, учителя могут создавать и редактировать курсы, добавлять учеников, отслеживать их прогресс и настраивать обратную связь. Платформа идеально подходит для онлайн-обучения и учебных заведений.</p>
                             </div>
                             <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div><!-- End Faq item-->
+                        </div>
 
                         <div class="faq-item">
-                            <h3>Tempus quam pellentesque nec nam aliquam sem et tortor?</h3>
+                            <h3>Можно ли использовать платформу для самообучения?</h3>
                             <div class="faq-content">
-                                <p>Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in</p>
+                                <p>Да! Просто укажи свою цель — и AI подберёт оптимальный путь обучения. Всё автоматически: тебе не нужно вручную искать материалы или составлять план.</p>
                             </div>
                             <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div><!-- End Faq item-->
+                        </div>
 
                         <div class="faq-item">
-                            <h3>Perspiciatis quod quo quos nulla quo illum ullam?</h3>
+                            <h3>Какие материалы доступны в курсах?</h3>
                             <div class="faq-content">
-                                <p>Enim ea facilis quaerat voluptas quidem et dolorem. Quis et consequatur non sed in suscipit sequi. Distinctio ipsam dolore et.</p>
+                                <p>Каждый шаг может содержать видеоуроки, статьи, задания, тесты, ссылки на внешние ресурсы и многое другое. Весь контент подбирается AI или преподавателем.</p>
                             </div>
                             <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div><!-- End Faq item-->
+                        </div>
+
+                        <div class="faq-item">
+                            <h3>Отслеживается ли прогресс?</h3>
+                            <div class="faq-content">
+                                <p>Да, каждый пользователь видит свой прогресс, а преподаватели могут отслеживать успехи учеников. Это помогает оставаться мотивированным и видеть результат.</p>
+                            </div>
+                            <i class="faq-toggle bi bi-chevron-right"></i>
+                        </div>
 
                     </div>
                 </div>
@@ -633,75 +425,69 @@
 </main>
 
 <footer id="contact" class="footer">
-
     <div class="container footer-top">
         <div class="row gy-4">
+
+            <!-- Блок о платформе -->
             <div class="col-lg-4 col-md-6 footer-about">
                 <a href="index.html" class="logo d-flex align-items-center">
-                    <span class="sitename">iLanding</span>
+                    <span class="sitename">AI - PathFinder</span>
                 </a>
                 <div class="footer-contact pt-3">
-                    <p>A108 Adam Street</p>
-                    <p>New York, NY 535022</p>
-                    <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-                    <p><strong>Email:</strong> <span>info@example.com</span></p>
+                    <p>г. Худжанд</p>
+                    <p>Таджикистан</p>
+                    <p class="mt-3"><strong>Телефон:</strong> <span>+992 977-17-36</span></p>
+                    <p><strong>Email:</strong> <span>zmraupov@gmail.com</span></p>
                 </div>
                 <div class="social-links d-flex mt-4">
-                    <a href=""><i class="bi bi-twitter-x"></i></a>
-                    <a href=""><i class="bi bi-facebook"></i></a>
-                    <a href=""><i class="bi bi-instagram"></i></a>
-                    <a href=""><i class="bi bi-linkedin"></i></a>
+                    <a href="#"><i class="bi bi-telegram"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
                 </div>
             </div>
 
+            <!-- Полезные ссылки -->
             <div class="col-lg-2 col-md-3 footer-links">
-                <h4>Useful Links</h4>
+                <h4>Полезные ссылки</h4>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Terms of service</a></li>
-                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/register">Регистратсия</a></li>
+                    <li><a href="/login">Вход</a></li>
+
+                    <li><a href="#services">О платформе</a></li>
                 </ul>
             </div>
 
+            <!-- Возможности платформы -->
             <div class="col-lg-2 col-md-3 footer-links">
-                <h4>Our Services</h4>
+                <h4>Функции</h4>
                 <ul>
-                    <li><a href="#">Web Design</a></li>
-                    <li><a href="#">Web Development</a></li>
-                    <li><a href="#">Product Management</a></li>
-                    <li><a href="#">Marketing</a></li>
-                    <li><a href="#">Graphic Design</a></li>
+                    <li>Создание курсов</li>
+                    <li>AI-генерация контента</li>
+                    <li>Дорожные карты</li>
+                    <li>Видеоуроки и тесты</li>
+                    <li>Аналитика прогресса</li>
                 </ul>
             </div>
 
+            <!-- Для кого платформа -->
             <div class="col-lg-2 col-md-3 footer-links">
-                <h4>Hic solutasetp</h4>
+                <h4>Для кого</h4>
                 <ul>
-                    <li><a href="#">Molestiae accusamus iure</a></li>
-                    <li><a href="#">Excepturi dignissimos</a></li>
-                    <li><a href="#">Suscipit distinctio</a></li>
-                    <li><a href="#">Dilecta</a></li>
-                    <li><a href="#">Sit quas consectetur</a></li>
+                    <li>Ученикам</li>
+                    <li>Преподавателям</li>
+                    <li>Самообучение</li>
+                    <li>Корпоративное обучение</li>
+                    <li>HR и развитие</li>
                 </ul>
             </div>
 
-            <div class="col-lg-2 col-md-3 footer-links">
-                <h4>Nobis illum</h4>
-                <ul>
-                    <li><a href="#">Ipsam</a></li>
-                    <li><a href="#">Laudantium dolorum</a></li>
-                    <li><a href="#">Dinera</a></li>
-                    <li><a href="#">Trodelas</a></li>
-                    <li><a href="#">Flexo</a></li>
-                </ul>
-            </div>
+            <!-- Дополнительно -->
+
 
         </div>
     </div>
-
-
 </footer>
 
 <!-- Scroll Top -->

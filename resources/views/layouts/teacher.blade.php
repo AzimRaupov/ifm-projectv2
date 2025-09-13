@@ -669,7 +669,7 @@
                 <img class="navbar-brand-logo"
                      src="{{ asset('assets/img/logo.png') }}"
                      alt="Logo"
-                     style="max-width: 200px; width: 95%; height: auto;">
+                     style="max-width: 80px; width: 70%; height: auto;">
                 <img class="navbar-brand-logo" src="{{asset('assets/svg/logos-light/logo.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
                 <img class="navbar-brand-logo-mini" src="{{asset('assets/img/logo_mini.png')}}" alt="Logo" data-hs-theme-appearance="default" width="80rem" >
                 <img class="navbar-brand-logo-mini" src="{{ asset("assets/svg/logos-light/logo-short.svg") }}" alt="Logo" data-hs-theme-appearance="dark">

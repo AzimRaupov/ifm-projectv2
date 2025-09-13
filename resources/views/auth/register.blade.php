@@ -137,7 +137,7 @@
     <!-- Content -->
     <div class="container py-5 py-sm-7">
         <a class="d-flex justify-content-center mb-5" href="{{route('home')}}">
-            <img class="zi-2" src="{{asset('assets/img/logo.png')}}"  alt="Image Description" style="width: 15rem;">
+            <img class="zi-2" src="{{asset('assets/img/logo.png')}}"  alt="Image Description" style="width: 10rem;">
         </a>
 
         <div class="mx-auto" style="max-width: 30rem;">

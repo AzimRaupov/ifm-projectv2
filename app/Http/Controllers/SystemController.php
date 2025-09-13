@@ -15,7 +15,7 @@ class SystemController extends Controller
         $teacher_count=0;
         $student_count=0;
 
-        $courses=Course::query()->with(['teacher'])->get();
+        $courses=Course::query()->with(['teacher'])->take(4)->get();
         $teachers = User::query()
             ->where('role', 'teacher')
             ->take(4)

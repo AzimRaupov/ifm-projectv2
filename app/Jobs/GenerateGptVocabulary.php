@@ -36,40 +36,42 @@ class GenerateGptVocabulary implements ShouldQueue
         }
 
         // Формируем prompt для GPT
-        $prompt = "I am studying \"$step->course->topic\" in the step \"$step->title\". Break the step into several sub-steps without unnecessary information.
+        $prompt = "I am studying \"$step->course->topic\" in the step \"$step->title\". Break this step into several logically complete sub-steps and write for each of them a **detailed educational explanation**, similar to a university lecture or textbook.
 
-### Requirements for the sub-steps:
-1. A title for each sub-step.
-2. Pesponse in Rssia Lang.
-2. Detailed information with examples and explanations in HTML format — **only the content inside the <body> tag**.
-3. The number of sub-steps should depend on the complexity of the step.
-4. Multiple links for further studying of each sub-step.
-5. The experience from reading each sub-step should be rated based on the complexity of the content, with a maximum of 10 experience points for each sub-step.
+### Requirements for each sub-step:
+1. A clear and concise **title**.
+2. The **response must be in Russian** language.
+3. For each sub-step, provide a **minimum of 300-500 words** of detailed, high-quality educational content in **HTML format**, but include **only content inside the `<body>` tag**.
+4. Include **multiple examples, analogies, or code** (if applicable).
+5. Add **2–4 relevant and useful links** for deeper learning.
+6. Rate the **complexity** of each sub-step with an `exp` field from 1 to 10.
+7. The total number of sub-steps should depend on the complexity of the original step.
 
-### Response format (JSON):
-Please respond **only** with a valid JSON array. Each item in the array should be a JSON object with the following structure:
+### Output format:
+Respond **only** with a valid JSON array, where each object has the following structure:
 
 ```json
 [
     {
-        \"title\": \"Sub-step 1\",
-        \"exp\": 3,
-        \"info\": \"<p>This is detailed information for sub-step 1.</p>\",
+        \"title\": \"Название подшага\",
+        \"exp\": 6,
+        \"info\": \"<p>HTML-контент внутри тега body, минимум 300 слов, с объяснениями, примерами и т.п.</p>\",
         \"links\": [
             \"https://example.com/1\",
             \"https://example.com/2\"
         ]
     },
     {
-        \"title\": \"Sub-step 2\",
-        \"exp\": 5,
-        \"info\": \"<p>This is detailed information for sub-step 2.</p>\",
+        \"title\": \"Название подшага 2\",
+        \"exp\": 4,
+        \"info\": \"<p>Ещё один подробный блок лекционного материала.</p>\",
         \"links\": [
             \"https://example.com/3\",
             \"https://example.com/4\"
         ]
     }
-]";
+]
+";
 
         // Получаем ответ от GPT
         $decoded = GlobalMethods::gpt($prompt,9000);
