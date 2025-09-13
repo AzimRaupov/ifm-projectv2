@@ -1,5 +1,19 @@
 @extends('layouts.teacher')
 
+@section('head')
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .lucide-icon-small {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+
+
+    <script src="{{asset('js/main.js')}}"></script>
+
+@endsection
+
 @section('content-main')
     <style>
         input[type="radio"],
@@ -49,23 +63,38 @@
         </div>
     </div>
 
+    <div class="content container-fluid" style="margin-bottom: 0px;">
+        <!-- Page Header -->
+        <div class="page-header" style="margin-bottom: 0px;">
+            <div class="row align-items-end">
+                <div class="col-sm mb-2 mb-sm-0">
 
-    <div class="bg-light border-bottom shadow-sm p-2 mb-3 d-flex justify-content-between align-items-center sticky-top" style="z-index: 1030;">
-        <strong>🔧 Панель инструментов</strong>
-        <div class="d-flex gap-2">
-            <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" onclick="generate_vocabulary_view()">
-                <i data-lucide="cpu" class="lucide-icon-small"></i> Генерировать
-            </button>
 
-            <button class="btn btn-outline-success btn-sm d-flex align-items-center gap-1 js-save-form">
-                <i data-lucide="save" class="lucide-icon-small"></i> Сохранить
-            </button>
+                    <h1 class="page-header-title">Редактировать: {{$step->course->topic}}</h1>
+                </div>
+                <!-- End Col -->
 
-            <button class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" onclick="delete_vocabulary()">
-                <i data-lucide="trash-2" class="lucide-icon-small"></i> Удалить
-            </button>
+                <div class="col-lg-auto">
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" onclick="generate()">
+                            <i data-lucide="cpu" class="lucide-icon-small"></i> Генерировать
+                        </button>
+                        <button class="btn btn-outline-success btn-sm d-flex align-items-center gap-1 js-save-form">
+                            <i data-lucide="save" class="lucide-icon-small"></i> Сохранить
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" onclick="delete_vocabulary()">
+                            <i data-lucide="trash-2" class="lucide-icon-small"></i> Удалить
+                        </button>
+                    </div>
+                </div>
+                <!-- End Col -->
+            </div>
         </div>
+        <!-- End Page Header -->
     </div>
+
+
+
 
     <br>
     <div class="text-center">
@@ -191,7 +220,9 @@
             // Создаём AbortController и таймер
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 секунд
-
+            const button = this;
+            button.disabled = true;
+            button.textContent = 'Обработка...';
             fetch(form.getAttribute('action') || window.location.href, {
                 method: 'POST',
                 headers: {
@@ -205,15 +236,16 @@
                     return res.ok ? res.json() : res.text().then(text => Promise.reject(text));
                 })
                 .then(data => {
-                    alert('✅ Успешно отправлено!');
+                    showSuccessToast('Тест успешно сгенирован');
+                    location.reload();
                     console.log(data);
                 })
                 .catch(err => {
                     if (err.name === 'AbortError') {
-                        alert('⏱ Время ожидания истекло (30 секунд)');
+                        showErrorToast('⏱ Время ожидания истекло (30 секунд)');
                     } else {
                         console.error(err);
-                        alert('❌ Ошибка при отправке');
+                        showErrorToast('❌ Ошибка при отправке');
                     }
                 });
         });
@@ -221,13 +253,15 @@
 
 
     <script>
-        function generate_vocabulary_view(){
+        function generate(){
             var modal = new bootstrap.Modal(document.getElementById('exampleModalCenter'));
             modal.show();
         }
     </script>
 
-
+    <script>
+        lucide.createIcons();
+    </script>
     <script>
 
         function check_test(answer) {

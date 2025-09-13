@@ -368,8 +368,7 @@ class GenerateRodmap
 
     static public function generateDescriptionn($req, $user)
     {
-        $open_ai_key = env('OPENAI_API_KEY');
-        $open_ai = new OpenAi($open_ai_key);
+
         $prompt = "Создай учебный план для человека, которому ".$user->old." лет.
 Тема курса: '".$req->topic."'.
 Уровень знаний: '".$req->level."'.
@@ -409,37 +408,9 @@ class GenerateRodmap
     ]
 }";
 
-        $chat = $open_ai->chat([
-            'model' => 'gpt-4o',
-            'messages' => [
-                [
-                    "role" => "system",
-                    "content" => "Ты обучающая платформа.Создай дарожную карту"
-                ],
-                ['role' => 'user', 'content' => $prompt],
 
-            ],
-            'temperature' => 1.0,
-            'max_tokens' => 4000,
-            'frequency_penalty' => 0,
-            'presence_penalty' => 0,
-        ]);
+       $decoded=GlobalMethods::gpt($prompt);
 
-        //  return response()->json($chat);
-
-        $text=json_decode($chat,true)['choices'][0]['message']['content'];
-        $clean = str_replace(['```json', '```'], '', $text);
-        $decoded = json_decode($clean, true);
-
-        if (json_last_error() === JSON_ERROR_NONE && isset($decoded['map'])) {
-            return $decoded;
-        }
-
-        // Попытка исправить запятые или двойные кавычки
-        $clean = preg_replace('/,\s*}/', '}', $clean);
-        $clean = preg_replace('/,\s*]/', ']', $clean);
-
-        $decoded = json_decode($clean, true);
 
         if (json_last_error() === JSON_ERROR_NONE && isset($decoded['map'])) {
             return $decoded;
@@ -474,7 +445,7 @@ class GenerateRodmap
 ';
 
     }
-    static public function generateDescription($step)
+    static public function generateDescriptiongemini($step)
     {
         $apiKey = env('GEMINI_API_KEY');
 
@@ -543,5 +514,35 @@ class GenerateRodmap
             // Логирование и обработка исключений
             return response()->json(['error' => 'Ошибка при подключении к API: ' . $e->getMessage()], 500);
         }
+    }
+    static public function generateDescription($step)
+    {
+
+
+        $promt = 'Создай описание на тему "' . $step->course->topic . '" шаг "' . $step->title . '" в формате HTML.
+Также предоставь минимум 5 внешних ссылок и ссылок на видеоуроки в поле "links".
+
+### Требования:
+1. Описание шага должно быть в формате HTML (например, внутри тега <body>).
+2. В поле "links" должно быть минимум 5 внешних ссылок, которые будут полезны для дальнейшего изучения {'.$step->title.'}.
+3. Ссылки должны быть полезными для дальнейшего изучения темы.
+4. Ответ должен быть только в формате JSON, без других сообщений.
+
+### Формат ответа (JSON):
+```json
+{
+    "info": {
+        "description": "<p>Ваш HTML-описание для шага. Например: В этом шаге мы изучаем...</p>",
+        "links": [
+            "https://example.com/1",
+            "https://example.com/2",
+            "https://example.com/3",
+            "https://example.com/4",
+            "https://example.com/5"
+        ]
+    }
+}';
+
+          return GlobalMethods::gpt($promt,4000,"system","Ты учител и наставник");
     }
 }

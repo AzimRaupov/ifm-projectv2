@@ -17,7 +17,6 @@ class TeacherHelpers
 
     static public function generateVocabulary($step,$request,$user)
     {
-        $apiKey = env('GEMINI_API_KEY1');
 
         $prompt = "Я изучаю '{$step->course->topic}' в шаге '{$step->title}'.Создай лексию
 Тема лексии от учителя: '{$request->topic}'
@@ -34,7 +33,7 @@ class TeacherHelpers
 7. Язык ответа на '{$user->leng}'
 
 ### Формат ответа (JSON):
-[
+{
        \"title\": \"строка\",
        \"exp\": \"опыт за прочитание\",
         \"info\": \"HTML-код, только содержимое внутри <body>, без <body> и <html>\",
@@ -43,53 +42,23 @@ class TeacherHelpers
             \"/\",
             \"/\"
         ]
-]
+}
 
 Пожалуйста, не возвращай полный HTML-документ, только содержимое тега <body>.
 ";
 
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
-
-        try {
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json'
-            ])->post($url, [
-                'contents' => [
-                    [
-                        'parts' => [
-                            ['text' => $prompt]
-                        ]
-                    ]
-                ]
-            ]);
 
 
-            if ($response->successful()) {
-                $result = $response->json();
+                    $roadmap = GlobalMethods::gpt($prompt);
 
-                if (isset($result['candidates'][0]['content']['parts'][0]['text'])) {
-                    $text = $result['candidates'][0]['content']['parts'][0]['text'];
+                    return $roadmap;
 
-                    $clean = str_replace(['```json', '```'], '', $text);
-                    $roadmap = trim($clean);
 
-                    return json_decode($roadmap, true);
-                }
-
-                return response()->json(['error' => 'Не удалось найти нужные данные в ответе API'], 400);
-            }
-
-            return response()->json(['error' => 'Ошибка API', 'status' => $response->status(), 'message' => $response->body()], $response->status());
-
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Ошибка при подключении к API: ' . $e->getMessage()], 500);
-        }
     }
     static function one_correct($request)
     {
 
         $step=Step::query()->with('course')->find($request->id);
-        $apiKey = env('GEMINI_API_KEY1');
         $skills=Skill::query()->where('course_id',$step->course->id)->pluck('skill','id');
 
         $othertest=Test::query()->where('step_id',$step->id)->where('type_test','one_correct')->pluck('text','id')->toArray();
@@ -121,28 +90,10 @@ class TeacherHelpers
       \"id_skill\": 2
     }
 ]";
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
-
-        try {
-
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json'
-            ])->post($url, [
-                'contents' => [
-                    [
-                        'parts' => [
-                            ['text' => $prompt]
-                        ]
-                    ]
-                ]
-            ]);
 
 
-            if ($response->successful()) {
-                $result = $response->json();
-                $text=$result['candidates'][0]['content']['parts'][0]['text'];
-                $clean = str_replace(['```json', '```'], '', $text);
-                $tests = json_decode(trim($clean),true);
+
+                $tests = GlobalMethods::gpt($prompt);
                 $rt=$tests[0]["one_correct"];
                 $test=Test::query()->create([
                     'step_id'=>$step->id,
@@ -169,13 +120,8 @@ class TeacherHelpers
                 Variant::query()->insert($insert_variant);
 
                  return $test;
-            }
 
-            return response()->json(['error' => 'Ошибка API'], $response->status());
 
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
 
     }
     static function list_correct($request)
@@ -215,26 +161,10 @@ class TeacherHelpers
 ]";
         $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
 
-        try {
-
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json'
-            ])->post($url, [
-                'contents' => [
-                    [
-                        'parts' => [
-                            ['text' => $prompt]
-                        ]
-                    ]
-                ]
-            ]);
 
 
-            if ($response->successful()) {
-                $result = $response->json();
-                $text=$result['candidates'][0]['content']['parts'][0]['text'];
-                $clean = str_replace(['```json', '```'], '', $text);
-                $tests = json_decode(trim($clean),true);
+        $tests = GlobalMethods::gpt($prompt);
+
                 $rt=$tests[0]["list_correct"];
                 $test=Test::query()->create([
                     'step_id'=>$step->id,
@@ -265,13 +195,9 @@ class TeacherHelpers
                 Variant::query()->insert($insert_variant);
                 VariantTrue::query()->insert($insert_correct);
                 return $test;
-            }
 
-            return response()->json(['error' => 'Ошибка API'], $response->status());
 
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+
 
     }
 
@@ -311,28 +237,12 @@ class TeacherHelpers
       \"id_skill\": 1
     }
 ]";
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
-
-        try {
-
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json'
-            ])->post($url, [
-                'contents' => [
-                    [
-                        'parts' => [
-                            ['text' => $prompt]
-                        ]
-                    ]
-                ]
-            ]);
 
 
-            if ($response->successful()) {
-                $result = $response->json();
-                $text=$result['candidates'][0]['content']['parts'][0]['text'];
-                $clean = str_replace(['```json', '```'], '', $text);
-                $tests = json_decode(trim($clean),true);
+
+
+
+                $tests = GlobalMethods::gpt($prompt);
                 $rt=$tests[0]["true_false"];
                 $test=Test::query()->create([
                     'step_id'=>$step->id,
@@ -352,13 +262,9 @@ class TeacherHelpers
 
 
                 return $test;
-            }
 
-            return response()->json(['error' => 'Ошибка API'], $response->status());
 
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+
 
     }
 
@@ -366,7 +272,6 @@ class TeacherHelpers
     {
 
         $step=Step::query()->with('course')->find($request->id);
-        $apiKey = env('GEMINI_API_KEY1');
         $skills=Skill::query()->where('course_id',$step->course->id)->pluck('skill','id');
 
         $othertest=Test::query()->where('step_id',$step->id)->where('type_test','one_correct')->pluck('text','id')->toArray();
@@ -396,28 +301,10 @@ class TeacherHelpers
       \"id_skill\": 1
     }
 ]";
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
-
-        try {
-
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json'
-            ])->post($url, [
-                'contents' => [
-                    [
-                        'parts' => [
-                            ['text' => $prompt]
-                        ]
-                    ]
-                ]
-            ]);
 
 
-            if ($response->successful()) {
-                $result = $response->json();
-                $text=$result['candidates'][0]['content']['parts'][0]['text'];
-                $clean = str_replace(['```json', '```'], '', $text);
-                $tests = json_decode(trim($clean),true);
+
+                $tests = GlobalMethods::gpt($prompt);
                 $rt=$tests[0]["question_answer"];
                 $test=Test::query()->create([
                     'step_id'=>$step->id,
@@ -436,13 +323,9 @@ class TeacherHelpers
 
 
                 return $test;
-            }
 
-            return response()->json(['error' => 'Ошибка API'], $response->status());
 
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+
 
     }
 
@@ -450,7 +333,6 @@ class TeacherHelpers
     {
 
         $step=Step::query()->with('course')->find($request->id);
-        $apiKey = env('GEMINI_API_KEY1');
         $skills=Skill::query()->where('course_id',$step->course->id)->pluck('skill','id');
 
         $othertest=Test::query()->where('step_id',$step->id)->where('type_test','one_correct')->pluck('text','id')->toArray();
@@ -482,28 +364,11 @@ class TeacherHelpers
       \"id_skill\": 4
     }
 ]";
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={$apiKey}";
-
-        try {
-
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json'
-            ])->post($url, [
-                'contents' => [
-                    [
-                        'parts' => [
-                            ['text' => $prompt]
-                        ]
-                    ]
-                ]
-            ]);
 
 
-            if ($response->successful()) {
-                $result = $response->json();
-                $text=$result['candidates'][0]['content']['parts'][0]['text'];
-                $clean = str_replace(['```json', '```'], '', $text);
-                $tests = json_decode(trim($clean),true);
+
+
+                $tests =GlobalMethods::gpt($prompt);
                 $rt=$tests[0]["matching"];
                 $test=Test::query()->create([
                     'step_id'=>$step->id,
@@ -533,13 +398,7 @@ class TeacherHelpers
                 MatchingList2::query()->insert($insert_list2);
 
                 return $test;
-            }
 
-            return response()->json(['error' => 'Ошибка API'], $response->status());
-
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
 
     }
 

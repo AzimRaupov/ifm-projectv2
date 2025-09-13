@@ -6,6 +6,8 @@ use App\Helpers\GenerateRodmap;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCourseRequest;
 use App\Jobs\DownloadLogoJob;
+use App\Jobs\GenerateGptTest;
+use App\Jobs\GenerateGptVocabulary;
 use App\Jobs\GenerateTestJob;
 use App\Jobs\GenerateVocabularyJob;
 use App\Models\Course;
@@ -132,7 +134,7 @@ class CreateController extends Controller
         $skills = Skill::query()->select(['id','skill'])->where('course_id', $step->course_id)->get();
 
 
-        GenerateTestJob::dispatch($step->id, json_encode($skills));
+        GenerateGptTest::dispatch($step->id, json_encode($skills));
 
     }
 
@@ -168,7 +170,7 @@ class CreateController extends Controller
 //        }
 //        Link::insert($links);
 //            $step->load('vocabularies.links');
-            GenerateVocabularyJob::dispatch($request->input('id'));
+            GenerateGptVocabulary::dispatch($request->input('id'));
             return  response()->json(['status'=>'ok']);
         }
 
@@ -179,28 +181,57 @@ class CreateController extends Controller
     }
     function create_description(Request $request)
     {
+        // Найти шаг с его курсом и ссылками по ID
+        $step = Step::query()->where('id', $request->input('id'))->with(['course', 'links'])->first();
 
-        $step=Step::query()->where('id',$request->input('id'))->with(['course'])->first();
-        if(!$step->description){
-        $data=GenerateRodmap::generateDescription($step);
-
-        $create_link=[];
-        foreach ($data['info']['links'] as $link){
-            $create_link[]=[
-                'step_id'=>$step->id,
-                'link'=>$link
-            ];
-        }
-        Link::query()->insert($create_link);
-        $step->description=$data['info']['description'];
-        $step->update();
+        // Если шаг не найден, возвращаем ошибку
+        if (!$step) {
+            return response()->json(['error' => 'Step not found'], 404);
         }
 
-            return response()->json(['description'=>$step->description,'links'=>$step->links]);
+        // Если описание шага ещё не создано
+        if (!$step->description) {
+            // Генерация описания через метод GenerateRodmap
+            $data = GenerateRodmap::generateDescription($step);
 
+            // Создание массива для вставки ссылок
+            $create_link = [];
+            foreach ($data['info']['links'] as $link) {
+                $create_link[] = [
+                    'vocabulary_step_id' =>null,
+                    'step_id' => $step->id,
+                    'link' => $link
+                ];
+            }
+
+            // Вставляем ссылки в базу данных
+            $l = Link::query()->insert($create_link);
+
+            // Сохраняем описание шага
+            $step->description = $data['info']['description'];
+
+            // Сохраняем изменения в модели Step
+            $step->save(); // Используем save() вместо update()
+            $step = Step::query()->where('id', $request->input('id'))->with(['course', 'links'])->first();
+            // Возвращаем успешный ответ с данными
+            return response()->json([
+                'description' => $step->description,
+                'links' => $step->links,
+                'data' => $data,
+                'create_link' => $create_link,
+                'l' => $l
+            ]);
+        }
+
+        // Если описание уже существует, просто возвращаем его
+        return response()->json([
+            'description' => $step->description,
+            'links' => $step->links
+        ]);
     }
 
-   public function c_test(Request $request)
+
+    public function c_test(Request $request)
     {
         $step=Step::query()->where('id',$request->input('id'))->with(['test','course'])->first();
 

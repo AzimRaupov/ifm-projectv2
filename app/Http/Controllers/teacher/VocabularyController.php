@@ -22,9 +22,12 @@ class VocabularyController extends Controller
     }
     public function generate(Request $request)
     {
+
+
         $user=Auth::user();
         $step=Step::query()->where('id',$request->input('id'))->with(['course','vocabularies'])->first();
-        $result=TeacherHelpers::generateVocabulary($step,$request,$user)[0];
+
+        $result=TeacherHelpers::generateVocabulary($step,$request,$user);
         $v=VocabularyStep::query()->create([
             'step_id'=>$step->id,
             'course_id'=>$step->course_id,
