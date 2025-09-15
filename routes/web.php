@@ -13,7 +13,11 @@ Route::get('/dashboard',[\App\Http\Controllers\UserController::class,'dashboard'
 Route::get('/fg',[\App\Http\Controllers\TestController::class,'send']);
 Route::get('/google/auth',[\App\Http\Controllers\UserController::class,'google_auth'])->name('google.auth');
 Route::get('/google-calback',[\App\Http\Controllers\UserController::class,'google_callback'])->name('google.callback');
+Route::get('/gp',function (){
 
+    dd(\App\Helpers\GlobalMethods::gpt("helo"));
+
+});
 
 
 Route::get('/courses',[\App\Http\Controllers\CourseController::class,'index'])->name('courses.index');

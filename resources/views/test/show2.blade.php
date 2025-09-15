@@ -147,6 +147,10 @@
                         @endif
 
                     @elseif ($test->type_test == "matching")
+                        @php
+                            // Перемешиваем коллекцию lists2
+                            $test->lists2 = $test->lists2->shuffle();
+                        @endphp
                         <div class="row matching-test" data-test-id="{{ $test->id }}">
                             <div class="col-md-6">
                                 <div id="list1-{{ $test->id }}" class="list-group js-sortable list1">

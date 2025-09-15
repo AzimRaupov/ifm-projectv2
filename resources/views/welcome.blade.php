@@ -54,7 +54,6 @@
         <nav id="navmenu" class="navmenu">
             <ul>
                 <li><a href="#hero" class="active">Главная</a></li>
-                <li><a href="#teachers">Учителя</a></li>
                 <li><a href="#services">Сервис</a></li>
                 <li><a href="#courses">Курсы</a></li>
                 <li><a href="#faq">Вопросы</a></li>

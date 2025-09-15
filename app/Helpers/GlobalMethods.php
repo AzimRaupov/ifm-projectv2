@@ -51,7 +51,6 @@ class GlobalMethods
                 'frequency_penalty' => 0,
                 'presence_penalty' => 0,
             ]);
-
             // Log the raw response from the API.
             Log::info('Received raw response from OpenAI.', ['response' => $chat]);
 

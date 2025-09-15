@@ -67,9 +67,7 @@ class CreateController extends Controller
         $date_start=Carbon::today();
         $map=GenerateRodmap::generateDescriptionn($request,$user);
         $data=$map["map"];
-        if($map["status"]=="fail"){
-            return response()->json(['status'=>'fail'],500);
-        }
+
         $course=Course::query()->create([
             'user_id'=>$user->id,
             'topic'=>$map['topic_course'],
