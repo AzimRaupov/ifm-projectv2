@@ -14,6 +14,8 @@
 @endsection
 
 @section('content-main')
+    @if($step->vocabularies->count()>0)
+
     <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -71,9 +73,6 @@
         </div>
         <!-- End Page Header -->
     </div>
-
-
-
 
     <div class="text-center">
         <ul class="nav nav-segment nav-pills mb-7" id="nav-nav" role="tablist">
@@ -157,7 +156,24 @@
             </div>
         @endforeach
     </div>
+    @else
+        @include('components.my.spinner')
+        <script>
+            function while_check(){
+                reqman("{{route('api.vocabulary.isset')}}", "POST", {id:{{$request->id}}}).then(rr => {
+                    console.log(rr);
+                    if(rr.count){
+                        finish();
+                        location.reload();
+                    }
+                });
+            }
 
+            setInterval(function() {
+                while_check();
+            }, 3700);
+        </script>
+    @endif
 
 
 @endsection

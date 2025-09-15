@@ -18,7 +18,7 @@ class VocabularyController extends Controller
         $step=Step::query()->where('id',$request->id)->with(['test','course','vocabularies'=>function ($q) {
             $q->with('links');
         }])->first();
-       return view('teacher.vocabulary.editv2',['step'=>$step]);
+       return view('teacher.vocabulary.editv2',['step'=>$step,'request'=>$request]);
     }
     public function generate(Request $request)
     {

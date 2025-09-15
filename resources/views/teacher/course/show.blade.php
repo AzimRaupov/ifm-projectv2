@@ -214,11 +214,11 @@
         </div>
         <div class="offcanvas-body" style="margin-top: 0px">
             <div class="row" style="display: flex; justify-content: center; align-items: center;">
-                <a href="t" class="btn btn-primary link_test col-auto me-2" style="text-decoration: none; display: flex; align-items: center; justify-content: center; padding: 5px 15px; font-size: 14px;">
-                    Пройти тест
+                <a href="t" target="_blank" class="btn btn-primary link_test col-auto me-2" style="text-decoration: none; display: flex; align-items: center; justify-content: center; padding: 5px 15px; font-size: 14px;">
+                    Изменить тест
                 </a>
-                <a href="z" class="btn btn-primary link_vocabulary col-auto" style="text-decoration: none; display: flex; align-items: center; justify-content: center; padding: 5px 15px; font-size: 14px;">
-                    Лекция
+                <a href="z" target="_blank" class="btn btn-primary link_vocabulary col-auto" style="text-decoration: none; display: flex; align-items: center; justify-content: center; padding: 5px 15px; font-size: 14px;">
+                    Изменить лекцию
 
                 </a>
             </div>

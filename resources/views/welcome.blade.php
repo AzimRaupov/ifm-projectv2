@@ -291,7 +291,7 @@
                             <h3>{{$course->topic}}</h3>
                             <p>{{$course->description}}</p>
                          <small>{{$course->teacher->name}}</small>
-                            <a href="service-details.html" class="read-more">Подробнее <i class="bi bi-arrow-right"></i></a>
+                            <a href="{{route('course.subscribe',['id'=>$course->id])}}" class="read-more">Подробнее <i class="bi bi-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -302,39 +302,39 @@
         </div>
 
     </section><!-- /Services Section -->
-    <section id="teachers" class="py-5 bg-light">
-        <div class="container">
-            <!-- Section Title -->
-            <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="fw-bold">Учителя</h2>
-                <p class="text-muted">Профессиональные наставники, готовые помочь вам достигать целей</p>
-            </div>
+{{--    <section id="teachers" class="py-5 bg-light">--}}
+{{--        <div class="container">--}}
+{{--            <!-- Section Title -->--}}
+{{--            <div class="text-center mb-5" data-aos="fade-up">--}}
+{{--                <h2 class="fw-bold">Учителя</h2>--}}
+{{--                <p class="text-muted">Профессиональные наставники, готовые помочь вам достигать целей</p>--}}
+{{--            </div>--}}
 
-            <div class="row g-4">
+{{--            <div class="row g-4">--}}
 
-                @foreach($teachers as $teacher)
-                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                        <div class="card border-0 shadow-sm hover-scale">
-                            <img src="{{{asset('storage/'.$teacher->logo)}}}" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;" alt="Saul Goodman">
-                            <div class="card-body text-center">
-                                <h5 class="card-title fw-bold">{{$teacher->name}}</h5>
-                                <p class="text-primary mb-2">CEO & Founder</p>
-                                <div class="mb-2">
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                </div>
-                                <p class="text-muted small">{{$teacher->bio}}</p>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+{{--                @foreach($teachers as $teacher)--}}
+{{--                    <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">--}}
+{{--                        <div class="card border-0 shadow-sm hover-scale">--}}
+{{--                            <img src="{{{asset('storage/'.$teacher->logo)}}}" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;" alt="Saul Goodman">--}}
+{{--                            <div class="card-body text-center">--}}
+{{--                                <h5 class="card-title fw-bold">{{$teacher->name}}</h5>--}}
+{{--                                <p class="text-primary mb-2">CEO & Founder</p>--}}
+{{--                                <div class="mb-2">--}}
+{{--                                    <i class="bi bi-star-fill text-warning"></i>--}}
+{{--                                    <i class="bi bi-star-fill text-warning"></i>--}}
+{{--                                    <i class="bi bi-star-fill text-warning"></i>--}}
+{{--                                    <i class="bi bi-star-fill text-warning"></i>--}}
+{{--                                    <i class="bi bi-star-fill text-warning"></i>--}}
+{{--                                </div>--}}
+{{--                                <p class="text-muted small">{{$teacher->bio}}</p>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endforeach--}}
 
-            </div>
-        </div>
-    </section>
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </section>--}}
 
     <!-- Pricing Section -->
 

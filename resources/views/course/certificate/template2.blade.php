@@ -321,13 +321,7 @@
         </div>
     </div>
 
-    <div class="qr-container">
-        <p>Проверка подлинности:</p>
-        <div id="">https://example.com/verify/WB-2025-0001</div>
-    </div>
 
-
-    <p class="footer-note">Сертификат действителен при наличии цифровой подписи организации.</p>
 </div>
 
 <div class="container mt-4 text-center no-print">

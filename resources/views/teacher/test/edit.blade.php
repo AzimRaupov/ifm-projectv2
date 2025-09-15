@@ -15,7 +15,9 @@
 @endsection
 
 @section('content-main')
-    <style>
+
+    @if($step->test->count()>0)
+        <style>
         input[type="radio"],
         input[type="checkbox"] {
             transform: scale(1.5); /* увеличивает размер */
@@ -93,8 +95,6 @@
         </div>
         <!-- End Page Header -->
     </div>
-
-
 
 
     <br>
@@ -199,6 +199,24 @@
         @endforeach
     </div>
 
+    @else
+        @include('components.my.spinner')
+        <script>
+            function while_check(){
+                reqman("{{route('api.vocabulary.isset')}}", "POST", {id:{{$request->id}}}).then(rr => {
+                    console.log(rr);
+                    if(rr.count){
+                        finish();
+                        location.reload();
+                    }
+                });
+            }
+
+            setInterval(function() {
+                while_check();
+            }, 3000);
+        </script>
+    @endif
 
 
 @endsection

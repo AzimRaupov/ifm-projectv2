@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+
+@section('title')
+    Прогресс панель
+@endsection
+
 @section('content-main')
     @if($courses->isEmpty())
 

@@ -12,8 +12,7 @@ class TestController extends Controller
     public function edit(Request $request)
     {
         $step=Step::query()->where('id',$request->id)->with(['test'])->first();
-return view('teacher.test.edit',['step'=>$step]);
-        dd($step);
+return view('teacher.test.edit',['step'=>$step,'request'=>$request]);
     }
 
     public function generate(Request $request)
