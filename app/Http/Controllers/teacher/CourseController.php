@@ -97,7 +97,7 @@ class CourseController extends Controller
     {
         $user=Auth::user();
         $date_start=Carbon::today();
-        $map=GenerateRodmap::generateRodmap($request,$user);
+        $map=GenerateRodmap::generateDescriptionn($request,$user);
         $data=$map["map"];
 
         $course=Course::query()->create([
