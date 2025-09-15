@@ -2,7 +2,6 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/test',[\App\Http\Controllers\api\create\CreateController::class,'pdf'])->name('pdf');
 
 Route::post('/status/step',[\App\Http\Controllers\api\get\GetController::class,'status_step'])->name('status.step');
 Route::post('/get/skills',[\App\Http\Controllers\api\get\GetController::class,'skills'])->name('get.skills');
@@ -18,6 +17,15 @@ Route::post('/create/vocabulary',[\App\Http\Controllers\api\create\CreateControl
 Route::post('/upload',[\App\Http\Controllers\api\create\CreateController::class,'upload'])->name('upload');
 
 Route::post('/user/ping',[\App\Http\Controllers\api\UserController::class,'ping'])->name('user.ping');
+
+Route::prefix('/vocabulary')->group(function (){
+       Route::post('/isset',[\App\Http\Controllers\api\VocabularyController::class,'isset'])->name('vocabulary.isset');
+});
+
+
+Route::prefix('/test')->group(function (){
+    Route::get('/isset',[\App\Http\Controllers\api\TestController::class,'isset'])->name('test.isset');
+});
 
 Route::prefix('/step')->group(function (){
     Route::post('/statusEdit',[\App\Http\Controllers\api\ApiStepController::class,'statusEdit'])->name('step.statusEdit');

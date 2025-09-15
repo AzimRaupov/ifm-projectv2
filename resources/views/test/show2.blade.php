@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
+
+@section('head')
+
+    <script src="{{asset('js/main.js')}}"></script>
+@endsection
+
 @section('content-main')
+    @if($tests->count()>0)
+
 <style>
     input[type="radio"],
     input[type="checkbox"] {
@@ -186,6 +194,24 @@
         @endforeach
     </div>
 
+    @else
+        @include('components.my.spinner')
+        <script>
+            function while_check(){
+                reqman("{{route('api.vocabulary.isset')}}", "POST", {id:{{$request->id}}}).then(rr => {
+                    console.log(rr);
+                    if(rr.count){
+                        finish();
+                        location.reload();
+                    }
+                });
+            }
+
+            setInterval(function() {
+                while_check();
+            }, 3000);
+        </script>
+    @endif
 
 
 @endsection
@@ -310,5 +336,8 @@
             });
         });
     </script>
+
+
+
 
 @endsection

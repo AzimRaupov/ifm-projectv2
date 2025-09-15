@@ -182,11 +182,28 @@ public function edit(Request $request)
 
     public function subscribe(Request $request)
     {
-        $student=Auth::user();
-        StudentCourse::query()->create([
-            'course_id'=>$request->id,
-            'user_id'=>$student->id
+        $student = Auth::user();
+        $course = Course::find($request->id);
+        if (!$course) {
+            return redirect()->route('courses.index')->with('error', 'Курс не найден.');
+        }
+
+        $existingSubscription = StudentCourse::where('course_id', $course->id)
+            ->where('user_id', $student->id)
+            ->exists();
+
+        if ($existingSubscription) {
+            return redirect()->route('show', ['id' => $course->id])
+                ->with('info', 'Вы уже подписаны на этот курс.');
+        }
+
+        StudentCourse::create([
+            'course_id' => $course->id,
+            'user_id' => $student->id
         ]);
+
+        return redirect()->route('show', ['id' => $course->id])
+            ->with('success', 'Вы успешно подписались на курс!');
     }
 
 }

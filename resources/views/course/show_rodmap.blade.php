@@ -25,8 +25,20 @@
                 </div>
 
                 <div class="col-auto">
-                    <a class="btn btn-primary" href="{{route('course.progress',['id'=>$course->id])}}" >
-                        Посмотреть прогресс
+                    @if($course->step==$student_course->complete)
+                    <a class="btn btn-outline-primary" href="{{route('course.certificate',['id'=>$course->id])}}" >
+                        <i class="bi bi-award"></i>                        Получить сертификат
+                    </a>
+                    @endif
+                    <a class="btn btn-outline-primary" href="{{route('course.progress',['id'=>$course->id])}}" >
+                        <i class="bi bi-graph-up"></i>
+
+                        Прогресс
+                    </a>
+                    <a class="btn btn-outline-danger" href="{{route('course.pdf_book',['id'=>$course->id])}}" >
+                        <i class="bi bi-file-earmark-pdf"></i>
+
+                        Формат pdf
                     </a>
                 </div>
                 <!-- End Col -->
@@ -272,6 +284,7 @@
     <small class="text-muted fs-6">+${step.experience}exp</small>
 </div>
 `;
+                    @if($course->type=="private")
                     icon.onclick = (e) => {
                         e.stopPropagation(); // чтобы клик не распространялся на card
                         if(step.status != '1') {
@@ -284,7 +297,7 @@
                             lucide.createIcons();
                         }
                     };
-
+                @endif
                     card.onclick = () => {
                         create_test(step.id);
                         create_vocabulary(step.id);
@@ -310,6 +323,7 @@
                                     : '<i data-lucide="circle" class="text-secondary"></i>';
 
                                 // Клик по иконке дочернего шага
+                         @if($course->type=="private")
                                 childIcon.onclick = (e) => {
                                     e.stopPropagation(); // чтобы клик не шел на весь row
                                     if(child.status != '1') {
@@ -321,7 +335,7 @@
                                        lucide.createIcons();
                                     }
                                 };
-
+                            @endif
                                 const childCard = document.createElement("div");
                                 childCard.className = "flex-grow-1";
 

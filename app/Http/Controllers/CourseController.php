@@ -68,6 +68,22 @@ function progress(Request $request)
     return view('course.progress',compact(['course','complete']));
 
 }
+
+ public function pdf_book(Request $request)
+ {
+     $course=Course::query()->where('id',$request->id)->with(['steps'=>function ($q) {
+         $q->with('vocabularies');
+     }])->first();
+//        dd($course);
+
+
+
+     $html = view('course.pdf', ['course'=>$course])->render();
+
+     $pdf = Pdf::loadHTML($html);
+
+     return $pdf->download(Str::slug($course->topic) . '.pdf');
+ }
     public function show(Request $request)
     {
         $user=Auth::user();

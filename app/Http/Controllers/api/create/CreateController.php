@@ -20,6 +20,7 @@ use App\Models\Test;
 use App\Models\VocabularyStep;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -66,7 +67,9 @@ class CreateController extends Controller
         $date_start=Carbon::today();
         $map=GenerateRodmap::generateDescriptionn($request,$user);
         $data=$map["map"];
-
+        if($map["status"]=="fail"){
+            return response()->json(['status'=>'fail'],500);
+        }
         $course=Course::query()->create([
             'user_id'=>$user->id,
             'topic'=>$map['topic_course'],

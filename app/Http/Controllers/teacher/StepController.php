@@ -11,6 +11,22 @@ use function Pest\Laravel\json;
 
 class StepController extends Controller
 {
+
+    public function new_parent(Request $request)
+    {
+          $step=Step::query()->create([
+              'course_id'=>$request->id,
+              'parent_id'=>null,
+              'type'=>'parent',
+              'title'=>$request->title,
+              'experience'=>$request->experience,
+              'status'=>0,
+              'sort'=>0
+          ]);
+        return response(['status'=>1],200);
+
+    }
+
     public function new_child(Request $request)
     {
         $step=Step::query()->where('id',$request->id)->with('step_heirs')->first();
@@ -21,7 +37,7 @@ class StepController extends Controller
             'title'=>$request->title,
             'experience'=>$request->experience,
             'status'=>0,
-            'sort'=>$step->step_heirs[0]->sort-1
+            'sort'=>$step->sort+1
         ]);
 
         return response(['status'=>1],200);

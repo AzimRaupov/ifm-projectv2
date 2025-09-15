@@ -18,7 +18,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Генеритсия лексии</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Генерация лекции</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{route('teacher.vocabulary.generate')}}" method="post" class="generate-vocabulary">
@@ -26,7 +26,7 @@
                     <input type="hidden" name="id" value="{{$step->id}}">
                     <div class="modal-body">
 
-                        <label class="form-label">Тема лексии</label>
+                        <label class="form-label">Тема лекции</label>
                         <input type="text" name="topic" class="form-control">
                         <br>
                         <label class="form-label">Дополнительный промт</label>
@@ -136,7 +136,7 @@
                                 </div>
 
                                 <a href="javascript:;" class="js-create-field form-link">
-                                    <i class="bi-plus-circle me-1"></i> Добавть цылку
+                                    <i class="bi-plus-circle me-1"></i> Добавить ссылку
                                 </a>
                             </div>
                         </div>

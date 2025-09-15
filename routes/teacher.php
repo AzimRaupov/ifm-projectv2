@@ -24,6 +24,7 @@ Route::middleware(['auth', 'is_teacher'])->group(function () {
     Route::prefix('step')->group(function (){
         Route::post('/update',[\App\Http\Controllers\teacher\StepController::class,'update'])->name('step.update');
         Route::post('/new/child',[\App\Http\Controllers\teacher\StepController::class,'new_child'])->name('step.new.child');
+        Route::post('/new/parent',[\App\Http\Controllers\teacher\StepController::class,'new_parent'])->name('step.new.parent');
         Route::get('/edit',[\App\Http\Controllers\teacher\StepController::class,'edit'])->name('step.edit');
         Route::post('/destroy',[\App\Http\Controllers\teacher\StepController::class,'destroy'])->name('step.destroy');
 

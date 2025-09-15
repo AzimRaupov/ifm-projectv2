@@ -27,45 +27,10 @@
                     <div class="col-sm mb-2 mb-sm-0">
 
 
-                        <h1 class="page-header-title">Панель управления</h1>
+                        <h1 class="page-header-title">Панель учителя</h1>
                     </div>
                     <!-- End Col -->
 
-                    <div class="col-lg-auto">
-                        <span class="text-cap small">Ученики:</span>
-
-                        <div class="d-flex">
-                            <!-- Avatar Group -->
-                            <div class="avatar-group avatar-circle me-3">
-                                <a class="avatar" href="user-profile.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Amanda Harvey">
-                                    <img class="avatar-img" src="assets/img/160x160/img10.jpg" alt="Image Description">
-                                </a>
-                                <a class="avatar" href="user-profile.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Linda Bates">
-                                    <img class="avatar-img" src="assets/img/160x160/img9.jpg" alt="Image Description">
-                                </a>
-                                <a class="avatar avatar-soft-info" href="user-profile.html" data-bs-toggle="tooltip" data-bs-placement="top" title="#digitalmarketing">
-                  <span class="avatar-initials">
-                    <i class="bi-people-fill"></i>
-                  </span>
-                                </a>
-                                <a class="avatar" href="user-profile.html" data-bs-toggle="tooltip" data-bs-placement="top" title="David Harrison">
-                                    <img class="avatar-img" src="assets/img/160x160/img3.jpg" alt="Image Description">
-                                </a>
-                                <a class="avatar avatar-soft-dark" href="user-profile.html" data-bs-toggle="tooltip" data-bs-placement="top" title="Antony Taylor">
-                                    <span class="avatar-initials">A</span>
-                                </a>
-
-                                <a class="avatar avatar-light avatar-circle" href="javascript:;" data-bs-toggle="modal" data-bs-target="#shareWithPeopleModal">
-                                    <span class="avatar-initials">+2</span>
-                                </a>
-                            </div>
-                            <!-- End Avatar Group -->
-
-                            <a class="btn btn-primary btn-icon rounded-circle" href="javascript:;" data-bs-toggle="modal" data-bs-target="#shareWithPeopleModal">
-                                <i class="bi-share-fill"></i>
-                            </a>
-                        </div>
-                    </div>
                     <!-- End Col -->
                 </div>
             </div>
@@ -106,11 +71,11 @@
                 <div class="card shadow-sm border-1">
                     <div class="card-body d-flex align-items-center">
                         <div class="bg-warning bg-opacity-10 text-warning p-3 rounded me-3">
-                            <i class="bi bi-ui-checks fs-3"></i>
+                            <i class="bi-person-lines-fill fs-3"></i>
                         </div>
                         <div>
-                            <h6 class="text-muted">Тесты</h6>
-                            <h4 class="fw-bold mb-0">42</h4>
+                            <h6 class="text-muted">Учашийся</h6>
+                            <h4 class="fw-bold mb-0">{{$students->count()-$totalCertificate}}</h4>
                         </div>
                     </div>
                 </div>
@@ -135,7 +100,7 @@
             @foreach($courses as $course)
                 <div class="col-12 col-md-4"> <!-- на мобильных 1 в ряд, на планшете и выше 3 в ряд -->
                     <div class="card h-100">
-                        <div class="card-body d-flex flex-column">
+                            <div class="card-body d-flex flex-column">
                             <div class="d-flex mb-3 align-items-center">
                                 <div class="me-2">
                                     <h4 class="text-wrap">{{ $course->topic }}</h4>
@@ -159,10 +124,8 @@
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             <a class="dropdown-item" href="{{route('teacher.course.edit',['id'=>$course->id])}}"><i class="bi-pencil dropdown-item-icon"></i> Изменить</a>
-                                            <a class="dropdown-item" href="#"><i class="bi-star dropdown-item-icon"></i> Favorite</a>
-                                            <a class="dropdown-item" href="#"><i class="bi-archive dropdown-item-icon"></i> Archive</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="#"><i class="bi-trash dropdown-item-icon"></i> Remove</a>
+                                            <a class="dropdown-item" href="{{route('teacher.course.show',['id'=>$course->id])}}"><i class="bi-pencil dropdown-item-icon"></i> Изменить Шаги</a>
+
                                         </div>
                                     </div>
                                 </div>
@@ -178,23 +141,27 @@
                                 </div>
                                 <div class="col">
                                     <div class="text-center">
-                                        <span class="d-block h4 mb-1">0</span>
+                                        <span class="d-block h4 mb-1">{{$course->students->count()-$course->certificate}}</span>
                                         <span class="d-block fs-6">Учащийся</span>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="text-center">
-                                        <span class="d-block h4 mb-1">0</span>
+                                        <span class="d-block h4 mb-1">{{$course->certificate}}</span>
                                         <span class="d-block fs-6">Выпускники</span>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Progress -->
-                            <div class="progress">
+                            <div class="progress mb-3">
                                 <div class="progress-bar" role="progressbar" style="width: 0%"></div>
                             </div>
+                                <a href="{{ route('teacher.course.index', $course->id) }}" class="btn btn-primary mt-auto">
+                                    Перейти к курсу
+                                </a>
                         </div>
+
                     </div>
                 </div>
             @endforeach
@@ -219,7 +186,7 @@
                                 <div class="input-group-prepend input-group-text">
                                     <i class="bi-search"></i>
                                 </div>
-                                <input id="datatableWithSearchInput" type="search" class="form-control" placeholder="Search users" aria-label="Search users">
+                                <input id="datatableWithSearchInput" type="search" class="form-control" placeholder="Поиск" aria-label="Search users">
                             </div>
                             <!-- End Search -->
                         </form>

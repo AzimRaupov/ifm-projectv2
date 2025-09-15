@@ -91,6 +91,7 @@ $user->save();
            $totalStudents = 0;
            $totalCertificate = 0;
            $students_t = collect();
+           $ff=0;
            foreach ($courses as $course) {
                foreach ($course->students as $student) {
                    if ($student->pivot->status == 1) {
@@ -100,6 +101,10 @@ $user->save();
                    $student->step_course=$course->step;
                    $students_t->push($student); // сохраняет pivot
                }
+               $ff=$totalCertificate;
+               $course->certificate=$ff;
+               $ff=0;
+
            }
 //           dd($courses, $totalStudents, $totalCertificate);
            return view('teacher.dashboard',[

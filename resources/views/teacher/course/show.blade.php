@@ -55,7 +55,7 @@
                                 </div>
 
                                 <a href="javascript:;" class="js-create-field form-link">
-                                    <i class="bi-plus-circle me-1"></i> Добавть сылку
+                                    <i class="bi-plus-circle me-1"></i> Добавить ссылку
                                 </a>
                             </div>
                         </div>
@@ -132,6 +132,31 @@
             </div>
         </div>
     </div>
+    <div id="new_parent" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Добавить шаг</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{route('teacher.step.new.parent')}}" method="post" class="form-new_parent">
+                    @csrf
+                    <input type="hidden" name="id" value="{{$course->id}}" id="id_course">
+
+                    <div class="modal-body">
+                        <label for="topic_child" class="form-label">Название шага</label>
+                        <input type="text" name="title" id="topic_child" class="form-control">
+                        <label for="experience" class="form-label">Опыт за шаг</label>
+                        <input type="number" name="experience" id="experience" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary button-new_parent" data-bs-dismiss="modal">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="content container-fluid">
         <div class="page-header">
@@ -143,11 +168,11 @@
                 <div class="col-auto">
                     <div class="col-auto d-flex gap-2">
                         <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" onclick="addParent()">
-                            <i data-lucide="cpu" class="lucide-icon-small"></i> Добавить шаг
+                            <i data-lucide="plus" class="lucide-icon-small"></i> Добавить шаг
                         </button>
-                        <button class="btn btn-outline-success btn-sm d-flex align-items-center gap-1 js-save-form" onclick="save()">
-                            <i data-lucide="save" class="lucide-icon-small"></i> Сохранить
-                        </button>
+                        <a class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" href="{{route('teacher.course.edit',['id'=>$course->id])}}" target="_blank">
+                            <i data-lucide="edit" class="lucide-icon-small"></i> Изменить курс
+                        </a>
 
                     </div>
 
@@ -188,13 +213,12 @@
 
         </div>
         <div class="offcanvas-body" style="margin-top: 0px">
-            <div class="row" style="display: flex; align-items: center;">
-                <a href="t" class="col-6 link_test" style="text-decoration: none; color: #3498db; display: flex; align-items: center; justify-content: center;">
+            <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                <a href="t" class="btn btn-primary link_test col-auto me-2" style="text-decoration: none; display: flex; align-items: center; justify-content: center; padding: 5px 15px; font-size: 14px;">
                     Пройти тест
-
                 </a>
-                <a href="z" class="link_vocabulary col-6" style="text-decoration: none; color: #3498db; display: flex; align-items: center; justify-content: center;">
-                    Лекся
+                <a href="z" class="btn btn-primary link_vocabulary col-auto" style="text-decoration: none; display: flex; align-items: center; justify-content: center; padding: 5px 15px; font-size: 14px;">
+                    Лекция
 
                 </a>
             </div>
@@ -239,6 +263,15 @@
 
            formpost(new_child);
        });
+
+        document.querySelector('.button-new_parent')?.addEventListener('click',(e)=>{
+            e.preventDefault();
+
+            const new_parent=document.querySelector('.form-new_parent')
+
+            formpost(new_parent);
+        });
+
     </script>
 
 
@@ -352,6 +385,9 @@
 
 
         function create_test(step_id) {
+            lv.href = '{{ route('teacher.vocabulary.edit') }}?id=' + step_id;
+            ltest.href = '{{ route('teacher.test.edit') }}?id=' + step_id;
+
             fetch("{{ route('api.create.test') }}", {
                 method: "POST",
                 headers: {
@@ -365,7 +401,6 @@
                 console.error("Ошибка при отправке теста:", error);
             });
 
-            ltest.href = '{{ route('test.show') }}?id=' + step_id;
         }
 
         function create_vocabulary(step_id) {
@@ -382,7 +417,6 @@
                 console.error("Ошибка при отправке запроса:", error);
             });
 
-            lv.href = '{{ route('vocabulary.show') }}?id=' + step_id;
         }
         fetchData();
 
@@ -698,7 +732,8 @@
             modal.show();
         }
         function addParent(){
-
+            var modal = new bootstrap.Modal(document.getElementById('new_parent'));
+            modal.show();
         }
 
     </script>

@@ -28,7 +28,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Генеритсия лексии</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Генерация теста</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{route('teacher.test.generate')}}" method="post" class="generate-form">
@@ -36,17 +36,17 @@
                     <input type="hidden" name="id" value="{{$step->id}}">
                     <div class="modal-body">
 
-                        <label class="form-label">Тема лексии</label>
+                        <label class="form-label">Вопрос</label>
                         <input type="text" name="title" class="form-control">
                         <br>
 
                         <label class="form-label">Тип теста</label>
                        <select class="form-select" name="type">
-                           <option value="one_correct">Один правилный ответ</option>
-                           <option value="list_correct">Несколько правилных ответа</option>
-                           <option value="question_answer">Вотпрос ответ</option>
+                           <option value="one_correct">Один правильный ответ</option>
+                           <option value="list_correct">Несколько правильных ответа</option>
+                           <option value="question_answer">Вопрос ответ</option>
                            <option value="true_false">Да или нет</option>
-                           <option value="matching">М</option>
+                           <option value="matching">На соответствие</option>
 
                        </select>
                         <br>
@@ -55,8 +55,8 @@
                         <input type="text" name="promt" id="" class="form-control">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary generate">Save changes</button>
+                        <button type="button" class="btn btn-white" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary generate">Создать</button>
                     </div>
                 </form>
             </div>
@@ -79,12 +79,13 @@
                         <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1" onclick="generate()">
                             <i data-lucide="cpu" class="lucide-icon-small"></i> Генерировать
                         </button>
-                        <button class="btn btn-outline-success btn-sm d-flex align-items-center gap-1 js-save-form">
+                      <!--  <button class="btn btn-outline-success btn-sm d-flex align-items-center gap-1 js-save-form">
                             <i data-lucide="save" class="lucide-icon-small"></i> Сохранить
                         </button>
                         <button class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" onclick="delete_vocabulary()">
                             <i data-lucide="trash-2" class="lucide-icon-small"></i> Удалить
                         </button>
+                        -->
                     </div>
                 </div>
                 <!-- End Col -->

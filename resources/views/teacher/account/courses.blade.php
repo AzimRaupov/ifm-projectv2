@@ -61,61 +61,10 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{route('profile.courses',['id'=>$user->id])}}">Курсы <span class="badge bg-soft-dark text-dark rounded-circle ms-1">{{$user->courses->count()}}</span></a>
+                            <a class="nav-link active" href="{{route('profile.courses',['id'=>$user->id])}}">Курсы</a>
                         </li>
 
 
-                        <li class="nav-item ms-auto">
-                            <div class="d-flex gap-2">
-                                <!-- Form Check -->
-                                <div class="form-check form-check-switch">
-                                    <input class="form-check-input" type="checkbox" value="" id="connectCheckbox">
-                                    <label class="form-check-label btn btn-sm" for="connectCheckbox">
-                      <span class="form-check-default">
-                        <i class="bi-person-plus-fill"></i> Connect
-                      </span>
-                                        <span class="form-check-active">
-                        <i class="bi-check-lg me-2"></i> Connected
-                      </span>
-                                    </label>
-                                </div>
-                                <!-- End Form Check -->
-
-                                <a class="btn btn-icon btn-sm btn-white" href="#">
-                                    <i class="bi-list-ul me-1"></i>
-                                </a>
-
-                                <!-- Dropdown -->
-                                <div class="dropdown nav-scroller-dropdown">
-                                    <button type="button" class="btn btn-white btn-icon btn-sm" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi-three-dots-vertical"></i>
-                                    </button>
-
-                                    <div class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="profileDropdown">
-                                        <span class="dropdown-header">Settings</span>
-
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-share-fill dropdown-item-icon"></i> Share profile
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-slash-circle dropdown-item-icon"></i> Block page and profile
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-info-circle dropdown-item-icon"></i> Suggest edits
-                                        </a>
-
-                                        <div class="dropdown-divider"></div>
-
-                                        <span class="dropdown-header">Feedback</span>
-
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bi-flag dropdown-item-icon"></i> Report
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- End Dropdown -->
-                            </div>
-                        </li>
                     </ul>
                 </div>
                 <!-- End Nav -->
@@ -153,107 +102,76 @@
                         <div class="row row-cols-1 row-cols-md-2">
 
                             @foreach($courses as $course)
-
-                            <div class="col mb-3 mb-lg-5">
-                                <!-- Card -->
-                                <div class="card card-hover-shadow text-center h-100">
-                                    <div class="card-progress-wrap">
-                                        <!-- Progress -->
-                                        <div class="progress card-progress">
-                                            <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <!-- End Progress -->
-                                    </div>
-
-                                    <!-- Body -->
-                                    <div class="card-body">
-                                        <div class="row align-items-center text-start mb-4">
-                                            <div class="col">
-                                                <span class="badge bg-soft-secondary text-secondary p-2">To do</span>
+                                <div class="col mb-3 mb-lg-5">
+                                    <!-- Card -->
+                                    <div class="card card-hover-shadow text-center h-100">
+                                        <div class="card-progress-wrap">
+                                            <!-- Progress -->
+                                            <div class="progress card-progress">
+                                                <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
-                                            <!-- End Col -->
+                                            <!-- End Progress -->
+                                        </div>
 
-                                            <div class="col-auto">
-                                                <!-- Dropdown -->
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn btn-ghost-secondary btn-icon btn-sm card-dropdown-btn rounded-circle" id="projectsGridDropdown8" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bi-three-dots-vertical"></i>
-                                                    </button>
+                                        <!-- Body -->
+                                        <div class="card-body">
 
-                                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="projectsGridDropdown8">
-                                                        <a class="dropdown-item" href="#">Rename project </a>
-                                                        <a class="dropdown-item" href="#">Add to favorites</a>
-                                                        <a class="dropdown-item" href="#">Archive project</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item text-danger" href="#">Delete</a>
-                                                    </div>
+                                            <div class="d-flex justify-content-center mb-2">
+                                                <!-- Avatar -->
+                                                <img class="avatar avatar-lg" src="{{$course->logo}}" alt="Image Description">
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <h2 class="mb-1">{{$course->topic}}</h2>
+                                            </div>
+
+                                            <small class="card-subtitle">Участники</small>
+
+                                            <div class="d-flex justify-content-center">
+                                                <!-- Avatar Group -->
+                                                <div class="avatar-group avatar-group-sm avatar-circle card-avatar-group">
+                                                    @foreach($course->students as $student)
+                                                        <a class="avatar avatar-soft-primary" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $student->name }}">
+                                                            @if(isset($student->photo) && $student->photo)
+                                                                <img class="avatar-img" src="{{ asset('storage/' . $student->photo) }}" alt="Фото профиля пользователя {{ $student->name }}">
+                                                            @else
+                                                                <span class="avatar-initials">{{ mb_substr($student->name, 0, 1) }}</span>
+                                                            @endif
+                                                        </a>
+                                                    @endforeach
                                                 </div>
-                                                <!-- End Dropdown -->
+                                                <!-- End Avatar Group -->
                                             </div>
-                                            <!-- End Col -->
+
+                                            <a class="stretched-link" href="{{route('course.subscribe',['id'=>$course->id])}}"></a>
                                         </div>
+                                        <!-- End Body -->
 
-                                        <div class="d-flex justify-content-center mb-2">
-                                            <!-- Avatar -->
-                                            <img class="avatar avatar-lg" src="{{$course->logo}}" alt="Image Description">
-                                        </div>
+                                        <!-- Footer -->
+                                        <div class="card-footer">
+                                            <!-- Stats -->
+                                            <div class="row col-divider">
+                                                <div class="col">
+                                                    <span class="h4">{{ $course->total_students }}</span>
+                                                    <span class="d-block fs-5">Все</span>
+                                                </div>
 
-                                        <div class="mb-4">
-                                            <h2 class="mb-1">{{$course->topic}}</h2>
+                                                <div class="col">
+                                                    <span class="h4">{{ $course->inactive_students }}</span>
+                                                    <span class="d-block fs-5">Учащийся</span>
+                                                </div>
 
-                                            <span class="fs-5">Updated 2 hours ago</span>
-                                        </div>
-
-                                        <small class="card-subtitle">Участники</small>
-
-                                        <div class="d-flex justify-content-center">
-                                            <!-- Avatar Group -->
-                                            <div class="avatar-group avatar-group-sm avatar-circle card-avatar-group">
-
-                                                <a class="avatar avatar-soft-dark" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Bob Bardly">
-                                                    <span class="avatar-initials">B</span>
-                                                </a>
-
-                                                <a class="avatar avatar-soft-dark" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Adam Keep">
-                                                    <span class="avatar-initials">A</span>
-                                                </a>
+                                                <div class="col">
+                                                    <span class="h4">{{ $course->active_students }}</span>
+                                                    <span class="d-block fs-5">Выпускники</span>
+                                                </div>
                                             </div>
-                                            <!-- End Avatar Group -->
+                                            <!-- End Stats -->
                                         </div>
-
-                                        <a class="stretched-link" href="#"></a>
+                                        <!-- End Footer -->
                                     </div>
-                                    <!-- End Body -->
-
-                                    <!-- Footer -->
-                                    <div class="card-footer">
-                                        <!-- Stats -->
-                                        <div class="row col-divider">
-                                            <div class="col">
-                                                <span class="h4">19</span>
-                                                <span class="d-block fs-5">Tasks</span>
-                                            </div>
-                                            <!-- End Col -->
-
-                                            <div class="col">
-                                                <span class="h4">33</span>
-                                                <span class="d-block fs-5">Completed</span>
-                                            </div>
-                                            <!-- End Col -->
-
-                                            <div class="col">
-                                                <span class="h4">10</span>
-                                                <span class="d-block fs-5">Days left</span>
-                                            </div>
-                                            <!-- End Col -->
-                                        </div>
-                                        <!-- End Stats -->
-                                    </div>
-                                    <!-- End Footer -->
+                                    <!-- End Card -->
                                 </div>
-                                <!-- End Card -->
-                            </div>
-
                             @endforeach
 
                         </div>

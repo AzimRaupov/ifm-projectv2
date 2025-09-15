@@ -147,11 +147,11 @@
 <header id="header" class="navbar navbar-expand-lg navbar-fixed navbar-height navbar-container navbar-bordered bg-white">
     <div class="navbar-nav-wrap">
         <!-- Logo -->
-        <a class="navbar-brand" href="index.html" aria-label="Front">
+        <a class="navbar-brand" href="{{route('home')}}" aria-label="Front">
             <img class="navbar-brand-logo"
-                 src="{{ asset('assets/img/logo.png') }}"
+                 src="{{ asset('assets/img/logover.png') }}"
                  alt="Logo"
-                 style="max-width: 100px; width: 1000px; height: auto;">
+                 style="max-width: 70px; width: 70px; height: auto;">
             <img class="navbar-brand-logo" src="{{asset('assets/svg/logos-light/logo.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
             <img class="navbar-brand-logo-mini" src="{{asset('assets/img/logo_mini.png')}}" alt="Logo" data-hs-theme-appearance="default">
             <img class="navbar-brand-logo-mini" src="{{asset('assets/svg/logos-light/logo-short.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
@@ -668,13 +668,13 @@
         <div class="navbar-vertical-footer-offset">
             <!-- Logo -->
 
-            <a class="navbar-brand" href="index.html" aria-label="Front">
+            <a class="navbar-brand" href="{{route('home')}}" aria-label="Front">
                 <img class="navbar-brand-logo"
                      src="{{ asset('assets/img/logover.png') }}"
                      alt="Logo"
                      style="max-width: 500px; width: 100%; height: auto;">
                 <img class="navbar-brand-logo" src="{{asset('assets/svg/logos-light/logo.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
-                <img class="navbar-brand-logo-mini" src="{{asset('assets/img/logo.png')}}" alt="Logo" data-hs-theme-appearance="default" width="80rem" >
+                <img class="navbar-brand-logo-mini" src="{{asset('assets/img/logo.png')}}" alt="Logo" data-hs-theme-appearance="default" width="200rem" >
                 <img class="navbar-brand-logo-mini" src="{{ asset("assets/svg/logos-light/logo-short.svg") }}" alt="Logo" data-hs-theme-appearance="dark">
             </a>
 
@@ -1076,11 +1076,11 @@
                 <nav class="js-mega-menu navbar-nav-wrap">
                     <!-- Logo -->
 
-                    <a class="navbar-brand" href="index.html" aria-label="Front">
+                    <a class="navbar-brand" href="{{route('home')}}" aria-label="Front">
                         <img class="navbar-brand-logo"
                              src="{{ asset('assets/img/logo.png') }}"
                              alt="Logo"
-                             style="max-width: 100px; width: 100px; height: auto;">
+                             style="max-width: 50px; width: 50px; height: auto;">
                         <img class="navbar-brand-logo" src="{{asset('assets/svg/logos-light/logo.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
                     </a>
 

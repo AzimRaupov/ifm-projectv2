@@ -14,11 +14,37 @@ class AccountController extends Controller
 
     public function courses(Request $request)
     {
-        $user=User::query()->find($request->id);
-        $courses=Course::query()->with('students')->where('user_id',$user->id)->where('type','public')->get();
-       return view('teacher.account.courses',compact('courses','user'));
+        $user = User::query()->find($request->id);
 
-     }
+        $courses = Course::query()
+            ->with(['students' => function ($query) {
+                $query->select(
+                    'student_courses.user_id',
+                    'student_courses.course_id',
+                    'student_courses.status',
+                    'student_courses.complete',
+                    'student_courses.created_at',
+                    'student_courses.exp',
+                    'users.id as user_id',
+                    'users.name',
+                    'users.photo'
+                )
+                    ->join('users as u', 'student_courses.user_id', '=', 'u.id');
+            }])
+            ->where('user_id', $user->id)
+            ->where('type', 'public')
+            ->get();
+
+        foreach ($courses as $course) {
+            $course->total_students = $course->students->count();
+            $course->active_students = $course->students->where('pivot.status', 1)->count();
+            $course->inactive_students = $course->total_students - $course->active_students;
+        }
+
+        return view('teacher.account.courses', compact('courses', 'user'));
+
+
+    }
 
     public function updateBasic(Request $request)
     {

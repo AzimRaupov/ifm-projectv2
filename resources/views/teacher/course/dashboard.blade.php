@@ -56,8 +56,8 @@
             <div class="col-lg-4">
                 <!-- Card -->
                 <div class="text-center">
-                    <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations/oc-megaphone.svg')}}" alt="Image Description" data-hs-theme-appearance="default" style="min-height: 6rem;">
-                    <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations-light/oc-megaphone.svg')}}" alt="Image Description" data-hs-theme-appearance="dark" style="min-height: 6rem;">
+                    <i class="bi bi-people mb-4" style="font-size: 40px;"></i>
+
                     <span class="text-cap text-body">Все студенты</span>
                     <span class="d-block display-4 text-dark mb-2">{{$course->students->count()}}</span>
 
@@ -69,8 +69,8 @@
             <div class="col-lg-4">
                 <!-- Card -->
                 <div class="text-center">
-                    <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations/oc-money-profits.svg')}}" alt="Image Description" data-hs-theme-appearance="default" style="min-height: 6rem;">
-                    <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations-light/oc-money-profits.svg')}}" alt="Image Description" data-hs-theme-appearance="dark" style="min-height: 6rem;">
+                    <i class="bi-person-lines-fill mb-4" style="font-size: 40px;"></i>
+
                     <span class="text-cap text-body">Ученики</span>
                     <span class="d-block display-4 text-dark mb-2">{{$course->students->count()-$certificate}}</span>
 
@@ -82,8 +82,8 @@
             <div class="col-lg-4">
                 <!-- Card -->
                 <div class="text-center">
-                    <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations/oc-growing.svg')}}" alt="Image Description" data-hs-theme-appearance="default" style="min-height: 6rem;">
-                    <img class="avatar avatar-xl avatar-4x3 mb-4" src="{{asset('assets/svg/illustrations-light/oc-growing.svg')}}" alt="Image Description" data-hs-theme-appearance="dark" style="min-height: 6rem;">
+                    <i class="bi bi-award mb-4" style="font-size: 40px"></i>
+
                     <span class="text-cap text-body">Выпускники</span>
                     <span class="d-block display-4 text-dark mb-2">{{$certificate}}</span>
 

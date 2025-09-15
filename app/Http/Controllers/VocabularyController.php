@@ -17,8 +17,10 @@ class VocabularyController extends Controller
         $vocabularies = VocabularyStep::where('step_id', $request->id)
         ->with('links')
         ->get();
+        if(count($vocabularies)==0){
+            return view('vocabolary.show',compact('vocabularies','request'));
 
-        // получаем статусы студента по словарям
+        }
         $statuses = Vocabulary_Student::where('step_id', $request->id)
             ->where('user_id', Auth::id()) // 👈 чтобы статус был только текущего юзера
             ->pluck('status', 'vocabulary_id') // [vocabulary_id => status]
@@ -28,7 +30,7 @@ class VocabularyController extends Controller
                 $voc->status=$statuses[$voc->id];
             }
         }
-        return view('vocabolary.show',compact('vocabularies'));
+        return view('vocabolary.show',compact('vocabularies','request'));
     }
     public function rd(Request $request)
     {

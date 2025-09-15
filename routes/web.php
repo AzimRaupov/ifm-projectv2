@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/certificate',[\App\Http\Controllers\CourseController::class,'certificate'])->name('course.certificate');
         Route::get('/subscribe',[\App\Http\Controllers\teacher\CourseController::class,'subscribe'])->name('course.subscribe');
         Route::get('/tutorial',[\App\Http\Controllers\CourseController::class,'tutorial'])->name('course.tutorial');
+        Route::get('/book',[\App\Http\Controllers\CourseController::class,'pdf_book'])->name('course.pdf_book');
+
+
     });
 
     Route::prefix('account')->group(function (){

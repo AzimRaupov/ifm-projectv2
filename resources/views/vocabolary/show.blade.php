@@ -2,8 +2,13 @@
 
 
 
+@section('head')
+    <script src="{{asset('js/main.js')}}"></script>
+@endsection
 
 @section('content-main')
+    @if($vocabularies->count()>0)
+
     <style>
         .custom-checkbox {
             display: inline-flex;
@@ -110,7 +115,25 @@
     </div>
 
 </div>
-<!-- End Step Form -->
+    @else
+     @include('components.my.spinner')
+     <script>
+         function while_check(){
+             reqman("{{route('api.vocabulary.isset')}}", "POST", {id:{{$request->id}}}).then(rr => {
+                 console.log(rr);
+                 if(rr.count){
+                     finish();
+                     location.reload();
+                 }
+             });
+         }
+
+         setInterval(function() {
+             while_check();
+         }, 3700);
+     </script>
+    @endif
+
 
 @endsection
 
@@ -153,4 +176,5 @@
 
         });
     </script>
+
 @endsection

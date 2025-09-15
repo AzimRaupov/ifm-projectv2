@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('head')
+
+    <script src="{{asset('js/main.js')}}"></script>
+@endsection
+
 @section('content-main')
 
     <br>
@@ -34,22 +39,12 @@
                        required
                        style="border-radius: 12px; padding: 15px; font-size: 16px; transition: all 0.3s ease;">
                 <span class="invalid-feedback" style="color: #e74c3c; font-size: 14px;">
-                Пожалуйста, введите тему
+                Пожалуйста, введите название
             </span>
             </div>
 
             <!-- Время обучения -->
-            <div class="mb-4">
-                <label class="form-label" for="freetime" style="font-size: 16px; font-weight: 600;">
-                    Сколько часов в неделю вы готовы учиться?
-                </label>
-                <input type="number"
-                       id="freetime"
-                       class="form-control form-control-lg"
-                       name="freetime"
-                       placeholder="Например: 5"
-                       style="border-radius: 12px; padding: 15px; font-size: 16px; transition: all 0.3s ease;">
-            </div>
+
 
             <!-- Уровень -->
             <div class="mb-4">
@@ -79,7 +74,7 @@
         function create_course() {
             // Получаем данные из формы
             let topic = document.getElementById('topic-input').value.trim();
-            let freetime = document.getElementById('freetime').value.trim();
+            let freetime = 14;
             let level = document.getElementById('level').value;
             let button = document.getElementById("sub");
 
@@ -112,6 +107,7 @@
                     button.disabled = false;
 
                     if (data.redirect_url) {
+                        showSuccessToast("Успешная генератсия.")
                         window.location.href = data.redirect_url;
                     } else {
                         createTree(data);
@@ -123,7 +119,7 @@
                     console.error("Ошибка:", error);
                     console.error("Status:", status);
                     console.error("Response:", xhr.responseText);
-                    alert("Произошла ошибка при генерации курса. Попробуйте ещё раз.");
+                    showErrorToast("Произошла ошибка при генерации.");
                 }
             });
         }
