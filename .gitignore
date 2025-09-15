@@ -6,7 +6,6 @@
 /storage/*.key
 /storage/pail
 /vendor
-/public/ff.php
 .env
 .env.backup
 .env.production
