@@ -234,7 +234,7 @@
                 }),
                 success: function (res) {
                     console.log(res);
-                     // location.reload();
+                      location.reload();
                 },
                 error: function (xhr, status, error) {
                     console.error("Ошибка:", error);
